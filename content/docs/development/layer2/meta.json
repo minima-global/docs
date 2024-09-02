@@ -1,0 +1,14 @@
+{
+  "title": "Layer 2 - Off Chain ",
+  "root": false,
+  "pages": [
+    "uni-directional-channel",
+    "bi-directional-payments",
+    "eltoo-channel",
+    "eltoo-precoin",
+    "eltoo-floating-coin",
+    "eltoo-full-sequence",
+    "state-chains",
+    "coinflipv2"
+  ]
+}

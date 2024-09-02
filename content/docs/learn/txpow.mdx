@@ -1,0 +1,64 @@
+---
+title: TxPoW Units & Blocks
+description: Minima's Transaction Proof-of-Work (TxPoW) Units and Blocks
+tag: learn
+---
+
+The TxPoW unit is the main building block of the Minima Blockchain.
+Transactions are included in TxPoW units which have the potential to become blocks added to the chain.
+
+## TxPoW Units
+
+Header
+
+| Header Field     | Description                                                                                                                                            | Size/Format    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- |
+| Nonce            | The final nonce (number) that was included in the TxPoW header so that, when hashed, the required difficulty was achieved.                             | MiniNumber     |
+| Chain ID         | The Chain ID - This defines the rules this block was made under, MUST be 0x01                                                                          | MiniData       |
+| TimeMilli        | Time this TxPoW was created in milliseconds since the epoch of 1970-01-01T00:00:00Z                                                                    | MiniNumber     |
+| Block Number     | Block height to be used if this TxPoW unit becomes a block                                                                                             | MiniNumber     |
+| Block Difficulty | The Difficulty required for this unit to be considered a valid block                                                                                   | MiniData       |
+| Cascade Levels   | The maximum number of levels in the Cascade (32)                                                                                                       | MiniData array |
+| Super Parents    | Pointer to its immediate previous block and to the most recent block at each Super level. Used for cascading.                                          | MiniData List  |
+| MMR Root         | The root hash of the MMR (to prove coins existed using a proof and TxPoW header)                                                                       | MiniData       |
+| MMR Total        | The sum of all coins in the system (using a hash sum tree, the total amount of Minima is known every block removing the possibility of inflation bugs) | MiniNumber     |
+| Magic            | Chain parameters - the magic numbers: CurrentMaxTxPoWSize,CurrentMaxTxnPerBlock,CurrentMinTxPoWWork,CurrentMaxKISSVMOps                                | Magic          |
+| TxBodyHash       | The hash of the TxPoW body                                                                                                                             |                |
+
+## Witness
+
+A Witness provides three proofs that prove a transaction is valid. Each proof is stored in an MMR tree. It has the following attributes:
+
+| Body Field     | Description                                                                                                                                                                                                                    | Type             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| Random Number  | A Random number so that everyone is working on a different TxPoW in the pulse                                                                                                                                                  | `MiniData`       |
+| Txn Difficulty | The Difficulty required for this unit to be a valid TxPoW unit. The value that all users try to achieve when cycling through nonce values.                                                                                     | `MiniData`       |
+| Transaction    | Transaction ID for the main transaction. UTxO (coin) inputs, outputs, state variables, linkhash                                                                                                                                | `Transaction`    |
+| Witness        | Signature Proofs; Coin Proofs (pointing to a valid unspent MMR entry in the past 24 hours for each input coin used in the txn); Script Proofs (for the various P2SH addresses used)                                            | `Witness`        |
+| Burn Txn       | Inputs, outputs, state variables and linkhash for the Burn transaction paying for the transaction the user is trying to send. Can be empty.                                                                                    | `Transaction`    |
+| Burn Witness   | The Witness data for the Burn. Signatures, MMR Proofs and scripts. Can be empty.                                                                                                                                               | `Witness`        |
+| Txn List       | List of the hashes of mempool transactions to propagate. These will become confirmed if this TxPoW unit becomes a block. Only the hash of transactions are added since transactions have already been sent across the network. | `MiniData array` |
+|                |                                                                                                                                                                                                                                |                  |
+
+## Witness
+
+| Witness Attribute | Description                                              | Type                     |
+| ----------------- | -------------------------------------------------------- | ------------------------ |
+| SignatureProofs   | The MMR Proofs for the Signatures                        | `ArrayList<Signature>`   |
+| CoinProofs        | The MMR Proofs that each input Coin is valid and unspent | `ArrayList<CoinProof>`   |
+| ScriptProofs      | The MMR Proofs for Scripts used in the transactions      | `ArrayList<ScriptProof>` |
+|                   |                                                          |                          |
+
+## TxBlocks (Blocks)
+
+TxBlocks are TxPoW that become blocks and get added to the blockchain. TxBlocks can also be referred to as SyncBlocks as they are required for syncing when a new user joins (or existing users rejoin) the network.
+
+They include the following details:
+
+| TxBlock Attribute | Description                                                                 | Type                   |
+| ----------------- | --------------------------------------------------------------------------- | ---------------------- |
+| TxPoW             | The TxPoW object that became this block                                     | `TxPoW`                |
+| Previous Peaks    | The MMR Peaks from the previous block                                       | `ArrayList<MMREntry>`  |
+| Spent Coins       | The CoinProofs of all the input (spent) coins, unspent as of the last block | `ArrayList<CoinProof>` |
+| New Coins         | A list of all the newly created coins                                       | `ArrayList<Coin>`      |
+|                   |                                                                             |                        |

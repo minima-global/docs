@@ -1,0 +1,3770 @@
+---
+title: Terminal Commands
+description: Terminal Commands
+tag: learn
+icon: Terminal
+---
+
+Last updated: 6th August 2024
+
+The following commands can be run directly from a Minima Terminal. They can also be viewed by typing `help` into the Minima Terminal.
+
+For detailed help, use `help command:` followed by the command.
+
+`;` can be used to chain multiple commands
+
+## General Commands
+
+
+
+<Accordions>
+<Accordion title="Balance">
+
+`Show your total balance of Minima and tokens.`
+
+```bash title="Terminal"
+balance 
+```
+
+<CommandTable
+  type={{
+    address: {
+      description:
+        '(Optional) Show the balance for a specific 0x or Mx address.',
+      type: 'True',
+    
+    },
+    tokenid:{
+      description:
+        '(Optional) Show the balance for a specific tokenid. Minima is 0x00.',
+      type: 'True',
+    },
+     confirmations:{
+      description:
+        '(Optional) Set the number of block confirmations required before a coin is considered confirmed in your balance. Default is 3.',
+      type: 'True',
+    }
+  }}
+/>
+
+
+Examples:
+
+```bash title="Terminal"
+balance tokenid:0xFED5.. confirmations:10
+```
+
+```bash title="Terminal"
+balance address:0xFF..
+```
+</Accordion>
+
+
+<Accordion title="Block">
+
+
+
+`Return the top block`
+
+```bash title="Terminal"
+block
+```
+
+<Separator />
+
+
+
+`Check the validity of an address and whether it belongs to your node.`
+
+```bash title="Terminal"
+checkaddress 
+```
+
+<CommandTable
+  type={{
+    address: {
+      description:
+        'The 0x or Mx address to check.',
+      type: 'False',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+checkaddress address:0xFED...
+```
+</Accordion>
+
+<Accordion title="Coincheck">
+
+
+`Check a coin exists and is valid. Can only check unspent coins.`
+
+```bash title="Terminal"
+coincheck
+```
+
+<CommandTable
+  type={{
+    data: {
+      description:
+        'The data of a coin. Can be found using the `coinexport` command.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+coincheck data:0x00000..
+```
+</Accordion>
+
+<Accordion title="Coinexport">
+
+
+
+`Export a coin including its MMR proof.`
+
+```bash title="Terminal"
+coinexport
+```
+
+<CommandTable
+  type={{
+    coinid: {
+      description:
+        'The id of a coin. Can be found using the `coins` command.',
+      type: 'False',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+coinexport coinid:0xCD34..
+```
+
+</Accordion>
+
+
+
+<Accordion title="Coinimport">
+
+`Import a coin including its MMR proof.`
+
+```bash title="Terminal"
+coinimport
+```
+
+<CommandTable
+  type={{
+    data: {
+      description:
+        'The data of a coin. Can be found using the `coinexport` command.',
+      type: 'False',
+    }, 
+    track:{
+      description:
+        '(Optional) true or false, true will create an MMR entry for the coin and add it to your relevant coins. Default is false.',
+      type: 'True',
+      
+    }
+
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+coinimport data:0x00000..
+```
+```bash title="Terminal"
+coinimport data:0x00000.. track:true
+```
+
+</Accordion>
+
+<Accordion title="Cointrack">
+
+
+`Track or untrack a coin.`
+
+```bash title="Terminal"
+cointrack
+```
+
+<CommandTable
+  type={{
+    enable: {
+      description:
+        'true or false, true will add the coin to your relevant coins, false will remove it from your relevant coins.',
+      type: 'True',
+    },
+    coinid: {
+      description:
+        'The id of a coin. Can be found using the `coins` command.',
+      type: 'True',
+    }
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+cointrack enable:true coinid:0xCD34..
+```
+
+</Accordion>
+
+<Accordion title="Consolidate">
+
+`Consolidate multiple coins (UTxOs) into one by sending them back to yourself.`
+
+Must have at least 3 coins.
+
+Useful to prevent having many coins of tiny value and to manage the number of coins you are tracking. Optionally set the minimum coin age (in blocks), maximum number of coins, and maximum number of signatures for the transaction.
+
+```bash title="Terminal"
+consolidate
+```
+
+<CommandTable
+  type={{
+    tokenid: {
+      description:
+        'The tokenid for Minima or custom token to consolidate coins for. Minima is 0x00.',
+      type: 'True',
+    },
+    coinage: {
+      description:
+        '(Optional) The minimum number of blocks deep (confirmations) a coin needs to be. Default is 3.',
+      type: 'True',
+    },
+    maxcoins: {
+      description:
+        '(Optional) The maximum number of coins to consolidate. Minimum 3, up to 20. Coins are first sorted by value (smallest first) before adding to the transaction. Default is 20.',
+      type: 'True',
+    },
+    maxsigs: {
+      description:
+        '(Optional) The maximum number of signatures for the transaction, up to 5. Coins are then sorted by address to minimize the number of signatures required. Default is 5.',
+      type: 'True',
+    },
+    burn: {
+      description:
+        '(Optional) Amount of Minima to burn with the transaction. Default is 0.',
+      type: 'True',
+    },
+    debug: {
+      description:
+        '(Optional) true or false, true will print more detailed logs. Default is false.',
+      type: 'True',
+    },
+    dryrun: {
+      description:
+        '(Optional) true or false, true will simulate the consolidate transaction but not execute it. Default is false.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+consolidate tokenid:0x00
+```
+```bash title="Terminal"
+consolidate tokenid:0x00 coinage:10
+```
+```bash title="Terminal"
+consolidate tokenid:0x00 maxcoins:5
+```
+```bash title="Terminal"
+consolidate tokenid:0x00 coinage:10 maxcoins:8 burn:1
+```
+```bash title="Terminal"
+consolidate tokenid:0x00 coinage:10 maxcoins:8 maxsigs:3 burn:1 dryrun:true
+```
+
+</Accordion>
+
+<Accordion title="Getaddress">
+
+`Returns an existing default Minima address to receive funds, use as a change address etc.`
+
+Each address can be used securely 262144 (64^3) times.
+
+Then you can wipe the private keys from your online node using the 'vault' command.
+
+
+```bash title="Terminal"
+getaddress
+```
+
+Examples:
+
+```bash title="Terminal"
+getaddress
+```
+
+</Accordion>
+
+<Accordion title="Hashtest">
+
+`Check the speed of hashing of this device.`
+
+Defaults to 1 million hashes.
+
+Returns the time taken in milliseconds and speed in megahashes/second.
+
+E.g. A speed of 0.5 MH/s indicates 500000 hashes per second.
+
+```bash title="Terminal"
+hashtest
+```
+
+<CommandTable
+  type={{
+    amount: {
+      description:
+        '(Optional) Number of hashes to execute.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+hashtest amount:1000000
+```
+
+</Accordion>
+
+<Accordion title="History">
+
+
+
+`Return all TxPoW relevant to you.`
+
+<CommandTable
+  type={{
+    max: {
+      description:
+        '(Optional) Maximum number of TxPoW to retrieve.',
+      type: 'True',
+    },
+    offset: {
+      description:
+        '(Optional) Start the list from this point. (v1.0.41 onwards)',
+      type: 'True',
+    }
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+history max:20
+```
+```bash title="Terminal"
+history max:20 offset:45
+```
+
+</Accordion>
+
+<Accordion title="Keys">
+
+`Get a list of all your public keys or create a new key.`
+
+```bash title="Terminal"
+keys
+```
+
+<CommandTable
+  type={{
+    action: {
+      description:
+        '(Optional) action:list, action:checkkeys, action:new, action:genkey.',
+      type: 'String',
+    },
+      publickey: {
+      description: '(Optional) Search for a specific public key.',
+      type: 'String',
+    },
+    phrase: {
+      description: '(Optional) The phrase to use to generate the private/public key pair.',
+      type: 'String',
+    },
+  }}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+  type={{
+   checkkeys: {
+      description: 'action:checkkeys Checks if your Public and Private keys are correct.',
+      type: 'String',
+    },
+       genkey: {
+      description: 'action:genkey Generate a new private/public key pair and wallet address from a new random seed phrase or from a given phrase. This is independent from the node\'s wallet.',
+      type: 'String',
+    },
+      list: {
+      description: 'action:list List your existing public keys. The default. ',
+      type: 'String',
+    },
+      new: {
+      description: 'action:new Create a new key pair.',
+      type: 'String',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+keys action:list
+```
+```bash title="Terminal"
+keys action:checkkeys
+```
+```bash title="Terminal"
+keys action:list publickey:0xFFEE56..
+```
+```bash title="Terminal"
+keys action:new
+```
+
+</Accordion>
+
+<Accordion title="Newaddress">
+
+`Create a new address that will not be not used for anything else (not one of the 64 default change address).`
+
+Can be used for a specific use case or for improved privacy.
+
+```bash title="Terminal"
+newaddress
+```
+
+</Accordion>
+
+<Accordion title="Printmmr">
+
+`Print the MMR set of the tip block and the total number of entries in the MMR.`
+
+Returns the tip block number, latest entrynumber and latest set of MMR entries.
+
+For each entry, details of its row, entry number, data and value of all new and updated MMR entries for the tip block.
+
+Row 1 represents the leaf nodes, entry 0 represents the first entry on a row.
+
+```bash title="Terminal"
+printmmr
+```
+
+</Accordion>
+
+<Accordion title="Printtree">
+
+`Print a tree representation of the blockchain.`
+
+Default depth 32 blocks, can be increased to see more of the txpow tree.
+
+```bash title="Terminal"
+printtree
+```
+
+<CommandTable
+  type={{
+    depth: {
+      description:
+        '(Optional) Number of blocks back from the tip to show in the txpow tree.',
+      type: 'True',
+    },
+    cascade: {
+      description:
+        '(Optional) true or false, true shows the cascade.',
+      type: 'True',
+    }
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+printtree depth:500
+```
+```bash title="Terminal"
+printtree cascade:true
+```
+
+</Accordion>
+
+<Accordion title="Quit">
+
+`Shutdown Minima safely. Ensure you have a backup before shutting down.`
+
+Ensure you have a backup before shutting down.
+
+```bash title="Terminal"
+quit
+```
+
+Examples:
+
+```bash title="Terminal"
+quit
+```
+```bash title="Terminal"
+quit compact:true
+```
+
+</Accordion>
+
+<Accordion title="Seedrandom">
+
+`Generate a random value, based on your SEED and a modifier.`
+
+<CommandTable
+  type={{
+    modifier: {
+      description:
+        'The modifier - added to seed before hash.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+seedrandom modifier:"Hello you"
+```
+
+</Accordion>
+
+<Accordion title="Status">
+
+`Show the general status for Minima and your node. Optionally clean the RAM.`
+
+Prints details for general status, memory used, chain info, stored txpow units, network connections, p2p connections and traffic.
+
+```bash title="Terminal"
+status
+```
+
+<CommandTable
+  type={{
+    clean: {
+      description:
+        '(Optional) true only, clear the RAM.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+status
+```
+```bash title="Terminal"
+status clean:true
+```
+</Accordion>
+
+<Accordion title="Tokencreate">
+
+`Create (mint) custom tokens or NFTs.`
+
+`Create (mint) custom tokens or NFTs.`
+
+You must have some sendable Minima in your wallet as tokens are 'colored coins', a fraction of 1 Minima.
+
+<CommandTable
+  type={{
+    name: {
+      description:
+        'The name of the token. Can be a string or JSON Object.',
+      type: 'True',
+    },
+    amount: {
+      description:
+        'The amount of total supply to create for the token. Between 1 and 1 Trillion.',
+      type: 'True',
+    }, 
+    decimals: {
+      description:
+        '(Optional) The number of decimal places for the token. Default is 8, maximum 16.',
+      type: 'True',
+    },
+    script: {
+      description:
+        '(Optional) Add a custom script that must return \'TRUE\' when spending any coin of this token.',
+      type: 'True',
+    },
+    state: {
+      description:
+        '(Optional) List of state variables, if adding a script.',
+      type: 'True',
+    },
+    signtoken: {
+      description:
+        '(Optional) Provide a public key to sign the token with. Useful for proving you are the creator of the token/NFT.',
+      type: 'True',
+    },
+    webvalidate: {
+      description:
+        '(Optional) Provide a URL to a publicly viewable .txt file you are hosting which stores the tokenid for validation purposes.',
+      type: 'True',
+    },
+    burn: {
+      description:
+        '(Optional) Amount to burn with the tokencreate minting transaction.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+tokencreate name:newtoken amount:1000000
+```
+```bash title="Terminal"
+tokencreate amount:10 name:\{"name":"newcoin","link":"http:mysite.com","description":"A very cool token"}
+```
+```bash title="Terminal"
+tokencreate name:mynft amount:10 decimals:0 webvalidate:https://www.mysite.com/nftvalidation.txt signtoken:0xFF.. burn:0.1
+```
+```bash title="Terminal"
+tokencreate name:charitycoin amount:1000 script:"ASSERT VERIFYOUT(@TOTOUT-1 0xMyAddress 1 0x00 TRUE)"
+```
+
+</Accordion>
+
+<Accordion title="Tokenvalidate">
+
+`Validate the signature and webvalidate link in a token.`
+
+```bash title="Terminal"
+tokenvalidate tokenid:0xFED5..
+```
+
+<CommandTable
+  type={{
+    tokenid: {
+      description:
+        'The tokenid of the custom token/NFT to validate.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+tokenvalidate tokenid:0xFED5..
+```
+
+</Accordion>
+
+
+<Accordion title="Trace">
+
+`Show the message stacks of the internal Minima Engine with optional filter string.`
+
+```bash title="Terminal"
+trace
+```
+
+<CommandTable
+  type={{
+    enable: {
+      description:
+        'true or false, true to enable or false to disable.',
+      type: 'True',
+    },
+    filter: {
+      description:
+        '(Optional) A case-sensitive string to filter the messages by.',
+      type: 'True',
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+trace enable:true
+```
+```bash title="Terminal"
+trace enable:true filter:MAIN
+```
+```bash title="Terminal"
+trace enable:true filter:MINER
+```
+```bash title="Terminal"
+trace enable:true filter:MDS
+```
+```bash title="Terminal"
+trace enable:true filter:NOTIFYMANAGER
+```
+```bash title="Terminal"
+trace enable:true filter:TXPOWPROCESSOR
+```
+```bash title="Terminal"
+trace enable:false
+```
+</Accordion>
+
+</Accordions>
+  
+
+## Backup
+
+<Accordions>
+
+<Accordion title="Archive">
+
+`Perform a chain or seed re-sync from an archive node.`
+
+A chain re-sync will put your node on the correct chain so you are in sync with the latest tip block.
+
+Use a chain re-sync if your node has been offline for too long and cannot catchup. Seed Phrase is not required.
+
+A seed re-sync will wipe the wallet and re-generate your keys from your seed phrase. Your coins will be restored.
+
+Only use a seed re-sync if you have lost your node and do not have a backup.
+
+You can also check the integrity of your archive db.
+
+```bash title="Terminal"
+archive
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      'action:resync, action:integrity, action:export, action:import, action:inspect, action:addresscheck',
+    type: 'True',
+  },
+  host: {
+    description:
+      '(Optional) ip:port of the archive node to sync from or check the integrity of.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) name or path of the archive export gzip file to export/import/inspect',
+    type: 'True',
+  },
+  phrase: {
+    description:
+      '(Optional) Your 24 word seed phrase in double quotes, to perform a seed re-sync.',
+    type: 'True',
+  },
+  keys: {
+    description:
+      '(Optional) Number of keys to create if you need to do a seed re-sync.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      '(Optional) How many times at most you used your keys.',
+    type: 'True',
+  },
+  address: {
+    description:
+      '(Optional) The wallet address to check.',
+    type: 'True',
+  },
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  resync: {
+    description:
+      'do a resync. If you wish to perform a chain re-sync only, do not provide your 24 word seed phrase.',
+    type: 'True',
+  },
+  integrity: {
+    description:
+      'on an Archive node, check the integrity of your Archive db. No host required.',
+    type: 'True',
+  },
+  export: {
+    description:
+      'Export your archive db to a gzip file.',
+    type: 'True',
+  },
+  import: {
+    description:
+      'do a chain or seed re-sync using an archive gzip file. Use with `file`.',
+    type: 'True',
+  },
+  inspect: {
+    description:
+      'inspect an archive export gzip file. If `last:1` then the file can re-sync any node from genesis.',
+    type: 'True',
+  },
+  addresscheck: {
+    description:
+      'check your archive db for spent and unspent coins at a specific address.',
+    type: 'True',
+  },
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+archive action:resync host:auto
+```
+
+```bash title="Terminal"
+archive action:resync host:89.98.89.98:8888 phrase:"YOUR 24 WORD SEED PHRASE"
+```
+
+```bash title="Terminal"
+archive action:resync host:89.98.89.98:8888 phrase:"YOUR 24 WORD SEED PHRASE" keys:90 keyuses:2000
+```
+
+```bash title="Terminal"
+archive action:integrity
+```
+
+```bash title="Terminal"
+archive action:export file:archiveexport-ddmmyy.gzip
+```
+
+```bash title="Terminal"
+archive action:import file:archiveexport-ddmmyy.gzip
+```
+
+```bash title="Terminal"
+archive action:inspect file:archiveexport-ddmmyy.gzip
+```
+
+```bash title="Terminal"
+archive action:addresscheck address:Mx..
+```
+
+
+
+
+</Accordion>
+
+<Accordion title="Backup">
+
+`Backup your node. Uses a timestamped name by default.`
+
+```bash title="Terminal"
+backup
+```
+
+<CommandTable
+type={{
+  password: {
+    description:
+      'Set a password using letters and numbers only.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) Specify a filename ending in .bak, optionally include a local path for the backup.',
+    type: 'True',
+  },
+  auto: {
+    description:
+      '(Optional) true or false, true will schedule a non-password protected backup every 24 hours.',
+    type: 'True',
+  },
+  maxhistory: {
+    description:
+      '(Optional) Max relevant TxPoW to add - your history.',
+    type: 'True',
+  },
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+backup password:Longsecurepassword456
+```
+
+```bash title="Terminal"
+backup password:Longsecurepassword456 confirm:Longsecurepassword456
+```
+
+```bash title="Terminal"
+backup password:Longsecurepassword456 file:my-backup-01-Jan-22.bak maxhistory:100
+```
+
+```bash title="Terminal"
+backup auto:true
+```
+
+</Accordion>
+
+<Accordion title="Megammr (from v1.0.41)">
+
+`View information about your MegaMMR. Export and Import complete MegaMMR data.`
+
+You must be running with the -megammr start up parameter.
+
+```bash title="Terminal"
+megammr
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(Optional) action:info, action:export, action:import',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) A .mmr file. Use with export and import.',
+    type: 'True',
+  },
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  info: {
+    description:
+      'Show info about your MegaMMR.',
+    type: 'True',
+  },
+  export: {
+    description:
+      'Export a MegaMMR data file.',
+    type: 'True',
+  },
+  import: {
+    description:
+      'Import a MegaMMR data file.',
+    type: 'True',
+  },
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+megammr action:info
+```
+
+```bash title="Terminal"
+megammr action:export file:mmrfile.mmr
+```
+
+```bash title="Terminal"
+megammr action:import file:mmrfile.mmr
+```
+
+</Accordion>
+
+<Accordion title="MySQL">
+
+`Export the archive data of your node to a MySQL database.`
+
+The MySQL archive export (in .dat or .gzip format) can be used to perform a chain re-sync to put users on the correct chain or a seed re-sync to restore access to lost funds, using the 24 word seed phrase.
+
+Query an address for its history of spent and unspent coins.
+
+Additionally export the MySQL db to a .dat or .gzip file for resyncing with 'reset' or 'archive' command.
+
+You can also create a coins db in MySQL to search for coins using SQL queries.
+
+```bash title="Terminal"
+mysql
+```
+
+<CommandTable
+type={{
+  host: {
+    description:
+      'The ip:port (or name of Docker container) running the MySQL db.',
+    type: 'True',
+  },
+  database: {
+    description:
+      'name of the MySQL db being used to store the archive db data.',
+    type: 'True',
+  },
+  user: {
+    description:
+      'MySQL user to login to as.',
+    type: 'True',
+  },
+  password: {
+    description:
+      'MySQL password for the user provided.',
+    type: 'True',
+  },
+  readonly: {
+    description:
+      'true or false, connect in readonly mode.',
+    type: 'True',
+  },
+  action: {
+    description:
+      'action:info, action:integrity, action:update, action:addresscheck, action:autobackup, action:resync, action:wipe, action:h2export, action:h2import, action:rawexport, action:findtxpow',
+    type: 'True',
+  },
+  phrase: {
+    description:
+      '(Optional) Use with action:resync. The BIP39 seed phrase of the node to re-sync.',
+    type: 'True',
+  },
+  keys: {
+    description:
+      '(Optional) If the seed phrase is provided, optionally set the number of keys to create.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      '(Optional) If the seed phrase is provided, optionally set the number of previous uses for each key created.',
+    type: 'True',
+  },
+  address: {
+    description:
+      '(Optional) Use with action:checkaddress. The address to check the history of spent and unspent coins for.',
+    type: 'True',
+  },
+  enable: {
+    description:
+      '(Optional) Use with action:autobackup. Automatically save data to MySQL archive DB.',
+    type: 'True',
+  },
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  info: {
+    description:
+      'Show the blocks stored in the archive db and compare to the MySQL db.',
+    type: 'True',
+  },
+  integrity: {
+    description:
+      'Check the block order and block parents are correct in the MySQL db.',
+    type: 'True',
+  },
+  update: {
+    description:
+      'Update the MySQL db with the latest syncblocks from the node`s archive db.',
+    type: 'True',
+  },
+  addresscheck: {
+    description:
+      'Check the history of all the spent and unspent coins from an address.',
+    type: 'True',
+  },
+  autobackup: {
+    description:
+      'Automatically save data to MySQL archive DB. Use with enable.',
+    type: 'True',
+  },
+  resync: {
+    description:
+      'Perform a chain or seed re-sync from the specified MySQL db. Will shutdown the node so you must restart it once complete.',
+    type: 'True',
+  },
+  wipe: {
+    description:
+      'Be careful. Wipe the MySQL db.',
+    type: 'True',
+  },
+  h2export: {
+    description:
+      'export the MySQL db to an archive gzip file which can be used to resync a node.',
+    type: 'True',
+  },
+  h2import: {
+    description:
+      'import an archive gzip file to the MySQL db.',
+    type: 'True',
+  },
+  rawexport: {
+    description:
+      'export the MySQL db to an archive .dat file which can be used to resync a node.',
+    type: 'True',
+  },
+  findtxpow: {
+    description:
+      'if autobackup is enabled, find a specific txpow in the MySQL DB.',
+    type: 'True',
+  },
+}}
+
+/>
+
+
+Examples:
+
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:info
+```
+```bash title="Terminal"
+mysql host:dockermysql database:archivedb user:archiveuser password:archivepassword action:info
+```
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:integrity
+```
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:update
+```
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:addresscheck address:MxG08..
+```
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync
+```
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync phrase:"24 WORDS HERE" keys:90 keyuses:2000
+```
+</Accordion>
+
+<Accordion title="MySQL Coins">
+
+`Create and search a coins database from your MySQL Archive.`
+
+Create a coins db from your mysql data and search it.
+
+Use the same database you already use for your TxBlocks. This creates a new table.
+
+You can then search for coins using SQL queries.
+
+```bash title="Terminal"
+mysqlcoins
+```
+
+<CommandTable
+type={{
+  host: {
+    description:
+      'The ip:port (or name of Docker container) running the MySQL db.',
+    type: 'True',
+  },
+  database: {
+    description:
+      'name of the MySQL db being used to store the archive db data.',
+    type: 'True',
+  },
+  user: {
+    description:
+      'MySQL user to login to as.',
+    type: 'True',
+  },
+  password: {
+    description:
+      'MySQL password for the user provided.',
+    type: 'True',
+  },
+  readonly: {
+    description:
+      '(Optional) true or false, connect in readonly mode.',
+    type: 'True',
+  },
+  logs: {
+    description:
+      '(Optional) true or false, show detailed logs, default true.',
+    type: 'True',
+  },
+  action: {
+    description:
+      'action:info, action:update, action:wipe, action:search',
+    type: 'True',
+  },
+  maxcoins: {
+    description:
+      '(Optional) The maximum number of coins to add. The update can take a VERY long time so this way you can limit it.',
+    type: 'True',
+  },
+  where: {
+    description:
+      '(Optional) The search criteria. String data MUST be in single quotes. You can use multiple parameters.',
+    type: 'True',
+  },
+  query: {
+    description:
+      '(Optional) the full sql query',
+    type: 'True',
+  },
+  address: {
+    description:
+      '(Optional) the address to check for',
+    type: 'True',
+  },
+  spent: {
+    description:
+      '(Optional) true or false, if the coin is spent or unspent',
+    type: 'True',
+  },
+  limit: {
+    description:
+      '(Optional) limit the number of rows returned',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  info: {
+    description:
+      'Get information about the Coins DB.',
+    type: 'True',
+  },
+  update: {
+    description:
+      'Update the coins db from the latest coin added with MySQL data.',
+    type: 'True',
+  },
+  wipe: {
+    description:
+      'Wipe the Coins DB.',
+    type: 'True',
+  },
+  search: {
+    description:
+      'Perform a search on the data. You can specify any valid query params.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+```
+
+```bash title="Terminal"
+mysqlcoins action:search where:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103'" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+```
+
+```bash title="Terminal"
+mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103' AND state LIKE '%0xFFEEDD%' LIMIT 10" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+```
+
+
+
+</Accordion>
+
+
+<Accordion title="Reset">
+
+`Reset your node in various ways.`
+
+You MUST wait until all your original keys are created before this is allowed.
+
+```bash title="Terminal"
+reset
+```
+
+<CommandTable
+type={{
+  archivefile: {
+    description:
+      'Specify the the archive **.dat** or **.gzip** file. Should be recently exported from an archive node.',
+    type: 'True',
+  },
+  action: {
+    description:
+      'action:chainsync, action:seedsync, action:restore',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) Specify the filename or local path of the backup to restore',
+    type: 'True',
+  },
+  password: {
+    description:
+      '(Optional) Enter the password of the backup',
+    type: 'True',
+  },
+  phrase: {
+    description:
+      '(Optional) Your 24 word seed phrase in double quotes, to import a seed phrase and sync the entire chain.',
+    type: 'True',
+  },
+  keys: {
+    description:
+      '(Optional) Number of keys to create if you need to do a seed re-sync.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      '(Optional) How many times at most you used your keys.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  chainsync: {
+    description:
+      'Re-sync all blocks from the archivefile to get back onto the right chain. Seed phrase is not required, the private keys will remain unchanged.',
+    type: 'True',
+  },
+  seedsync: {
+    description:
+      'Wipe the wallet and re-generate your keys from your seed phrase. Your coins will be restored.',
+    type: 'True',
+  },
+  restore: {
+    description:
+      'Restore a backup and re-sync the entire chain from the archivefile.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+reset archivefile:archiveexport-jul23.gz action:chainsync
+```
+
+```bash title="Terminal"
+reset archivefile:archiveexport-jul23.gz action:seedsync keyuses:1000 phrase:"ENTER 24 WORDS HERE"
+```
+
+```bash title="Terminal"
+reset archivefile:archiveexport-jul23.gz action:restore file:backup-jul23.bak password:Longsecurepassword456
+```
+
+</Accordion>
+
+<Accordion title="Restore">
+
+`Restore your node from a backup.`
+
+You MUST wait until all your original keys are created before this is allowed.
+
+```bash title="Terminal"
+restore 
+```
+
+<CommandTable
+type={{
+  file: {
+    description:
+      'Specify the filename or local path of the backup to restore',
+    type: 'True',
+  },
+  password: {
+    description:
+      '(optional) Enter the password of the backup',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+restore file:my-full-backup-01-Jan-22 password:Longsecurepassword456
+```
+
+</Accordion>
+
+<Accordion title="Restore Sync">
+
+`Restore the entire system AND perform an archive chain sync. Use when the backup is old.`
+
+The node will be restored and an archive chain sync will commence from the last block in the backup.
+
+You MUST wait until all your original keys are created before this is allowed.
+
+```bash title="Terminal"
+restoresync
+```
+
+<CommandTable
+type={{
+  file: {
+    description:
+      'Specify the filename or local path of the backup to restore',
+    type: 'True',
+  },
+  password: {
+    description:
+      '(optional) Enter the password of the backup',
+    type: 'True',
+  },
+  host: {
+    description:
+      '(optional) ip:port of the archive node to sync from.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      '(optional) Increment (not set) the number of key uses per key.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+restoresync file:my-full-backup-01-Jan-22 password:Longsecurepassword456  host:89.98.89.98:9001
+```
+
+```bash title="Terminal"
+restoresync file:my-full-backup-01-Jan-22 password:Longsecurepassword456 keyuses:1000  host:89.98.89.98:9001
+```
+
+</Accordion>
+
+<Accordion title="Vault">
+
+`View, encrypt/decrypt or wipe/restore your seed phrase and private keys.`
+
+You must have your passphrase to unlock your private keys.
+
+```bash title="Terminal"
+vault
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(optional) action:seed, action:wipekeys, action:restorekeys, action:passwordlock, action:passwordunlock',
+    type: 'True',
+  },
+  seed: {
+    description:
+      '(optional) Enter your seed to lock your node. This will delete your private keys.',
+    type: 'True',
+  },
+  phrase: {
+    description:
+      '(optional) Enter your passphrase in double quotes to restore your node. This will reinstate your private keys.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  seed: {
+    description:
+      'Show your seed phrase. The default.',
+    type: 'True',
+  },
+  wipekeys: {
+    description:
+      'Wipe your private keys - keep the public.',
+    type: 'True',
+  },
+  restorekeys: {
+    description:
+      'Restore your private keys.',
+    type: 'True',
+  },
+  passwordlock: {
+    description:
+      'Lock your node by password encrypting private keys.',
+    type: 'True',
+  },
+  passwordunlock: {
+    description:
+      'Unlock your node to reinstating your private keys.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+  vault action:wipekeys seed:0xDD4E..
+```
+```bash title="Terminal"
+  vault action:restorekeys phrase:\"SPRAY LAMP..\"
+```
+```bash title="Terminal"
+vault action:passwordlock password:your_password
+```
+```bash title="Terminal"
+vault action:passwordlock password:your_password confirm:your_password
+```
+```bash title="Terminal"
+vault action:passwordunlock password:your_password
+```
+
+</Accordion>
+
+</Accordions>
+
+
+## MiniDapp System
+
+<Accordions>
+<Accordion title="MDS">
+
+`MiniDAPP System management.`
+
+Install, update or uninstall MiniDapps and set their permissions to READ/WRITE. Default permission is READ.
+
+DO NOT give WRITE permissions to MiniDapps you do not trust!
+Accept/deny pending commands from MiniDapps with READ permissions.
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(optional) list, install, update, uninstall, pending, accept, deny, permission, publicmds',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(optional) The file name of the MiniDapp to install. Can either be in the Minima folder or specify the file path.',
+    type: 'True',
+  },
+  uid: {
+    description:
+      '(optional) The uid of the MiniDapp to update, uninstall.',
+    type: 'True',
+  },
+  trust: {
+    description:
+      '(optional) The ip:port to send a message to. Use with action:send.',
+    type: 'True',
+  },
+  enable: {
+    description:
+      '(optional) true or false, default is false. Enable the public wallet on https://nodeip:port/publicmds/.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+
+```bash title="Terminal"
+mds action:list
+```
+```
+```bash title="Terminal"
+mds action:install file:wallet_1.0.mds.zip
+```
+```bash title="Terminal"
+mds action:install file:/Users/MyUser/Downloads/wallet_1.0.mds.zip trust:write
+```
+```bash title="Terminal"
+mds action:update uid:0xABA3.. file:wallet_2.0.mds.zip
+```
+```bash title="Terminal"
+mds action:uninstall uid:0xABA3..
+```
+```bash title="Terminal"
+mds action:pending
+```
+```bash title="Terminal"
+mds action:accept uid:0xCDF6..
+```
+```bash title="Terminal"
+mds action:deny uid:0xCDF6..
+```
+```bash title="Terminal"
+mds action:permission uid:0xABA3.. trust:write
+```
+
+
+
+
+
+</Accordion>
+
+<Accordion title="Checkmode">
+
+`Show if this MiniDAPP is READ or WRITE mode.`
+
+Can be called from a MiniDapp to check whether it is in READ or WRITE mode.
+
+```bash title="Terminal"
+checkmode
+```
+</Accordion>
+
+<Accordion title="Checkpending">
+
+`Show if a pending command UID is in the pending list`
+
+```bash title="Terminal"
+checkpending
+```
+</Accordion>
+
+<Accordion title="Checkrestore">
+
+`Check if the system is restoring`
+
+Check whether Minima is currently being restored, is shutting down and if shutdown is complete.
+
+```bash title="Terminal"
+checkrestore
+```
+</Accordion>
+
+</Accordions>
+
+
+## Network
+
+<Accordions>
+<Accordion title="Connect">
+
+`Connect to a network Minima instance.`
+
+Connect to another node to join the main network or to create a private test network.
+
+Set your own host using the -host parameter at start up.
+
+```bash title="Terminal"
+connect
+```
+
+<CommandTable
+type={{
+  host: {
+    description:
+      'The external ip:port of the node to connect to.',
+    type: 'True',
+  }
+}}
+/>
+
+
+Examples:
+
+```bash title="Terminal"
+connect host:94.0.239.117:9001
+```
+
+</Accordion>
+
+<Accordion title="Disconnect">
+
+`Disconnect from a connected or connecting host.`
+
+Optionally disconnect from all hosts.
+
+```bash title="Terminal"
+disconnect
+```
+
+<CommandTable
+type={{
+  uid: {
+    description:
+      'Use \'all\' to disconnect from all hosts or enter the uid of the host to disconnect from.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+disconnect uid:all
+```
+
+```bash title="Terminal"
+disconnect uid:CVNPMLPOCQ0HQ
+```
+
+</Accordion>
+
+<Accordion title="Message">
+
+`Send a message to one or all of your direct peers.`
+
+```bash title="Terminal"
+message
+```
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'The message as a string.',
+    type: 'True',
+  },
+  uid: {
+    description:
+      '(Optional) Leave blank to send a message to all peers or enter the uid of the peer to send the message to.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+message data:"hello" uid:CVNPMLPOCQ0HQ
+```
+
+</Accordion>
+
+<Accordion title="Network">
+
+`Show network status or reset traffic counter.`
+
+```bash title="Terminal"
+network
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(optional) list, reset, recalculateip',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List the direct peers you are connected to.',
+    type: 'True',
+  },
+  reset: {
+    description:
+      'Restart the traffic counter from 0.',
+    type: 'True',
+  },
+  recalculateip: {
+    description:
+      'Reset your IP - when you move to a different WiFi.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+network action:list
+```
+```bash title="Terminal"
+network action:reset
+```
+```bash title="Terminal"
+network action:recalculateip
+```
+
+</Accordion>
+
+<Accordion title="Peers">
+
+`Prints the peers list this node has. P2P must be enabled.`
+
+
+```bash title="Terminal"
+peers
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(optional) list, addpeers',
+    type: 'True',
+  },
+  peerslist: {
+    description:
+      '(optional) JSON array of new peers [ip:port,ip:port,..]',
+    type: 'True',
+  }
+}}
+/>
+
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List your peers.',
+    type: 'True',
+  },
+  addpeers: {
+    description:
+      'Add a list of new peers.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+peers
+```
+
+```bash title="Terminal"
+peers action:list
+```
+```bash title="Terminal"
+peers action:addpeers peerslist:["31.125.188.214:9001","94.0.239.117:9001"]
+```
+</Accordion>
+
+<Accordion title="Ping">
+
+`Ping a host and get back Minima Node info.`
+
+```bash title="Terminal"
+ping
+```
+
+<CommandTable
+type={{
+  host: {
+    description:
+      'ip:port to ping.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+ping host:
+```
+
+</Accordion>
+
+<Accordion title="Rpc">
+
+`Enable and disable RPC on port 9005 (default is off).`
+
+```bash title="Terminal"
+rpc
+```
+
+
+<CommandTable
+type={{
+  enable: {
+    description:
+      'true or false, true to enable rpc or false to disable.',
+    type: 'True',
+  },
+  ssl: {
+    description:
+      'true or false, true to enable Self signed SSL - you can use stunnel yourself.',
+    type: 'True',
+  },
+  password: {
+    description:
+      'the Basic Auth password used in headers - ONLY secure if used with SSL.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+rpc enable:true
+```
+
+```bash title="Terminal"
+rpc enable:true ssl:true password:minima
+```
+
+```bash title="Terminal"
+rpc enable:true password:minima
+```
+
+```bash title="Terminal"
+rpc enable:false
+```
+
+</Accordion>
+
+<Accordion title="Webhooks">
+
+`Add a web hook that is called with Minima events as they happen.`
+
+```bash title="Terminal"
+webhooks
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(optional) list, add, remove, clear',
+    type: 'True',
+  },
+  hook: {
+    description:
+      '(Optional) The URL, must be a POST endpoint.',
+    type: 'True',
+  },
+  filter: {
+    description:
+      '(Optional) Filters which events get posted.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List your existing webhooks.',
+    type: 'True',
+  },
+  add: {
+    description:
+      'Add a new webhook.',
+    type: 'True',
+  },
+  remove: {
+    description:
+      'Remove an existing webhook.',
+    type: 'True',
+  },
+  clear: {
+    description:
+      'Clear the existing webhooks.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+webhooks action:list
+```
+
+```bash title="Terminal"
+webhooks action:add hook:http://127.0.0.1/myapi.php
+```
+
+```bash title="Terminal"
+webhooks action:remove hook:http://127.0.0.1/myapi.php
+```
+
+```bash title="Terminal"
+webhooks action:add hook:http://127.0.0.1/myapi.php filter:MINING
+```
+
+```bash title="Terminal"
+webhooks action:clear
+```
+</Accordion>
+</Accordions>
+
+## Maxima
+
+<Accordions>
+
+<Accordion title="Max Contacts">
+
+`Manage your Maxima contacts. List, refresh, add, remove or search contacts.`
+
+```bash title="Terminal"
+maxcontacts
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      'action:list, add, remove, search',
+    type: 'True',
+  },
+  contact: {
+    description:
+      '(Optional) The Maxima contact address of another node. Can be found using the "maxima" command.',
+    type: 'True',
+  },
+  id: {
+    description:
+      '(Optional) The id of an existing contact to remove or search for.',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      '(Optional) The Maxima public key of an existing contact to remove or search for.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List your existing webhooks.',
+    type: 'True',
+  },
+  add: {
+    description:
+      'Add a new contact.',
+    type: 'True',
+  },
+  remove: {
+    description:
+      'Remove an existing contact.',
+    type: 'True',
+  },
+  search: {
+    description:
+      'Search for a contact.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+maxcontacts
+```
+
+```bash title="Terminal"
+maxcontacts action:list
+```
+
+```bash title="Terminal"
+maxcontacts action:add contact:MxG18H..
+```
+```bash title="Terminal"
+maxcontacts action:remove id:1
+```
+```bash title="Terminal"
+maxcontacts action:search publickey:0x3081..
+```
+</Accordion>
+
+<Accordion title="Max Create">
+
+`Create a 128 bit RSA public and private key.`
+
+You can use them with maxsign and maxverify.
+
+```bash title="Terminal"
+maxcreate
+```
+
+</Accordion>
+
+<Accordion title="Max Extra">
+
+`Perform extra functions on Maxima.`
+
+```bash title="Terminal"
+maxextra
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      'action:staticmls, addpermanent, removepermanent, listpermanent, clearpermanent, getaddress, mlsinfo, allowallcontacts, addallowed, listallowed, clearallowed',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      '(Optional) The Maxima public key of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.',
+    type: 'True',
+  },
+  maxaddress: {
+    description:
+      '(Optional) The Maxima maxaddress of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.',
+    type: 'True',
+  },
+  enable: {
+    description:
+      '(Optional) true or false, use with action:allowallcontacts to enable or disable all new contacts.',
+    type: 'True',
+  },
+  host: {
+    description:
+      '(Optional) The p2pidentity of a server node which is always online.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  staticmls: {
+    description:
+      'Set an unchanging Maxima Location Service (mls) host for yourself.',
+    type: 'True',
+  },
+  addpermanent: {
+    description:
+      'On your static mls node, add your Maxima public key to allow `getaddress` requests from anyone.',
+    type: 'True',
+  },
+  removepermanent: {
+    description:
+      'On your static mls node, remove your Maxima public key to stop allowing `getaddress` requests.',
+    type: 'True',
+  },
+  listpermanent: {
+    description:
+      'On your static mls node, list all public keys currently allowing public requests for their contact address.',
+    type: 'True',
+  },
+  clearpermanent: {
+    description:
+      'On your static mls node, remove ALL public keys currently allowing requests for their contact address.',
+    type: 'True',
+  },
+  getaddress: {
+    description:
+      'Request the current contact address of a permanently accessible user from their static mls host.',
+    type: 'True',
+  },
+  mlsinfo: {
+    description:
+      'List info about users using you as their mls and the public keys of their contacts.',
+    type: 'True',
+  },
+  allowallcontacts: {
+    description:
+      'If you have shared your permanent maxaddress, you can disable/enable users adding you as a contact.',
+    type: 'True',
+  },
+  addallowed: {
+    description:
+      'If `allowallcontacts` is disabled, you can authorize specific users to add you as a contact. Stored in RAM.',
+    type: 'True',
+  },
+  listallowed: {
+    description:
+      'List all the public keys which are allowed to add you as a Maxima contact.',
+    type: 'True',
+  },
+  clearallowed: {
+    description:
+      'Remove the public keys of ALL users which are allowed to add you as a Maxima contact.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+maxextra action:staticmls host:Mx...@34.190.784.3:9001
+```
+
+```bash title="Terminal"
+maxextra action:staticmls host:clear
+```
+
+```bash title="Terminal"
+maxextra action:addpermanent publickey:0x3081..
+```
+
+```bash title="Terminal"
+maxextra action:removepermanent publickey:0x3081..
+```
+
+```bash title="Terminal"
+maxextra action:listpermanent
+```
+
+```bash title="Terminal"
+maxextra action:clearpermanent
+```
+
+```bash title="Terminal"
+maxextra action:getaddress maxaddress:MAX#0x3081..#Mx..@34.190.784.3:9001
+```
+
+```bash title="Terminal"
+maxextra action:mlsinfo
+```
+
+```bash title="Terminal"
+maxextra action:allowallcontacts enable:false
+```
+
+```bash title="Terminal"
+maxextra action:addallowed publickey:0x2451..
+```
+
+```bash title="Terminal"
+maxextra action:listallowed
+```
+
+```bash title="Terminal"
+maxextra action:clearallowed
+```
+
+</Accordion>
+
+
+<Accordion title="Maxima">
+
+`Check your Maxima details, send a message/data.`
+
+```bash title="Terminal"
+maxima
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      'action:info, setname, hosts, send, sendall, refresh',
+    type: 'True',
+  },
+  name: {
+    description:
+      '(Optional) The name of the user.',
+    type: 'True',
+  },
+  id: {
+    description:
+      '(Optional) The id of the user.',
+    type: 'True',
+  },
+  to: {
+    description:
+      '(Optional) The to of the user.',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      '(Optional) The public key of the user.',
+    type: 'True',
+  },
+  application: {
+    description:
+      '(Optional) The application of the user.',
+    type: 'True',
+  },
+  data: {
+    description:
+      '(Optional) The data of the user.',
+    type: 'True',
+  },
+  poll: {
+    description:
+      '(Optional) true or false, true will poll the send action until successful.',
+    type: 'True',
+  },
+  delay: {
+    description:
+      '(Optional) Only used with poll or with sendall. Delay sending the message by this many milliseconds.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  info: {
+    description:
+      'Show your Maxima details - name, publickey, staticmls, mls, local identity, and contact address.',
+    type: 'True',
+  },
+  setname: {
+    description:
+      'Set your Maxima name so your contacts recognize you. Default "noname".',
+    type: 'True',
+  },
+  hosts: {
+    description:
+      'List your Maxima hosts and see their Maxima public key, contact address, last seen time, and if you are connected.',
+    type: 'True',
+  },
+  send: {
+    description:
+      'Send a message to a contact. Must specify "id|to|publickey", "application", and "data" parameters.',
+    type: 'True',
+  },
+  sendall: {
+    description:
+      'Send a message to ALL your contacts. Must specify "application" and "data" parameters.',
+    type: 'True',
+  },
+  refresh: {
+    description:
+      'Refresh your contacts by sending them a network message.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+maxima action:info
+```
+```bash title="Terminal"
+maxima action:setname name:myname
+```
+```bash title="Terminal"
+maxima action:hosts
+```
+```bash title="Terminal"
+maxima action:send id:1 application:appname data:0xFED5..
+```
+```bash title="Terminal"
+maxima action:send to:MxG18H.. application:appname data:0xFED5..
+```
+```bash title="Terminal"
+maxima action:send publickey:0xCD34.. application:ip:port data:0xFED5.. poll:true
+```
+```bash title="Terminal"
+maxima action:refresh
+```
+</Accordion>
+
+<Accordion title="Max Sign">
+
+`Sign and verify data with your Maxima ID.`
+
+Returns the signature of the data, signed with your Maxima private key or the specified key.
+
+```bash title="Terminal"
+maxsign
+```
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'The 0x HEX data to sign.',
+    type: 'True',
+  },
+  privatekey: {
+    description:
+      '(Optional) The 0x HEX data of the private key from maxcreate. Uses your Maxima ID otherwise.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+maxsign data:0xCD34..
+```
+
+```bash title="Terminal"
+maxsign data:0xCD34.. privatekey:0x3081..
+```
+</Accordion>
+
+<Accordion title="Max Verify">
+
+`Verify data with a Maxima public key. Returns valid true or false.`
+
+```bash title="Terminal"
+maxverify
+```
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'The 0x HEX data to verify the signature for.',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      'The Maxima public key of the signer.',
+    type: 'True',
+  },
+  signature: {
+    description:
+      'The signature of the data.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+maxverify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
+```
+</Accordion>
+</Accordions>
+
+
+## Scripts
+
+<Accordions>
+
+<Accordion title="New Script">
+
+`Add a new custom script.`
+
+Track ALL coins with this script address or just ones with state variables relevant to you.
+
+```bash title="Terminal"
+newscript
+```
+
+<CommandTable
+type={{
+  script: {
+    description:
+      'The script to add to your node. Your node will then know about coins with this script address.',
+    type: 'True',
+  },
+  trackall: {
+    description:
+      'true or false, true will track all coins with this script address. false will only track coins with this script address that are relevant to you.',
+    type: 'True',
+  },
+  clean: {
+    description:
+      '(Optional) true or false, true will clean the script to its minimal correct representation. Default is false.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+newscript trackall:true script:"RETURN SIGNEDBY(0x1539..) AND SIGNEDBY(0xAD25..)"
+```
+
+```bash title="Terminal"
+newscript trackall:false script:"RETURN (@BLOCK GTE PREVSTATE(1) OR @COINAGE GTE PREVSTATE(4)) AND VERIFYOUT(@INPUT PREVSTATE(2) @AMOUNT @TOKENID FALSE)"
+```
+
+</Accordion>
+
+<Accordion title="Remove Script">
+
+`Remove a custom script.`
+
+BE CAREFUL not to remove a script you need.
+
+```bash title="Terminal"
+removescript
+```
+
+<CommandTable
+type={{
+  address: {
+    description:
+      'The address of the script.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+removescript address:0xFFE678768CDE..
+```
+
+```bash title="Terminal"
+removescript address:MxFFE678768CDE..
+```
+
+</Accordion>
+
+<Accordion title="Run Script">
+
+`Test run a script with predefined parameters without executing on chain.`
+
+Scripts will be auto cleaned for you.
+
+```bash title="Terminal"
+runscript
+```
+
+<CommandTable
+type={{
+  script: {
+    description:
+      'The script to run, surrounded by double quotes.',
+    type: 'True',
+  },
+  state: {
+    description:
+      '(Optional) State variable values to use when running the script. JSON object in the format {0:value,1:value,..}.',
+    type: 'True',
+  },
+  prevstate: {
+    description:
+      '(Optional) The previous state variable values (for the input coin) to use when running the script. JSON object in the format {0:value,1:value,..}.',
+    type: 'True',
+  },
+  globals: {
+    description:
+      '(Optional) The Global variable values to use when running the script. JSON object in the format {0:value,1:value,..}.',
+    type: 'True',
+  },
+  signatures: {
+    description:
+      '(Optional) The signatures required for the script. JSON array.',
+    type: 'True',
+  },
+  extrascripts: {
+    description:
+      '(Optional) Extra scripts required for MAST contracts. JSON object in the format {script:proof,..}.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+runscript script:"RETURN SIGNEDBY(0xFF..) AND @BLOCK GT 100" globals:\{"@BLOCK":"101"} signatures:["0xFF"]
+```
+
+```bash title="Terminal"
+runscript script:"LET st=STATE(99) LET ps=PREVSTATE(99) IF st EQ ps AND @COINAGE GT 20 AND SIGNEDBY(0xFF) THEN RETURN TRUE ELSEIF st GT ps AND SIGNEDBY(0xEE) THEN RETURN TRUE ENDIF" globals:\{"@COINAGE":"23"} state:\{"99":"0"} prevstate:\{"99":"0"} signatures:["0xFF"]
+```
+
+```bash title="Terminal"
+runscript script:"MAST 0x0E3.." extrascripts:\{"RETURN TRUE":"0x000.."}
+```
+
+</Accordion>
+
+<Accordion title="Scripts">
+
+`List all scripts or search for a script / basic address your node is tracking.`
+
+```bash title="Terminal"
+scripts
+```
+
+<CommandTable
+type={{
+  address: {
+    description:
+      '(Optional) The address of the script.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+scripts
+```
+
+```bash title="Terminal"
+scripts address:0xFED5..
+```
+
+</Accordion>
+
+<Accordion title="Tutorial">
+
+`Show the complete Grammar for Minima KISSVM scripting.`
+
+```bash title="Terminal"
+tutorial
+```
+
+</Accordion>
+</Accordions>
+
+
+## Search
+
+<Accordions>
+
+<Accordion title="Coins">
+
+`Search for coins that are relevant to you or in the unpruned chain.`
+
+<CommandTable
+type={{
+  relevant: {
+    description:
+      'true or false, true will only return coins you are tracking. False will search all coins in the unpruned chain. Default is false unless no other parameters are provided.',
+    type: 'True',
+  },
+  sendable: {
+    description:
+      '(Optional) true only, filter out coins that are not sendable, they might be locked in a contract. Default is to return sendable and unsendable coins.',
+    type: 'True',
+  },
+  coinid: {
+    description:
+      '(Optional) A coinid, to search for a single coin.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      '(Optional) The coin value to search for.',
+    type: 'True',
+  },
+  address: {
+    description:
+      '(Optional) Address of a coin to search for, could be a script address. Can be a 0x or Mx address.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      '(Optional) A tokenid, to search for coins of a specific token. Minima is 0x00.',
+    type: 'True',
+  },
+  checkmempool: {
+    description:
+      '(Optional) Check if the coin is in the mempool.',
+    type: 'True',
+  },
+  coinage: {
+    description:  
+      '(Optional) How old does the coin have to be.',
+    type: 'True',
+  },
+  order: {
+    description:
+      '(Optional) Order asc or desc (Ascending or Descending).',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+coins relevant:true sendable:true
+```
+
+```bash title="Terminal"
+coins relevant:true amount:10
+```
+
+```bash title="Terminal"
+coins coinid:0xEECD7..
+```
+
+```bash title="Terminal"
+coins relevant:true tokenid:0xFED5..
+```
+
+```bash title="Terminal"
+coins relevant:true address:0xCEF6.. tokenid:0x00
+```
+
+```bash title="Terminal"
+coins relevant:true address:MxABC9..
+```    
+</Accordion>
+
+<Accordion title="Keys">
+
+`Get a list of all your public keys or create a new key.`
+
+Each public key can be used for signing securely 262144 (64^3) times.
+
+```bash title="Terminal"
+keys
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(Optional) action:list, action:checkkeys, action:new',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      '(Optional) The public key to search for.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List all your public keys.',
+    type: 'True',
+  },
+  checkkeys: {
+    description:
+      'Check if your Public and Private keys are correct.',
+    type: 'True',
+  },
+  new: {
+    description:
+      'Create a new key pair.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+keys
+```
+```bash title="Terminal"
+keys action:list
+```
+```bash title="Terminal"
+keys action:list publickey:0xFFEE56..
+```
+```bash title="Terminal"
+keys action:new
+```
+
+
+</Accordion>
+
+<Accordion title="Tokens">
+
+`List all tokens in the unpruned chain.`
+
+Optionally import or export tokens to share token data.
+
+```bash title="Terminal"
+tokens
+```
+
+<CommandTable
+type={{
+  tokenid: {
+    description:
+      '(Optional) The tokenid of the token to search for or export.',
+    type: 'True',
+  },
+  action: {
+    description:
+      '(Optional) The action to perform.',
+    type: 'True',
+  },
+  data: {
+    description:
+      '(Optional) The data of the token to import, generated from the export.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  import: {
+    description:
+      'Import a token.',
+    type: 'True',
+  },
+  export: {
+    description:
+      'Export a token.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+
+
+```bash title="Terminal"
+tokens tokenid:0xFED5..
+```
+
+```bash title="Terminal"
+tokens action:export tokenid:0xFED5..
+```
+
+```bash title="Terminal"
+tokens action:import data:0x000..
+```
+
+</Accordion>
+
+<Accordion title="TxPoW">
+
+`Search for a specific TxPoW in the unpruned chain or your mempool.`
+
+Search by txpowid, block or 0x / Mx address.
+
+```bash title="Terminal"
+txpow
+```
+
+<CommandTable
+type={{
+  txpowid: {
+    description:
+      '(Optional) The txpowid of the TxPoW to search for.',
+    type: 'True',
+  },
+  block: {
+    description:
+      '(Optional) The block number to search in.',
+    type: 'True',
+  },
+  address: {
+    description:
+      '(Optional) The address of the TxPoW to search for.',
+    type: 'True',
+  },
+  max: {
+    description:
+      '(Optional) The maximum number of TxPoWs to retrieve.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples: 
+
+
+```bash title="Terminal"
+txpow txpowid:0x000..
+```
+
+```bash title="Terminal"
+txpow block:200
+```
+
+```bash title="Terminal"
+txpow address:0xCEF6..
+```
+
+</Accordion>
+
+
+</Accordions>
+
+## Send
+
+<Accordions>
+
+<Accordion title="Multisig">
+
+`Create a multisig coin that can only be used in a txn signed by root OR n of m given public keys.`
+
+Provide your Vault password to temporarily decrypt the private keys when creating the coin or signing a transaction.
+
+```bash title="Terminal"
+multisig
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(Optional) action:create, action:getkey, action:list, action:spend, action:sign, action:post, action:view',
+    type: 'True',
+  },
+  id: {
+    description:
+      '(Optional) The id of the multisig coin to search for or create.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      '(Optional) The amount of the multisig coin to create.',
+    type: 'True',
+  },
+  publickeys: {
+    description:
+      '(Optional) The public keys to create the multisig coin with.',
+    type: 'True',
+  },
+  required: {
+    description:
+      '(Optional) The number of public keys required to sign the multisig coin.',
+    type: 'True',
+  },
+  root: {
+    description:
+      '(Optional) The root public key to create the multisig coin with.',
+    type: 'True',
+  },
+  coinid: {
+    description:
+      '(Optional) The coinid of the multisig coin to spend.',
+    type: 'True', 
+  },
+  address: {
+    description:
+      '(Optional) The address to send the multisig coin to.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) The file to create, sign or post.',
+    type: 'True',
+  },
+  password: {
+    description:
+      '(Optional) The password to decrypt the private keys.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  create: {
+    description:
+      'Create a new multisig coin.',
+    type: 'True',
+  },
+  getkey: {
+    description:
+      'Get one of your default public keys to be provided when creating the coin.',
+    type: 'True',
+  },
+  list: {
+    description:
+      'List all existing multisig coins.',
+    type: 'True',
+  },
+  spend: {
+    description:
+      'Create an unsigned transaction (.txn) file to spend a specified amount of a multisig coin.',
+    type: 'True',
+  },
+  sign: {
+    description:
+      'Sign a multisig transaction (.txn) file with the relevant public keys and outputs a new signed file.',
+    type: 'True',
+  },
+  post: {
+    description:
+      'Post the transaction to the network, must be signed as required by the contract before posting.',
+    type: 'True',
+  },
+  view: {
+    description:
+      'View the details of a multisig transaction file.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+multisig action:create id:2of3multisig amount:100 publickeys:["0xFED5..","0xABD6..","0xFD8B.."] required:2 password:your_password
+```
+```bash title="Terminal"
+multisig action:create id:3of3multisigroot amount:100 publickeys:["0xFED5..","0xABD6..","0xFD8B.."] required:3 root:0xFFE..
+```
+
+```bash title="Terminal"
+multisig action:list
+```
+
+```bash title="Terminal"
+multisig action:list id:2of3multisig
+```
+```bash title="Terminal"
+multisig action:spend id:3of3multisigroot amount:5 address:0xFF..
+```
+
+```bash title="Terminal"
+multisig action:spend coinid:0x17EA.. amount:5 address:0xFF.. file:multisig.txn
+```
+
+```bash title="Terminal"
+multisig action:sign file:multispend_1673351592845.txn
+```
+
+```bash title="Terminal"
+multisig action:sign file:multisig.txn password:your_password
+```
+
+```bash title="Terminal"
+multisig action:view file:multisig.txn
+```
+
+```bash title="Terminal"
+multisig action:post file:signed_multispend_1673351592845.txn
+```
+
+```bash title="Terminal"
+multisig action:post file:signed_multisig.txn
+```
+
+</Accordion>
+
+
+<Accordion title="Send">
+
+`Send Minima or custom tokens to a wallet or custom script address.`
+
+Optionally, send to multiple addresses in one transaction; split UTxOs; add state variables or include a burn.
+
+```bash title="Terminal"
+send
+```
+
+<CommandTable
+type={{
+  address: {
+    description:
+      '(Optional) A Minima 0x or Mx wallet address or custom script address.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      '(Optional) The amount of Minima or custom tokens to send to the specified address.',
+    type: 'True',
+  },
+  multi: {
+    description:
+      '(Optional) JSON Array listing addresses and amounts to send in one transaction. Takes the format ["address:amount","address2:amount2",..], with each set in double quotes.',
+  },
+  tokenid: {
+    description:
+      '(Optional) If sending a custom token, you must specify its tokenid. Defaults to Minima (0x00).',
+    type: 'True',
+  },
+  state: {
+    description:
+      '(Optional) List of state variables, if sending coins to a script. A JSON object in the format {"port":"value",..}.',
+    type: 'True',
+  },
+  burn: {
+    description:
+      '(Optional) The amount of Minima to burn with this transaction.',
+    type: 'True',
+  },
+  password: {
+    description:
+      '(Optional) If your Wallet is password locked, you can unlock it for this one transaction - then relock it.',
+    type: 'True',
+  },
+  split: {
+    description:
+      '(Optional) You can set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.',
+    type: 'True',
+  },
+  coinage: {
+    description:
+      '(Optional) How old must the coins be in blocks.',
+    type: 'True',
+  },
+  debug: {
+    description:
+      '(Optional) true or false, true will print more detailed logs.',
+    type: 'True',
+  },
+  dryrun: {
+    description:
+      '(Optional) true or false, true will simulate the send transaction but not execute it.',
+    type: 'True',
+  },
+  mine: {
+    description:
+      '(Optional) true or false - should you mine the transaction immediately.',
+    type: 'True',
+  },
+  fromaddress: {
+    description:
+      '(Optional) Only use this address for input coins.',
+    type: 'True',
+  },
+  signkey: {
+    description:
+      '(Optional) Sign the txn with only this key (use with fromaddress).',
+    type: 'True',
+  },
+  storestate: {
+    description:
+      '(Optional) true or false - defaults to true. Should the output coins store the state (will still appear in NOTIFYCOIN messages).',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+send address:0xFF.. amount:10
+```
+
+```bash title="Terminal"
+send address:0xFF.. amount:10 tokenid:0xFED5.. burn:0.1
+```
+
+```bash title="Terminal"
+send address:0xFF.. amount:10 split:5 burn:0.1
+```
+
+```bash title="Terminal"
+send multi:["0xFF..:10","0xEE..:10","0xDD..:10"] split:10
+```
+
+```bash title="Terminal"
+send amount:1 address:0xFF.. state:{"0":"0xEE..","1":"0xDD.."}
+```
+
+</Accordion>
+
+<Accordion title="Send Poll">
+
+`Send function that adds 'send' commands to a list and polls every 30 seconds until the return status is 'true'.`
+
+```bash title="Terminal"
+sendpoll
+```
+
+<CommandTable
+type={{
+  action: {
+    description:
+      '(Optional) action:list, action:remove',
+    type: 'True',
+  },
+  uid: {
+    description:
+      '(Optional) The uid of a "send" command you wish to remove from the polling list. Use with action:remove.',
+    type: 'True',
+  }
+}}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+type={{
+  list: {
+    description:
+      'List all the "send" commands in the polling list.',
+    type: 'True',
+  },
+  remove: {
+    description:
+      'Remove a "send" command from the polling list.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+sendpoll address:0xFF.. amount:10
+```
+
+```bash title="Terminal"
+sendpoll address:0xFF.. amount:10 tokenid:0xFED5.. burn:0.1
+```
+
+```bash title="Terminal"
+sendpoll action:list
+```
+
+```bash title="Terminal"
+sendpoll action:remove uid:0x..
+```
+
+</Accordion>
+
+<Accordion title="Send No Sign">
+
+`Create a txn but don't sign it.`
+
+Constructs and outputs an unsigned transaction to a file in the base folder. 
+
+The output .txn file can then be imported to an offline node for signing. Must be done from an online node as the MMR proofs for the input coins are added. 
+
+Useful when the keys on an online node are wiped or password locked.
+
+```bash title="Terminal"
+sendnosign
+```
+
+<CommandTable
+type={{
+  address: {
+    description:
+      '(Optional) A Minima 0x or Mx wallet address or custom script address.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      '(Optional) The amount of Minima or custom tokens to send to the specified address.',
+    type: 'True',
+  },
+  multi: {
+    description:
+      '(Optional) JSON Array listing addresses and amounts to send in one transaction.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      '(Optional) If sending a custom token, you must specify its tokenid.',
+    type: 'True',
+  },
+  state: {
+    description:
+      '(Optional) List of state variables, if sending coins to a script.',
+    type: 'True',
+  },
+  burn: {
+    description:
+      '(Optional) The amount of Minima to burn with this transaction.',
+    type: 'True',
+  },
+  split: {
+    description:
+      '(Optional) Set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) Specify the file to output, otherwise default chosen.',
+    type: 'True',
+  },
+  debug: {
+    description:
+      '(Optional) true or false, true will print more detailed logs.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+sendnosign address:0xFF.. amount:10
+```
+
+```bash title="Terminal"
+sendnosign address:0xFF.. amount:10 tokenid:0xFED5.. burn:0.1
+```
+
+```bash title="Terminal"
+sendnosign address:0xFF.. amount:10 split:5 burn:0.1
+```
+
+```bash title="Terminal"
+sendnosign multi:["0xFF..:10","0xEE..:10","0xDD..:10"] split:10
+```
+
+```bash title="Terminal"
+sendnosign amount:1 address:0xFF.. state:{"0":"0xEE..","1":"0xDD.."}
+```
+
+</Accordion>
+
+<Accordion title="Send Sign">
+
+`Sign a transaction previously created by the 'sendnosign' command, by specifying its .txn file.`
+
+Optionally, if the node is Vault password locked, provide the Vault password to decrypt the keys for signing. 
+
+The keys will be automatically re-encrypted after signing. 
+
+Can be signed on an offline node, then posted from an online node.
+
+```bash title="Terminal"
+sendsign
+```
+
+<CommandTable
+type={{
+  file: {
+    description:
+      'Name of the unsigned transaction (.txn) file to sign, located in the node\'s base folder. If not in the base folder, specify the full file path.',
+    type: 'True',
+  },
+  password: {
+    description:
+      'The Vault password, if the node is password locked.',
+    type: 'True',
+  }
+}}
+/>
+
+
+Examples:
+
+```bash title="Terminal"
+sendsign file:unsignedtransaction-1674907380057.txn
+```
+
+```bash title="Terminal"
+sendsign file:C:\\Users\\unsignedtransaction-1674907380057.txn password:your_vaultpassword
+```
+
+</Accordion>
+
+<Accordion title="Send View">
+
+`View a transaction (signed or unsigned).`
+
+View the details of a transaction created by the 'sendnosign' command by specifying its .txn file.
+
+```bash title="Terminal"
+sendview
+```
+
+<CommandTable
+type={{
+  file: {
+    description:
+      'Name of the transaction (.txn) file to view, located in the node\'s base folder. If not in the base folder, specify the full file path.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+sendview file:unsignedtransaction-1674907380057.txn
+```
+
+```bash title="Terminal"
+sendview file:C:\\Users\\unsignedtransaction-1674907380057.txn
+```
+
+</Accordion>
+
+<Accordion title="Send Post">
+
+`Post a transaction previously created and signed using the 'sendnosign' and 'sendsign' commands.`
+
+Must be posted from an online node within approximately 24 hours of creation to ensure MMR proofs are valid.
+
+```bash title="Terminal"
+sendpost
+```
+
+<CommandTable
+type={{
+  file: {
+    description:
+      'Name of the signed transaction (.txn) file to post, located in the node\'s base folder. If not in the base folder, specify the full file path.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+sendpost file:signedtransaction-1674907380057.txn
+```
+
+```bash title="Terminal"
+sendpost file:C:\\Users\\signedtransaction-1674907380057.txn
+```
+
+</Accordion>
+</Accordions>
+
+
+
+
+## Signatures
+
+<Accordions>
+
+<Accordion title="Sign">
+
+`Sign the data with the publickey.`
+
+Returns the signature of the data, signed with the corresponding private key.
+
+```bash title="Terminal"
+sign
+```
+
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'The 0x HEX data to sign.',
+    type: 'True',
+  }
+}}
+/>
+
+```bash title="Terminal"
+sign data:0xCD34..
+```
+
+
+</Accordion>
+
+<Accordion title="Verify">
+
+`Verify a signature.`
+
+Returns valid true or false.
+
+```bash title="Terminal"
+verify
+```
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'The 0x HEX data to verify the signature for.',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      'The public key of the signer.',
+    type: 'True',
+  },
+  signature: {
+    description:
+      'The signature of the data.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+verify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
+```
+
+
+</Accordion>
+
+</Accordions>
+
+
+
+## Transactions
+
+
+<Accordions>
+
+<Accordion title="Burn">
+
+`View the latest Burn metrics`
+
+View the number of burn transactions and the maximum, median, average and minimum burn metrics for the last 1, 10 and 50 blocks.
+
+Use as an indicator for an appropriate burn amount for transactions. 
+
+**Examples:**
+
+```bash title="Terminal"
+burn
+```
+
+</Accordion>
+
+<Accordion title="Logs">
+
+`Enable detailed logs for script errors or mining activity.`
+
+Enable detailed logs for script errors, mining activity, Maxima, network messages, blocks, or IBD processing.
+
+<CommandTable
+type={{
+  scripts: {
+    description:
+      '(Optional) true or false. Setting it to true turns on detailed logs for script errors.',
+    type: 'True',
+  },
+  mining: {
+    description:
+      'true or false. Setting it to true turns on detailed logs for mining start/end activity.',
+    type: 'True',
+  },
+  maxima: {
+    description:
+      '(Optional) true or false. Setting it to true turns on detailed logs for Maxima.',
+    type: 'True',
+  },
+  networking: {
+    description:
+      '(Optional) true or false. Setting it to true turns on detailed logs for Network Messages.',
+    type: 'True',
+  },
+  blocks: {
+    description:
+      '(Optional) true or false. Setting it to true turns on detailed logs for Blocks.',
+    type: 'True',
+  },
+  ibd: {
+    description:
+      '(Optional) true or false. Setting it to true turns on detailed logs for IBD processing.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+logs scripts:true
+```
+
+```bash title="Terminal"
+logs scripts:false mining:true
+```
+
+
+
+</Accordion>
+
+<Accordion title="txnbasics">
+
+`Automatically set the MMR proofs and scripts for a transaction.`
+
+Only run this command when a transaction is ready to be posted.
+
+```bash title="Terminal"
+txnbasics
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The ID of the transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnbasics id:simpletxn
+```
+
+</Accordion>
+
+<Accordion title="txncheck">
+
+`Show details about the transaction.`
+
+Verify whether the inputs, outputs, signatures, proofs, and scripts are valid.
+
+```bash title="Terminal"
+txncheck
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      '(Optional) The ID of the transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txncheck id:multisig
+```
+
+</Accordion>
+
+
+
+<Accordion title="txnclear">
+
+`Clear ALL the Witness data for a transaction.`
+
+Clears signatures, mmr proofs and script proofs.
+
+```bash title="Terminal"
+txnclear
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      '(Optional) The ID of the transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnclear id:multisig
+```
+
+</Accordion>
+
+<Accordion title="txncreate">
+
+`Create a custom transaction.`
+
+The first step before defining the inputs and outputs.
+
+```bash title="Terminal"
+txncreate
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The ID of the transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txncreate id:multisig
+```
+
+</Accordion>
+
+
+<Accordion title="txndelete">
+
+`Delete a previously created custom transaction.`
+
+```bash title="Terminal"
+txndelete
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      '(Optional) The ID of the transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txndelete id:multisig
+```
+
+</Accordion>
+
+<Accordion title="txnexport">
+
+`Export a transaction as HEX or to a file.`
+
+```bash title="Terminal"
+txnexport
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The ID of the transaction.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) File name/path to export the transaction to, must use the .txn extension.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnexport id:simpletxn
+```
+
+```bash title="Terminal"
+txnexport id:multisig file:multisig.txn
+```
+
+</Accordion>
+
+</Accordions>
+
+
+
+
+
+
+
+
+

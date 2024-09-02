@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.development {
+  --primary: var(--development-color);
+}
+
+.core {
+  --primary: var(--core-color);
+}
+
+.learn {
+  --primary: var(--learn-color);
+}
+
+.run-a-node {
+  --primary: var(--run-a-node-color);
+}
+
+.user-guides {
+  --primary: var(--user-guides-color);
+}
+
+:root {
+  --background: 0 0% 100%;
+  --popover: 0 0% 100%;
+  --card: 0 0% 100%;
+  --development-color: 31 80% 54%;
+  --core-color: 0 0% 9%;
+  --learn-color: 161 40% 27%;
+  --run-a-node-color: 215 100% 34%;
+  --user-guides-color: 10 85% 55%;
+}
+
+.dark {
+  --background: 0 0% 2%;
+  --foreground: 0 0% 98%;
+  --muted: 0 0% 8%;
+  --muted-foreground: 0 0% 60%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 88%;
+  --card: 0 0% 4%;
+  --card-foreground: 0 0% 98%;
+  --border: 0 0% 14%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 12.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 0 0% 14.9%;
+  --core-color: 0 0% 100%;
+  --learn-color: 161 40% 27%;
+  --run-a-node-color: 215 100% 34%;
+  --user-guides-color: 10 85% 55%;
+}
+
+#nd-nav {
+  background-color: hsl(var(--background));
+  z-index: 9999;
+  border: none;
+}
+
+.box {
+  border: 2px solid #615a5400;
+  border-radius: 0.75rem;
+  animation: 8s rotate linear infinite;
+  background:
+    linear-gradient(#fbfbfb, #fbfbfb) padding-box,
+    linear-gradient(var(--angle), #fbfbfb, #a5a3a1) border-box;
+}
+
+.dark\:box:is(.dark *) {
+  background:
+    linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(var(--angle), #070707, #504f4e) border-box;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.stars-container {
+  perspective: 500px;
+  transform-style: preserve-3d;
+}
+.stars,
+.stars2,
+.stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: twinkle 5s ease-in-out infinite alternate;
+  background-image: radial-gradient(
+      1px 1px at 25px 5px,
+      white,
+      rgba(255, 255, 255, 0)
+    ),
+    radial-gradient(1px 1px at 50px 25px, white, rgba(255, 255, 255, 0)),
+    radial-gradient(1px 1px at 125px 20px, white, rgba(255, 255, 255, 0)),
+    radial-gradient(1.5px 1.5px at 50px 75px, white, rgba(255, 255, 255, 0)),
+    radial-gradient(2px 2px at 15px 125px, white, rgba(255, 255, 255, 0)),
+    radial-gradient(2.5px 2.5px at 110px 80px, white, rgba(255, 255, 255, 0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+.stars2 {
+  animation-delay: 2.5s;
+  transform: translateZ(-100px) scale(2);
+}
+.stars3 {
+  animation-delay: 3.75s;
+  transform: translateZ(-200px) scale(3);
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  svg .h {
+    fill: red;
+  }
+}
+

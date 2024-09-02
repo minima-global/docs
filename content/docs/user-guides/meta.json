@@ -1,0 +1,24 @@
+{
+  "title": "User Guides",
+  "root": true,
+  "pages": [
+    "---Guides---",
+    "index",
+    "jointhenetwork",
+    "secure-your-seedphrase",
+    "---General---",
+    "lock-your-wallet",
+    "backup-your-wallet",
+    "check-node-status",
+    "minidapp-permissions",
+    "approve-transactions",
+    "manage-minidapps",
+    "set-your-profile",
+    "maxima-contacts",
+    "advanced-maxima-options",
+    "---Node---",
+    "node-recovery",
+    "manage-archive-node",
+    "advanced"
+  ]
+}

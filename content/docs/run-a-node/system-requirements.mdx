@@ -1,0 +1,130 @@
+---
+title: System Requirements
+description: Learn about the system requirements for running a Minima node
+icon: BatteryFull
+tag: run-a-node
+---
+
+Minima is a lightweight blockchain that can be run on any Android device (version 9 or above), general purpose computer or server (VPS).
+
+There is no minimum amount of Minima coins required to run a node.
+
+The following information is for Server or Desktop users.
+
+## Minimum hardware requirement
+
+The following requirements are separate to any specs required for non Minima related processes. GPU is not necessary.
+
+### Standard full node
+
+<Callout title="Minidapps" type="warn">
+  High MiniDapp usage may require higher availability of Storage
+</Callout>
+
+- Processing: 2 CPU
+- Memory: 2GB RAM
+- Storage: 2GB storage
+
+<Callout title="Docker" type="warn">
+  Processing, memory and storage require 4 CPU, 4GB RAM and 4GB storage if using
+  Docker.
+</Callout>
+
+### Archive node
+
+- Processing: 2 CPU (4 CPU if using Docker)
+- Memory: 4GB RAM
+- Storage: 5GB storage
+
+<Callout title="Storage" type="warn">
+  Minimum requirements for storage may change over time.
+</Callout>
+
+### Mega node
+
+- Processing: 2 CPU
+- Memory: 8GB RAM
+- Storage: 5GB storage
+
+<Callout title="Android" type="error">
+  We do not recommend running a Mega node from an Android device as the RAM
+  consumption is considerably higher than a standard node.
+</Callout>
+
+The Mega node must be online constantly to remain in sync with the chain. Downtime of less than 24 hours is acceptable.
+
+## Ports used
+
+By default, Minima reserves ports `9001-9005`, although an alternate 5-port range can be chosen by specifying a different main port on start up e.g. 8001.
+
+```bash title="Terminal"
+java -jar minima.jar -port 8001
+```
+
+<Callout title="Note" type="info">
+  If specifying a different main port e.g. 8001, the port range used will be the
+  next consecutive 4 ports. e.g 8001-8005.
+</Callout>
+
+- **9001 TCP (main port):** The main Minima port, for peer-to-peer communication over Minima and Maxima
+- **9002 TCP(or main port +1):** Not currently used
+- **9003 TCP(or main port +2):** MiniDapp System (MDS) Web Server
+- **9004 TCP(or main port +3):** No longer used after v 1.0.37
+- **9005 TCP(or main port +4):** JSON-RPC over HTTP
+
+Desktop nodes are not required to configure any port forwarding to use Minima.
+
+## Recommended Firewall settings (VPS users)
+
+<Callout title="Android" type="error">
+  If using Docker to run your node on a VPS, you must not rely on UFW as your
+  firewall, Docker will overwrite UFW firewall rules. You must use your VPS
+  provider's firewall manager.
+</Callout>
+
+After configuring your firewall, you should check they are enforced as expected.
+
+### Ingress
+
+All inbound connections should be denied by default.
+
+**22 tcp:** allow all
+
+Allows ssh access to the server, optionally only allow this from your home IP address.
+
+**9001 tcp:** allow all
+
+<Callout title="9001 - Relay nodes" type="info">
+  Allowing inbound connections on port 9001 will ensure your node acts as a
+  relay node. Relay nodes are the backbone of the Minima peer-to-peer network
+  that faciliate the transmission of transactions and blocks across the network
+  and support the network to scale. If your inbound connection is closed, your
+  node will only make outgoing connections and will not act as a relay node.
+</Callout>
+
+**9003 tcp:**
+
+- if enabling the MiniDapp system, **allow only from your home IP address**
+- if running Minima headlessly, **deny inbound connections**
+
+<Callout title="9003 - Minidapp port" type="info">
+  If your home IP is dynamic, you will need to maintain this firewall rule to
+  your latest IP. If you choose to allow inbound connections from anywhere, your
+  login screen will be public facing, so your login password (mdspassword) must
+  be long and secure, using a combination of lowercase, uppercase letters
+  numbers and symbols.
+</Callout>
+
+**9002 tcp (not in use):** deny all
+
+**9004 tcp (not in use):** deny all
+
+**9005 tcp (RPC port):**
+
+- deny all, or
+- if you want to `curl` into the node remotely, ensure this is **only allowed inbound from your home IP address. You should only do this if you are an advanced user and understand the risks!**
+
+<Callout type="error">
+  Opening port 9005 is extremely risky as it exposes your node and seed phrase
+  if you have not set a [secure password for RPC access](/docs/run-a-node/linux-vps-system#rpc-client-setup).
+</Callout>

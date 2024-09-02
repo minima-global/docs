@@ -1,0 +1,22 @@
+{
+  "title": "Run a node",
+  "root": true,
+  "pages": [
+    "index",
+    "system-requirements",
+    "---Select your Platform---",
+    "android",
+    "windows",
+    "mac",
+    "docker-desktop",
+    "linux-vps",
+    "linux-vps-system",
+    "desktop-cli",
+    "---Archive Node---",
+    "archive-node",
+    "---Mega Node (NEW)---",
+    "mega-node",
+    "---Public Wallet (NEW)---",
+    "public-wallet"
+  ]
+}

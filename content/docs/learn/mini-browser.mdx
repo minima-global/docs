@@ -1,0 +1,99 @@
+---
+title: MiniBrowser
+description: The Mini Browser is a web browser that is built into the Minima wallet.
+tag: learn
+---
+
+The Android MiniBrowser is the web browser that runs internally on the Minima Android app. 
+
+It is a custom built browser that allows users to use MiniDapps without having to leave the app to open an external browser window such as Chrome. 
+
+Using the MiniBrowser prevents users from needing to bypass the self-signed certificate warning however it does not contain the full breadth of functionality that comes with an external browser. 
+
+The MiniBrowser javascript interface contains the following functions that can be called from your MiniDapp:
+  
+
+## Show title bar
+
+```javascript
+showTitleBar()
+```
+
+Show the title bar to allow the user to refresh the page, view the console logs or open the MiniDapp in an external browser. 
+
+This is normally hooked up to the MiniDapp's top bar so that tapping at the top of the screen brings up the title bar. 
+
+## Blob download
+
+```javascript
+blobDownload(String zMdsfile, String zHexData) 
+```
+
+Due to limitations of the Minima Browser, you cannot download blob files via an anchor tag. 
+
+To get around this issue, you can convert your file contents into hex data by using `MDS.util.base64ToHex` and then `Android.blobDownload('fileName', hexData);`
+
+## Share text
+
+```javascript
+shareText(String zText) 
+```
+
+Displays Androids native share menu and allows you to share any text that is passed in as an argument.
+
+## Share file
+    
+```javascript
+shareFile(String zFilePath, String zMimeType) 
+```
+
+This will display Androids native share menu with the attached file (filepath must be specified). This is useful for attaching a file to an email for sharing.
+
+Example:
+
+```javascript
+if ((window as any).navigator.userAgent.includes('Minima Browser')) {
+return Android.shareFile(saveLocation, '/');
+}
+```
+
+Where saveLocation is the absolute path of the file on the operating system. This will pop up with the share options for other apps on the phone.
+
+## Disable default content menu
+
+```javascript
+disableDefaultContextMenu()
+```
+
+Disables the context menu (hold screen menu). This can be useful if the user needs to tap and hold the screen for some action instead of invoking Android's context menu.
+    
+## Enable default content menu
+
+```javascript
+enableDefaultContextMenu() 
+```
+
+Enables the context menu (hold screen menu).
+
+## Open external brower
+
+```javascript
+openExternalBrowser(String zUrl, String zTarget)
+```
+
+This will open the app in the default external browser.
+
+## Close Window
+
+```javascript
+closeWindow()
+```
+
+A MiniDapp can call this function to close the window and return back to the previous window, in most cases this will be the MiniHUB.
+
+## Shutdown Minima
+
+```javascript
+shutdownMinima()
+```
+Gracefully shutdown Minima to ensure all databases are shutdown correctly.

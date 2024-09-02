@@ -1,0 +1,37 @@
+---
+title: Time Lock Contract
+description: Learn how to create a time lock contract on Minima
+tag: development
+---
+
+A time lock contract is a script that can only be spent after a certain amount of time - in this case a certain block - has passed.
+So the script for that would be: `RETURN (SIGNEDBY(0xFFEE67F7C..) AND @BLOCK GT 100)`
+
+This script will return TRUE if the transaction is signed by the correct public key and the blocktime is over 100. The @ symbol represents ‘Global’ variables that are set automatically and represent variables related to the transaction itself, the coin, and the current state of the blockchain, that you can then access in your scripts.
+
+**Global Variables**
+
+| Variable      | Description                                                                       |
+| ------------- | --------------------------------------------------------------------------------- |
+| `@BLOCK`      | The current block number                                                          |
+| `@BLOCKMILLI` | The current block time in milliseconds since Jan 1 1970                           |
+| `@CREATED`    | The block this coin was created in                                                |
+| `@COINAGE`    | The difference in @BLOCK and @CREATED                                             |
+| `@INPUT`      | Input index of a coin used in the transaction. First input coin has an index of 0 |
+| `@COINID`     | The coinid                                                                        |
+| `@AMOUNT`     | The amount                                                                        |
+| `@ADDRESS`    | The address                                                                       |
+| `@TOKENID`    | The tokenid                                                                       |
+| `@SCRIPT`     | The script of this coin                                                           |
+| `@TOTIN`      | The total number of input coins                                                   |
+| `@TOTOUT`     | The total number of output coins                                                  |
+
+You can test your scripts without sending them on chain using the ‘runscript‘ function. This allows you to set all the variables and globals as you see fit.
+
+```bash title="Terminal"
+runscript script:"RETURN SIGNEDBY(0xFF) AND @BLOCK GT 100" globals:{"@BLOCK":"101"} signatures:["0xFF"]
+```
+
+You can use lowercase when entering the scripts and it will be ‘cleaned’ for you into the correct format.
+
+Now let's attempt another very useful contract, one that requires 2 signatures from different parties to be valid.

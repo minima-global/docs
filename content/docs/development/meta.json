@@ -1,0 +1,24 @@
+{
+  "title": "Development",
+  "root": true,
+  "pages": [
+    "---Get Started---",
+    "index",
+    "start-testnet",
+    "testnet-multiple",
+    "---MiniDapp Tutorials---",
+    "start",
+    "basic-minidapp",
+    "interactive-minidapp",
+    "react-minidapp",
+    "minidapp-stores",
+    "---Smart Contract Tutorials---",
+    "pruning",
+    "tokens",
+    "layer1",
+    "layer2",
+    "---Smart Contract Examples---",
+    "future-cash",
+    "vestr"
+  ]
+}

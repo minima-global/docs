@@ -1,0 +1,307 @@
+---
+title: Desktop Command Line
+description: Run a Minima node on your desktop using the command line interface
+tag: run-a-node 
+---
+
+
+<Callout title="Note">
+  The following process is for running a Minima node manually. You must leave
+  your desktop running at all times for Minima to continue running and must
+  update your node manually when new versions become available.
+</Callout>
+
+## Start a new Minima node
+
+To run Minima, you need to have Java installed on your system. You can check if you have Java installed by running the following command in your terminal:
+
+```bash title="Terminal"
+java -version
+```
+
+<Callout title="Note" type="info">
+  If you don't have Java installed, you can download it from the [Java
+  website](https://www.java.com/en/download/).
+</Callout>
+
+<Steps>
+<Step>
+
+### Download the latest minima.jar 
+
+You can download the latest version of Minima from the [Minima GitHub releases
+page](https://github.com/minima-global/Minima/releases).
+
+The latest version is `v1.0.41`.
+
+</Step>
+<Step>
+
+### Start your node
+
+Type the following command all on one line, replacing `INSERTUSERNAME` with the username for your files and `[insertpasswordhere]` with your own custom password:
+
+<Callout title="Tip">
+  To avoid typing in the folder path, you can drag and drop the downloaded
+  minima.jar file into the command line window.
+</Callout>
+
+
+<Tabs items={["Mac/Linux", "Windows"]}>
+  <Tab value="Mac/Linux">
+  
+```bash 
+sudo java -jar /Users/INSERTUSERNAME/Downloads/minima.jar -mdsenable -mdspassword [insertpasswordhere]
+```
+
+  </Tab>
+  <Tab value="Windows">
+  ```bash 
+java -jar C:\Users\INSERTUSERNAME\Downloads\minima.jar -mdsenable -mdspassword [insertpasswordhere]
+  ```
+
+  </Tab>
+</Tabs>
+
+
+<Accordions type="single">
+<Accordion title="Startup paramaters">
+The following start up parameters can optionally be specified when starting your node.
+
+To add/remove parameters after a node has been started, you must `quit` the node and restart it, adding/removing the required parameters.
+
+`[]` square brackets indicate where an input is required, **the brackets should not be included**.
+
+<Callout>
+  To add/remove parameters after a node has been started, you must stop and
+  remove your minima9001 Docker container, then start it again, adding/removing
+  the required parameters in front of `-v ~/minimadocker9001:/home/minima/data`.
+  As long as you use the same minimadocker8001 folder, your previous node will
+  be preserved but will use different parameters.
+</Callout>
+
+<Heading as="h4">General</Heading>
+
+- `-clean` : CAREFUL! Clears existing data, starts a new fresh node. All coins will be lost.
+- `-port [port]` : specify the initial port for Minima to use. Range used will be the specified port +4. Default is 9001-9005.
+- `-host [ipaddress]` : specify the host IP
+- `-dbpassword [yourdbpassword]` : Main Wallet / SQL AES password - MUST be specified on first launch. CANNOT be changed later.
+- `-allowallip` : Allow all IPs for Maxima / Networking. Local IPs won't be allowed otherwise.
+- `-archive` : Run an Archive node - store all archive data / the cascade to allow for resyncs from this node
+- `-daemon` : Run in daemon mode with no stdin input (if running Minima as a background service)
+- `-isclient` : Tells the P2P System that this node can't accept incoming connections
+- `-server` : Use Server settings - this node can accept incoming connections
+- `-desktop` : Use Desktop settings - this node can't accept incoming connections
+
+<Heading as="h4">Folders</Heading>
+
+- `- data` : the data folder where all the config files for this node are stored. Default is a hidden .minima folder under the user's home directory. If you want to specify a folder not in the user's home directory, you must use the complete path.
+- `-basefolder` : specify a default file creation / backup / restore folder. Default is the user's home directory. Can be the same as the data folder provided.
+
+<Heading as="h4">MiniDapp System (mds)</Heading>
+
+- `- mdsenable` : enable the MiniDapp System (default port 9003)
+- `-mdspassword [yourmdspassword]` : specify the mds login password
+- `-mdsinit [foldername/path]` : specify a folder of miniDAPPs
+- `-mdswrite [minidapp]` : give an initial miniDAPP WRITE access
+
+<Heading as="h4">RPC</Heading>
+
+- `-rpcenable` : enable remote procedure call
+- `-rpcssl` : use Self Signed SSL cert to run RPC
+- `-rpcpassword [yourrpcpassword]` : set Basic Auth password for RPC calls ( Use with SSL / stunnel ). Only secure if used with SSL.
+- `-rpcclrf` : use CRLF at the end of the RPC headers (NodeJS)
+
+<Heading as="h4">Test nodes</Heading>
+
+- `-genesis` : start the node from the genesis block (automatically uses -clean)
+- `-test` : uses test parameters e.g. faster block times
+- `-connect [ip:port,ip:port]` : Disable the automatic P2P system and create your own network by manually connecting to this list of host:port
+- `-nop2p` : Disable the automatic P2P system
+- `-noconnect` : Stops the P2P system from connecting to other nodes until it has been connected to
+- `-nosyncibd` : Do not sync IBD (for testing)
+
+<Heading as="h4">Mobile</Heading>
+
+- `-mobile` : Sets this device to a mobile device - used for metrics only
+- `-limitbandwidth` : Limit the amount sent for archive sync
+- `-noshutdownhook` : Do not use the shutdown hook (Android)
+
+<Heading as="h4">Debugging</Heading>
+
+- `-p2p-log-level-info` : Set the P2P log level to info
+- `-p2p-log-level-debug` : Set the P2P log level to debug
+
+<Heading as="h4">Help</Heading>
+
+- `-showparams` : Show relevant startup params on launch
+- `-help` : print help for the start up parameters
+
+</Accordion>
+
+</Accordions>
+
+<Callout type="warn" title="Avoid">
+
+The following process is for running a Minima node manually so you should avoid the following:
+
+- Closing the terminal window
+- Allowing your PC to go to sleep
+- Turning your PC off
+
+If any of the above happen, your Minima node will stop running and you will need to repeat step 3 to start it again.
+
+</Callout>
+
+Minima is now started, your output should look similar to the below and you should start to see the logs running.
+
+```bash
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : **********************************************
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : *  __  __  ____  _  _  ____  __  __    __    *
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : * (  \/  )(_  _)( \( )(_  _)(  \/  )  /__\   *
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : *  )    (  _)(_  )  (  _)(_  )    (  /(__)\  *
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : * (_/\/\_)(____)(_)\_)(____)(_/\/\_)(__)(__) *
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : *                                            *
+Minima @ 14/03/2022 17:32:30 [5.1 MB] : **********************************************
+```
+
+Your node is now installed & running!
+</Step>
+
+<Step>
+
+<Heading as="h4">Secure your node</Heading>
+<Card
+  title="Security"
+  description="Click on this card to learn how to secure your Minima node"
+/>
+
+</Step>
+
+</Steps>
+
+## Login to your node
+
+The first time accessing your MiniDapp hub, you may need to pass through the security warning - see below - as the MiniDapp system currently uses self-signed certificates.
+
+<Callout type="info" title="Custom Ports">
+
+Note that **9003** is the default port for accessing your MiniDapp system - if you installed Minima on custom ports, you will need to use your custom base port + 2. E.g. If you installed Minima on 8001, you will need to use https://127.0.0.1:8003/
+
+</Callout>
+
+Go to https://127.0.0.1:9003/ in your web browser. You may have to proceed past the security warning, since Minima uses self-signed certificates. Learn how here.
+
+You will see the login page to your node.
+
+<ImageZoom
+src="/img/runanode/mds_login.png"
+alt="mds_login"
+width={500}
+height={500}
+/>
+
+
+If you set one, use the password you set as your -mdspassword when starting the node.
+
+<Callout title="Fotgot your password?" type="warn">
+  To check your password you can return to your desktop command line/terminal
+  where the Minima logs are running and enter `mds`
+</Callout>
+
+## First steps
+
+The first time you install Minima, you will need to
+
+- Connect to the network
+- Write down your seed phrase
+
+<Callout title="User Guides" type="info">
+  For more information on how to connect to the network and secure your node,
+  please refer to [User Guides](/docs/user-guides/jointhenetwork).
+</Callout>
+
+## Using the MiniDapp Hub
+
+By default, all MiniDapps will be given **READ** permission when you install them.
+
+When a MiniDapp with READ permission attempts to run a command which would make changes to your node or require access to your funds, a PENDING command will be created which you will need to accept.
+
+<Callout title="Danger" type="error">
+  You should only give WRITE permissions to MiniDapps that you trust. Only the
+  Terminal MiniDapp will need WRITE permission so you can approve/deny
+  transactions.
+</Callout>
+
+### Setting the Terminal permissions to WRITE
+
+<Callout title="Info">
+  If your prefer to use the Terminal MiniDapp to execute all commands, you will
+  need to set the permissions to WRITE see below.
+</Callout>
+
+1. Login to your MiniDapp hub and install the Terminal MiniDapp from the [MiniDapp site](https://minidapps.minima.global/)
+2. Return to your desktop command line/terminal and run the `mds` command again (see above) to list your MiniDapps and check their existing permissions
+3. You will see the Terminal MiniDapp listed, **copy the uid from YOUR node**
+
+Run the following command in the Command line/Terminal where the Minima logs are running, pasting in YOUR uid:
+
+```bash title="Terminal"
+mds action:permission uid:0x02FA22EF2A2A3B0FA01D688A902779E5 trust:write
+```
+
+You may now use the Terminal MiniDapp to execute all commands. You will no longer need to use your desktop command line interface/Terminal.
+
+## Node status
+
+The `status` command will show details of your node including version, last block and chain details.
+
+1. Type `status` into the command line/Terminal
+2. Check `block` and `time`, this is your tip block and the `time` of that block, time should be within a few minutes of the current time.
+
+<ImageZoom
+src="/img/runanode/docker_vps_terminalstatus.png"
+alt="docker_vps_terminalstatus"
+width={500}
+height={500}
+/>
+
+<Callout title="Checking your node is in sync" type="warn">
+Having a recent block time is not a guarantee that you are on the right chain.
+Consider cross checking your latest block with another node or checking the samechain response of your Maxima Contacts by running the maxcontacts command.
+
+If the time shown is significantly behind, you should restart your node to resync to the chain. If it doesn't catch up automatically, youu may need to perform a chain resync from an Archive node.
+
+</Callout>
+
+**Other useful commands:**
+
+- `mds` - find the password for your node
+- `help` - show all commands
+
+## How to update your node
+
+1. Type `quit` into the Command prompt/Terminal window where the Minima logs are running
+2. Download the latest version of Minima from the [Minima GitHub releases page](https://github.com/minima-global/Minima/releases) and replace the existing minima.jar file with the latest version
+3. Restart Minima using the command in step 2 in [Start a new Minima node](#start-a-new-minima-node).
+
+<Callout title="Starting a clean node">
+  To create a fresh install of a node -clean can be added on to the end of the
+  start up command DO NOT use -clean if you are simply restarting your node,
+  your coins will be wiped and you will only be able to recover them from a
+  backup! e.g. java -jar C:\Users\Username\Downloads\minima.jar -mdsenable
+  -clean
+</Callout>
+
+## How to remove your node
+
+<Callout title="info">
+  Removing a node without taking a backup will delete all your coins! Only
+  remove a node if you have taken a backup or are running a test node.
+</Callout>
+
+1. Type `quit` into the Command prompt/Terminal window where the Minima logs are running
+2. Delete the minima.jar file you downloaded
+3. (Optional) Remove the minima database files located in your home directory (you may need to show hidden files)
+
+Once your node running, you will need to [join the network](/docs/user-guides/jointhenetwork).

@@ -1,0 +1,20 @@
+{
+  "title": "Core",
+  "root": true,
+  "tag": ["core"],
+  "pages": [
+    "index",
+    "---Minima---",
+    "about-minima",
+    "get-involved",
+    "use-cases",
+    "tokenomics",
+    "---Terms of Use---",
+    "minidapp-terms",
+    "website-terms",
+    "minima-privacy-policy",
+    "presale",
+    "--- Whitepaper---",
+    "[Minima Whitepaper]( https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)"
+  ]
+}

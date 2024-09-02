@@ -1,0 +1,58 @@
+---
+title: Scripting
+description: Learn about  Minima Scripting
+tag: learn
+---
+
+Minima has its own, Turing Complete, scripting language for creating Smart Contracts - **KISS VM**. 
+
+Minima, like Bitcoin, uses the [UTxO model](/docs/learn/minima/coreconcepts#utxo-model) so writing smart contracts on Minima is quite different to writing them on an Account based model like Ethereum. 
+
+Every UTxO (coin) is associated with a Minima script i.e. contract which can either return **TRUE** or **FALSE** when used in a transaction. The default is return FALSE, so all scripts must explicitly return TRUE for the transaction to be valid.
+
+A **‘contract’** is the script that locks the funds in a coin and is interchangeable with the word script.
+
+The default script for a coin is 
+
+``` bash
+RETURN SIGNEDBY(0xFFEE67F7C..)
+```
+
+where `0xFFEE67F7C..` is the public key of the owner of the coin.
+
+This default script will only return TRUE when a transaction attempting to spend this coin has been signed by the coin's owner.
+
+<Callout title="Tip">
+The KISS VM scripting language supports SHA2-256 to allow cross-chain hash lock contracts with legacy chains.
+
+Contracts are inherently compatible with Layer 2. 
+</Callout>
+
+The addition of the **state variables** in the MMR Proof DB, allow for complex scripts with knowledge of their past to be created. Minima uses a simple state mechanic for transactional history rather than a global state for ALL transactions.
+
+Each user tracks the coins to an address they possess and all coins that have a public key or address they possess in the STATE or PREVSTATE.
+
+
+## Types of contracts
+
+Some of the types of contracts possible:
+
+- Basic Signed 
+- Time Lock 
+- Multi-sig 
+- Complex multi-sig 
+- M of N multi-sig 
+- Hashed Time Lock (including cross-chain)
+- Exchange
+- FlashCash
+- MAST 
+
+## Token Scripts
+
+Each token has a separate script that must also return TRUE when attempting to spend a UTxO. 
+
+A token by default has RETURN TRUE as its script. This token structure is added to any transaction wishing to use that token so every user can know how many, what scripts, name etc of the Token is correct and valid.
+
+**Both the coin address script and the token script must return TRUE.**
+
+For details about the KISS VM scripting language, see the [Build](/docs/buildonminima/contracts/scriptbasics) section.

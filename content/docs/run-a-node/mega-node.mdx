@@ -1,0 +1,149 @@
+---
+title: Run a Mega Node
+description: Learn how to run a Mega Node
+tag: run-a-node
+---
+
+A Mega node is similar to an Archive node in that that it can recover any Minima user that has lost access to their node or requires a re-sync to the chain.
+
+A Mega node does not also have to be an archive node although the two can be run together on the same node.
+
+What does it do?
+
+A Mega node stores `all unspent` coins with their proofs, this differs to a standard node which only stores the coins (and proofs) that are relevant to the user.
+
+## System requirements
+
+The following requirements are separate to any specs required for non Minima related processes.
+
+**Processing**: 2 CPU
+**Memory**: 8GB RAM
+**Storage**: 5GB storage
+
+We do not recommend running a Mega node from an Android device as the RAM consumption is considerably higher than a standard node.
+
+The Mega node must be online constantly to remain in sync with the chain. Downtime of less than 24 hours is acceptable.
+
+## Ports
+
+If running an archive node on a desktop, no port forwarding is required.
+
+If running a public archive node on a server, open inbound connections on port 9001 (or the main custom Minima port you have chosen).
+
+## How to start a Mega node
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs"
+
+<Steps>
+<Step>
+
+### Start (or update) a node
+
+Start (or update) a node in the same way as as a normal node, adding the `-megammr` startup parameter. See examples below.
+
+<Tabs items={["Terminal", "JNLP", "Docker"]}>
+
+<Tab value="Terminal">
+ ```bash
+java -jar /path/to/minima.jar -mdsenable -mdspassword YOURSECUREPASSWORD -megammr
+```
+
+</Tab>
+
+<Tab value="JNLP">
+
+1. Start a node as per the Run a Node section for Windows or Mac.
+2. Once running, on the Settings tab, under Advanced Params, tick the "Use custom parameters" box
+3. Enter `-megammr`
+4. Close the window and restart the node by relaunching the JNLP
+
+</Tab>
+
+<Tab value="Docker">
+Start a node as per the Run a Node section for Docker desktop or Linux VPS (Docker). However, when starting the container, add the following environment variable to the start up command:
+
+`-e minima_megammr=true`
+
+If you already have other Minima containers running, you can start a separate Mega node by changing the port
+
+e.g. `-p 6001-6003:9001-9003`
+
+<Tabs items={["Windows","Mac/Linux", "Linux VPS"]}>
+<Tab value="Windows">
+
+```bash
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e minima_megammr=true -v C:\Users\INSERTUSERNAME\megaminimadocker:/home/minima/data -p 9001-9003:9001-9003 --restart unless-stopped --name megaminima minimaglobal/minima:latest
+```
+
+</Tab>
+
+<Tab value="Mac/Linux">
+
+```bash
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e minima_megammr=true -v ~/megaminimadocker:/home/minima/data -p 9001-9003:9001-9003 --restart unless-stopped --name megaminima minimaglobal/minima:latest
+```
+
+</Tab>
+
+</Tabs>
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+<Step>
+
+### Join the network
+
+Once the node is running, you will need to join the Peer-to-Peer network, enter the following command from the Minima terminal/RPC client:
+
+`peers action:addpeers peerslist:https://spartacusrex.com/minimapeers.txt`
+
+Alternatively use your own list of peers.
+
+You should see the response below, wait a few moments to receive the initial blockchain download.
+
+```json
+{
+  "command": "peers",
+  "params": {
+    "action": "addpeers",
+    "peerslist": "https://spartacusrex.com/minimapeers.txt"
+  },
+  "status": true,
+  "pending": false,
+  "response": {
+    "message": "Peers added to checking queue.."
+  }
+}
+```
+
+</Step>
+
+<Step>
+### Chain sync or import historical data
+
+A Mega node should be backfilled with the chain history so that the node has a complete database of all the coins since the blockchain started.
+
+You can either:
+
+- [Chain resync](/docs/user-guides/node-recovery/chain-resync) the Mega node from an Archive node, or
+- Import a MegaMMR `.mmr` file shared from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
+
+Daily .mmr exports can be found [here](https://spartacusrex.com/megaarchive/).
+
+<Callout title="Info">
+  The .mmr file must have been generated no longer than 1 week ago.
+</Callout>
+
+To import the .mmr file, run the following command:
+
+```bash title="Terminal"
+megammr action:import file:[PathToFile]/megammr.mmr
+```
+
+</Step>
+
+  </Steps>

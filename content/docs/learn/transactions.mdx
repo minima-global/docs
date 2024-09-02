@@ -1,0 +1,86 @@
+---
+title: Transactions
+description: Learn about transactions on the Minima network
+tag: learn
+---
+
+## Transaction Lifecycle
+
+The following diagram explains the basic process from a Transaction to [TxPoW](/txpow) unit to Block.
+
+**Insert image here**
+
+## Structure
+
+All transactions have the following structure:
+
+- Inputs
+- Outputs
+- State variables
+- Link hash
+- Transaction ID
+
+### Inputs
+
+Transaction inputs are coins (UTxOs) that will be spent in the transaction, identified by the Coin ID. One or more coins may be required depending on the value of the coins owned by the user and the amount they wish to spend.
+
+> If a user wishes to spend 100 Minima but they only have two coins worth 40 and 90 Minima, they must use both coins as inputs to the transaction and receive change of 30 as a new coin.
+
+Each coin is identifiable with a unique CoinID has the following attributes:
+
+| Coin Attribute | Description                                                                                                                                                                                                                                            | Type                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| CoinID         | The globally unique identifier for a coin. The coin id of a new UTxO is hash(first input coin in txn \| output_num_in_txn)                                                                                                                             | 64 byte hash (MiniData) |
+| Amount         | The amount of 'Minima'. Even custom token transactions are just amounts of coloured Minima (see Coloured Coins)                                                                                                                                        | MiniNumber              |
+| Address        | The hash of a script. If no custom script is provided, the script will simply be RETURN(SIGNEDBY([PublicKey of coin owner]) i.e. the transaction must be signed by the coin owner before it can be spent. All addresses are P2SH (Pay to Script Hash). | 64 byte hash (MiniData) |
+| Token ID       | The Token ID. Minima is 0x00. Everything else has a full 64 byte hash. Tokens are created by colouring Minima.                                                                                                                                         | 64 byte hash (MiniData) |
+| Token          | Token Details (see Coloured Coins)                                                                                                                                                                                                                     |                         |
+| Floating       | True or False. Set when you create a transaction. If True, the Coin ID is ignored so that any valid coin that has the same amount, address and Token ID can be used.                                                                                   | Boolean                 |
+| Store State    | True or False, depending on whether the state is stored for this coin                                                                                                                                                                                  | Boolean                 |
+| State          | The state variables (0-255) of the transaction this coin was created in. You can access this data from scripts.                                                                                                                                        | Integer                 |
+| MMR Entry      | The MMR database entry number for this coin                                                                                                                                                                                                            | MMREntryNumber          |
+| Spent          | True or False, depending on whether this coin has been spent or not.                                                                                                                                                                                   | Boolean                 |
+| Created        | The block number this coin was created in.                                                                                                                                                                                                             | Integer                 |
+
+Example coin details by running:
+
+```bash title="Terminal"
+coins relevant:true
+```
+
+```json
+{
+  "command": "coins",
+  "params": {
+    "relevant": "true"
+  },
+  "status": true,
+  "response": [
+    {
+      "coinid": "0xB76A17B0444D40A90697FCC7EFFFB1917F7B4AC7FD70D7E70323DC560B6A3CF2",
+      "amount": "98",
+      "address": "0x0B00C23C8B4DFBDEC76FEE908ADF1BD396A5E92DCC826D3ADD26E4140CFA1DC0",
+      "tokenid": "0x00",
+      "token": null,
+      "floating": false,
+      "storestate": true,
+      "state": [],
+      "mmrentry": "439",
+      "spent": false,
+      "created": "167764"
+    }
+  ]
+}
+```
+
+## Outputs
+
+Transaction outputs are new coins (UTxOs) created as a result of a transaction and include:
+
+1. Amount to send to recipients: One or more amounts with recipients' addresses specified.
+2. Change to the sender: When the amount being sent is less than the value of the coin inputs, change needs to be returned to the sender's address.
+
+<Callout title="Burn">
+  Any difference between inputs and outputs will be burned, reducing the
+  circulating supply of Minima.
+</Callout>
