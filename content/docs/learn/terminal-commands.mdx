@@ -3511,7 +3511,7 @@ verify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
 
 <Accordions>
 
-<Accordion title="Burn">
+<Accordion title="burn">
 
 `View the latest Burn metrics`
 
@@ -3527,7 +3527,7 @@ burn
 
 </Accordion>
 
-<Accordion title="Logs">
+<Accordion title="logs">
 
 `Enable detailed logs for script errors or mining activity.`
 
@@ -3758,7 +3758,541 @@ txnexport id:multisig file:multisig.txn
 
 </Accordion>
 
+<Accordion title="txnimport">
+
+`Import a transaction from previously exported HEX data or a .txn file.`
+
+```bash title="Terminal"
+txnimport
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      '(Optional) Choose an ID for the transaction you are importing.',
+    type: 'True',
+  },
+  file: {
+    description:
+      '(Optional) File name/path to the previously exported .txn file.',
+    type: 'True',
+  },
+  data: {
+    description:
+      '(Optional) HEX data of the previously exported transaction.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnimport data:0x0000..
+```
+
+```bash title="Terminal"
+txnimport id:simpletxn data:0x0000..
+```
+
+```bash title="Terminal"
+txnimport id:multisig file:multisig.txn
+```
+
+</Accordion>
+
+<Accordion title="txninput">
+
+`Add a coin as an input to a transaction.`
+
+```bash title="Terminal"
+  txninput
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The id of the transaction to add an input to.',
+    type: 'True',
+  },
+  coinid: {
+    description:
+      '(Optional) The id of the coin to add as an input.',
+    type: 'True',
+  },
+  coindata: {
+    description:
+      '(Optional) The data of the coin to add, instead of coinid. Can be from the `coinexport` command or `outputcoindata` from another transaction.',
+    type: 'True',
+  },
+  floating: {
+    description:
+      '(Optional) true or false, true will add an unspecified, floating ELTOO coin as an input. If true, also specify address, amount, tokenid. If false, specify a coinid or coindata.',
+    type: 'True',
+  },
+  address: {
+    description:
+      'Coin address to use for the floating input. Can be 0x or Mx address.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      'Amount of a coin for the floating input.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      'tokenid of a coin for the floating input.',
+    type: 'True',
+  },
+  scriptmmr: {
+    description:
+      'true or false, true will add the scripts and MMR proof for the coin.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txninput id:simpletxn coinid:0xD0BF..
+```
+
+```bash title="Terminal"
+txninput id:multisig coinid:0xD0BF.. scriptmmr:true
+```
+
+```bash title="Terminal"
+txninput id:posttxn coindata:0x000..
+```
+
+```bash title="Terminal"
+txninput id:eltootxn floating:true address:0xFED5.. amount:10 tokenid:0x00
+```
+      
+</Accordion>
+
+<Accordion title="txnlist">
+
+`List your custom transactions. Includes previously posted transactions.`
+
+```bash title="Terminal"
+txnlist
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      '(Optional) The id of a single transaction to list.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnlist
+```
+```
+
+```bash title="Terminal"
+txnlist id:multisig
+```
+</Accordion>
+
+<Accordion title="txnoutput">
+
+`Create a transaction output.`
+
+This will create a new coin (UTxO).
+
+If the sum of inputs > outputs, the difference will be burned unless change to the sender is defined as an output.
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The id of the transaction to add an output to.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      'The amount for the output. To send to the specified address.',
+    type: 'True',
+  },
+  address: {
+    description:
+      'Address of the recipient/script to send the output to. Can be 0x or Mx address.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      '(Optional) tokenid of the output. Default is Minima (0x00).',
+    type: 'True',
+  },
+  storestate: {
+    description:
+      '(Optional) true or false, true will keep the state variables of the transaction in the newly created output coin. Default is true.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnoutput id:simpletxn amount:10 address:0xFED5..
+```
+
+```bash title="Terminal"
+txnoutput id:multisig amount:10 address:0xFED5.. tokenid:0xCEF5.. storestate:false
+```
+
+```bash title="Terminal"
+txnoutput id:eltootxn amount:10 address:0xFED5..
+```
+
+</Accordion>
+
+<Accordion title="txnscript">
+
+`Add scripts to a transaction.`
+
+If it is a single script, and not one created with mmrcreate, leave the proof blank.
+
+If it is an mmrcreate script, include the proof.
+
+```bash title="Terminal"
+txnscript
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The id of the transaction.',
+    type: 'True',
+  },
+  scripts: {
+    description:
+      'JSON holds the script and the proof in the format \{script:proof}',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnscript id:txnmast scripts:{"RETURN TRUE":""}
+```
+
+```bash title="Terminal"
+txnscript id:txnmast scripts:{"RETURN TRUE":"0x000.."}
+```
+
+</Accordion>
+
+<Accordion title="txnsign">
+
+`Sign a transaction.`
+
+```bash title="Terminal"
+txnsign
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The id of the transaction.',
+    type: 'True',
+  },
+  publickey: {
+    description:
+      'The public key specified in a custom script, or auto for transactions with simple inputs.',
+    type: 'True',
+  },
+  txnpostauto: {
+    description:
+      'Do you want to post this transaction. Use the same values as you would for txnpost auto (sort MMR and Scripts).',
+    type: 'True',
+  },
+  txnpostburn: {
+    description:
+      'If you also post this transaction, do you want to add a burn transaction.',
+    type: 'True',
+  },
+  txnpostmine: {
+    description:
+      'If you also post this transaction, do you want to mine it immediately.',
+    type: 'True',
+  },
+  txndelete: {
+    description:
+      'true or false - delete this txn after signing AND posting.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnsign id:simpletxn publickey:auto
+```
+
+```bash title="Terminal"
+txnsign id:simpletxn publickey:auto password:your_password
+```
+
+```bash title="Terminal"
+txnsign id:multisig publickey:0xFD8B..
+```
+
+```bash title="Terminal"
+txnsign id:simpletxn publickey:auto txnpostauto:true
+```
+
+</Accordion>
+
+<Accordion title="txnstate">
+
+`Add a state variable to a transaction.`
+
+```bash title="Terminal"
+txnstate
+```
+
+<CommandTable
+type={{
+  id: {
+    description:
+      'The id of the transaction.',
+    type: 'True',
+  },
+  port: {
+    description:
+      'Port number of the state variable, from 0-255.',
+    type: 'True',
+  },
+  value: {
+    description:
+      'Value for the state variable.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnstate id:multisig port:0 value:0xFED5..
+```
+
+```bash title="Terminal"
+txnstate id:multisig port:1 value:100
+```
+
+```bash title="Terminal"
+txnstate id:multisig port:1 value:"string"
+```
+
+</Accordion>
 </Accordions>
+
+
+
+## External wallet transactions 
+
+These are available from v1.0.41 onwards.
+
+The following commands allow you to construct, sign (online or offline) and post transactions on behalf of specific wallets that are separate from the node's own wallet.
+
+They should be used alongside the `keys action:genkey` OR `keys action:genkey phrase:"MY SEED PHRASE"` command which generate a new private/public key pair and wallet address from a random or given seed phrase that is independent from the node itself. 
+
+Note that `sendfrom` and `createfrom` require a [Mega MMR node](/docs/runanode/meganode).
+
+
+<Accordions>
+
+<Accordion title="sendfrom">
+
+`Send Minima or Tokens from a certain address with a given private key.`
+
+Must be used from an ONLINE node. 
+
+<CommandTable
+type={{
+  fromaddress: {
+    description:
+      'Wallet address to send from.',
+    type: 'True',
+  },
+  address: {
+    description:
+      'Wallet address to send to.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      'Amount to send.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      '(Optional) tokenid of the token to send. Default is Minima 0x00.',
+    type: 'True',
+  },
+  script: {
+    description:
+      'The script of the fromaddress.',
+    type: 'True',
+  },
+  privatekey: {
+    description:
+      'The private key to sign with. From `keys action:genkey`.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      'Set the key uses for this privatekey.',
+    type: 'True',
+  },
+  mine: {
+    description:
+      '(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+sendfrom fromaddress:0xFEEED.. address:0xABCD.. script:"INSERT SCRIPT" privatekey:0xGHFK.. keyuses:5
+```
+
+
+
+</Accordion>
+
+<Accordion title="createfrom">
+
+`Create and export an unsigned txn from a certain address.`
+
+Must be run from a node using the `-megammr` start up parameter. Can be used from an ONLINE or OFFLINE node. 
+
+<CommandTable
+type={{
+  fromaddress: {
+    description:
+      'Wallet address to send from.',
+    type: 'True',
+  },
+  address: {
+    description:
+      'Wallet address to send to.',
+    type: 'True',
+  },
+  amount: {
+    description:
+      'Amount to send.',
+    type: 'True',
+  },
+  tokenid: {
+    description:
+      '(Optional) tokenid of the token to send. Default is Minima 0x00.',
+    type: 'True',
+  },
+  script: {
+    description:
+      'The script of the fromaddress.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+createfrom fromaddress:0xFEEED.. address:0xABCD.. script:"INSERT SCRIPT"
+```
+
+Examples:
+
+</Accordion>
+
+<Accordion title="signfrom">
+
+`Sign a createfrom txn.`
+
+Can be used from an ONLINE or OFFLINE node. 
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'transaction data output from createfrom.',
+    type: 'True',
+  },
+  privatekey: {
+    description:
+      'The private key to sign with. From `keys action:genkey`.',
+    type: 'True',
+  },
+  keyuses: {
+    description:
+      'Set the key uses for this privatekey.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+signfrom data:0x000000.. address:0xABCD.. script:"INSERT SCRIPT" keyuses:5
+```
+
+</Accordion>
+
+<Accordion title="postfrom">
+
+`Post a signfrom txn to the network`
+
+Must be used from an ONLINE node. 
+
+<CommandTable
+type={{
+  data: {
+    description:
+      'transaction data output from createfrom.',
+    type: 'True',
+  },
+  mine: {
+    description:
+      '(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.',
+    type: 'True',
+  }
+}}
+/>
+
+Examples:
+
+```bash title="Terminal"
+postfrom data:0x000000.. mine:true
+```
+
+</Accordion>
+
+</Accordions>
+
 
 
 
