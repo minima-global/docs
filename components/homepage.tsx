@@ -1,5 +1,6 @@
 "use client"
 import { cn } from "@/app/lib/utils"
+import Link from "next/link"
 
 export function DocsHomePage() {
   return (
@@ -12,8 +13,8 @@ export function DocsHomePage() {
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
       <div className=" absolute inset-0 bg-background h-1/2 bottom-0"></div>
       <div className=" absolute bg-background right-0 bottom-[460px] left-0 h-[100px] blur-xl"></div>
-      <div className="flex flex-col  mx-auto  md:px-20 mt-20 relative  pb-12 ">
-        <main className="container relative max-w-[1100px] px-2 flex flex-col justify-center items-center">
+      <div className="flex flex-col  mx-auto  md:px-10 mt-20 relative  pb-12 xl:min-w-[1200px] ">
+        <main className=" relative  px-2 flex flex-col justify-center items-center">
           <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-primary-foreground ">
             Welcome to the Minima Docs
           </h4>
@@ -33,6 +34,7 @@ const Cards = () => {
     {
       title: "Introduction",
       description: "Learn about Minima and how to get involved.",
+      link: "/docs/core",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,6 +53,7 @@ const Cards = () => {
       title: "Run a node",
       description:
         "Install and run a validating and constructing Minima node on your device.",
+      link: "/docs/run-a-node",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,6 +71,7 @@ const Cards = () => {
     {
       title: "User Guides",
       description: "Guidance for using and managing your Minima node",
+      link: "/docs/user-guides",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +89,9 @@ const Cards = () => {
     },
     {
       title: "Developer Tutorials",
-      description: "A deep dive into the Minima protocol and its architecture",
+      description:
+        "Develop decentralized applications and create smart contracts on Minima",
+      link: "/docs/development",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -103,9 +109,9 @@ const Cards = () => {
     },
     {
       title: "Knowledge Base",
-      description:
-        "Develop decentralized applications and create smart contracts on Minima",
-      icon: (
+      description: "A deep dive into the Minima protocol and its architecture",
+      link: "/docs/learn",
+      icon: ( 
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -120,9 +126,10 @@ const Cards = () => {
       ),
     },
     {
-      title: "Whitepaper",
+      title: "Tokenomics",
       description:
         "Understand Minima's token allocation and distribution schedule",
+      link: "/docs/core/tokenomics",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -144,9 +151,9 @@ const Cards = () => {
     },
   ]
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-10  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full ">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-5  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full  ">
       {features.map((feature, index) => (
-        <Feature key={feature.title} {...feature} index={index} />
+        <Feature key={feature.title} {...feature} index={index} link={feature.link} />
       ))}
     </div>
   )
@@ -157,16 +164,19 @@ const Feature = ({
   description,
   icon,
   index,
+  link
 }: {
   title: string
   description: string
   icon: React.ReactNode
   index: number
+  link: string
 }) => {
   return (
-    <div
+    <Link
+      href={link}
       className={cn(
-        "flex flex-col lg:border-r group  py-10 relative group/feature dark:border-neutral-800 cursor-pointer ",
+        "flex flex-col lg:border-r group  py-10 relative group/feature dark:border-neutral-800 cursor-pointer  ",
         (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
         index < 3 && "lg:border-b dark:border-neutral-800"
       )}
@@ -189,6 +199,6 @@ const Feature = ({
       <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
         {description}
       </p>
-    </div>
+    </Link>
   )
 }

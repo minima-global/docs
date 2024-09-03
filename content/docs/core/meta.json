@@ -3,8 +3,8 @@
   "root": true,
   "tag": ["core"],
   "pages": [
-    "index",
     "---Minima---",
+    "index",
     "about-minima",
     "get-involved",
     "use-cases",

@@ -30,7 +30,7 @@ export const modes: Mode[] = [
   {
     param: "user-guides",
     name: "User Guides",
-    description: "Guides about minima",
+    description: "How to use Minima",
     icon: BookOpen,
   },
 
@@ -43,7 +43,7 @@ export const modes: Mode[] = [
   {
     param: "learn",
     name: "Knowledge Base",
-    description: "Learn Minima",
+    description: "Learn how Minima works",
     icon: ShapesIcon,
   },
 ]

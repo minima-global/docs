@@ -1,11 +1,9 @@
 ---
-title: Linux VPS (Sysyem served)
+title: Linux VPS (Systemd service)
 description: Run Minima on a Linux VPS
 tag: run-a-node
 ---
 
-import { Tab, Tabs } from "fumadocs-ui/components/tabs"
-import { Heading } from "fumadocs-ui/components/heading"
 
 Running a node on a server and allowing inbound connections on port 9001 will ensure your node acts as a **relay node**.
 
@@ -163,8 +161,8 @@ For more information see [here](https://wiki.debian.org/Uncomplicated%20Firewall
 
 ### Server installations
 
-<Tabs items={["Debain/Ubuntu", "CentOS/RedHat"]}>
-  <Tab value="Debain/Ubuntu">
+<Tabs items={["Debian/Ubuntu", "CentOS/RedHat"]}>
+  <Tab value="Debian/Ubuntu">
     As a user with sudo privileges, install the following:
 
 ```bash title="Terminal"
@@ -202,7 +200,7 @@ As a user with sudo privileges, install the following:
 
 </Tabs>
 
-### Miinima node setup
+### Minima node setup
 
 
 <Steps>

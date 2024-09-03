@@ -5,7 +5,7 @@ icon: Zap
 tag: run-a-node
 ---
 
-## Installation
+## CLI
 
 At it's core, Minima is a Java application. So on a server or CLI the easiest way to run Minima is to install Java and download the latest minima.jar.
 
@@ -32,7 +32,7 @@ java -version
 
 <Step>
 
-### Navigate to the directory where you downloaded the Minima jar
+<Heading as="h3">Navigate to the directory where you downloaded the Minima jar</Heading>
 
 ```bash title="Terminal"
 cd /path/to/minima.jar
@@ -41,7 +41,7 @@ cd /path/to/minima.jar
 </Step>
 
   <Step>
-  ### Run Minima
+<Heading as="h3">Run Minima</Heading>
   ```bash title="Terminal"
     java -jar minima.jar
 ```
@@ -56,32 +56,102 @@ Alternatively, copy this link directly into the app when prompted to join the ne
 [https://spartacusrex.com/minimapeers.txt](https://spartacusrex.com/minimapeers.txt)
 
 </Callout>
-  </Step>
-  <Step>
-  ### Choose your learning path
-  </Step>
+  </Step> 
+</Steps>
 
-  <Cards>
+## Android
+
+The next simplest way is to install and run the Android app.
+
+<a href="https://play.google.com/store/apps/details?id=com.minima.android">
+<GoogelPlayIcon />
+</a>
+
+<Callout title="Note" type="info">
+  If you cannot use the Google Playstore, you can download a signed APK from [Github](https://github.com/minima-global/Minima/tree/master/jar).
+</Callout>
+
+## Desktop 
+
+For Desktop users Minima can be launched from a JNLP file.. The Java Network Launch Protocol.
+
+<Steps>
+
+<Step>
+
+<Heading as="h3">Install Open Web Start</Heading>
+
+First install [Open Web Start](https://openwebstart.com/download/) - the new updated version of Java Web Start.
+
+</Step>
+
+<Step>
+
+<Heading as="h3">Download the Minima JNLP file</Heading>
+
+Download the [Minima JNLP](https://www.spartacusrex.com/javaws/minima.jnlp) file and open / double-click it to install Minima as an application. A desktop shortcut will be created for you and you will be shown a security warning, select Run.
+
+</Step>
+
+</Steps>
+
+### Mac & Windows
+Futher guidance can be found [here](/docs/run-a-node/mac) for Mac and [here](/docs/run-a-node/windows) for Windows.
+
+## Docker 
+
+<Steps>
+
+<Step>
+
+<Heading as="h3">Set a secure password</Heading>
+
+There is also a nice docker image that you can use if you have Docker installed. Set a secure password below.
+
+```bash title="Terminal"
+docker run -d -e minima_mdspassword=INSERTYOURPASSWORD -e minima_desktop=true -v ~/minimadocker:/home/minima/data -p 9001-9003:9001-9003 --restart unless-stopped --name minima minimaglobal/minima:latest
+```
+
+</Step>
+
+<Step>
+
+<Heading as="h3">Log into your node</Heading>
+
+
+
+Then you log into your node via https://127.0.0.1:9003/
+
+Further guidance on starting a node in Docker desktop can be found [here](/docs/run-a-node/docker-desktop)
+
+</Step>
+
+</Steps>
+
+## Next Steps
+
+ <Cards>
   <Card
-    title="Login to Minima"
+    title="Join the network"
     description="Join the Minima network"
+    href="/docs/user-guides/jointhenetwork"
 
 />
 
   <Card
-    title="Secure your wallet"
-    description="Learn how to secure your wallet"
-
+    title="Lock your wallet"
+    description="Learn how to lock your wallet"
+    href="/docs/user-guides/lock-your-wallet"
 />
 
   <Card
-    title="Using your node"
-    description="Learn how to use your Minima node"
+    title="Secure your seedphrase"
+    description="Learn how to secure your seedphrase"
+    href="/docs/user-guides/secure-your-seedphrase"
   />
   <Card
-    href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating"
-    title="Using Maxima"
-    description="Learn how to use Maxima"
+    href="/docs/user-guides/set-your-profile"
+    title="Set your profile"
+    description="Learn how to set your profile"
   />
 </Cards>
-</Steps>
