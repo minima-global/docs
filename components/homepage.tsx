@@ -1,14 +1,21 @@
 "use client"
 import { cn } from "@/app/lib/utils"
 import Link from "next/link"
+import { SparklesCore } from "./sparkles"
 
 export function DocsHomePage() {
   return (
     <div className="h-[calc(100vh-60px)] bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
-      <div className="stars-container absolute inset-0 top-0 z-[9000] h-[30vh] overflow-hidden">
-        <div className="stars"></div>
-        <div className="stars2"></div>
-        <div className="stars3"></div>
+      <div className=" absolute inset-0 top-0 z-[9000] h-[30vh] overflow-hidden">
+      <SparklesCore
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.4}
+          particleDensity={100}
+          className="w-full h-full"
+          particleColor="#FFFFFF"
+        />
       </div>
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
       <div className=" absolute inset-0 bg-background h-1/2 bottom-0"></div>
@@ -43,7 +50,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500"
         >
           <path d="M25.6,9.3l-1.4,6.3L22.4,8l-6.3-2.6L14.4,13l-1.5-8.9L6.5,1.6L0,30.4h6.9l2-8.9l1.5,8.9h6.9l1.7-7.6l1.8,7.6h6.9L32,11.9  L25.6,9.3z" />
         </svg>
@@ -62,7 +69,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500 transition-colors"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
         >
           <circle cx="16" cy="16" r="16" />
         </svg>
@@ -80,7 +87,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500 transition-colors"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
         >
           <path d="M15.9,0l-16,16v16l16-16V0z" />
           <path d="M31.9,0l-16,16v16l16-16V0z" />
@@ -100,7 +107,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500 transition-colors"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
         >
           <path d="M16,16H0v16h16V16z" />
           <path d="M32,0H16v16h16V0z" />
@@ -119,7 +126,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500 transition-colors"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
         >
           <path d="M10.7,21.3V10.7h10.7V0H32v32H0V21.3H10.7z" />
         </svg>
@@ -138,7 +145,7 @@ const Cards = () => {
           x="0px"
           y="0px"
           viewBox="0 0 32 32"
-          className=" h-5 w-5 dark:fill-white/25 fill-black group-hover:fill-orange-500 transition-colors"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
         >
           <g>
             <path d="M24.7,14.4c3.9,0,7.1-3.2,7.1-7.1c0-3.9-3.2-7.1-7.1-7.1c-3.9,0-7.1,3.2-7.1,7.1C17.6,11.2,20.8,14.4,24.7,14.4z" />
@@ -153,13 +160,13 @@ const Cards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-5  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full  ">
       {features.map((feature, index) => (
-        <Feature key={feature.title} {...feature} index={index} link={feature.link} />
+        <FeatureCards key={feature.title} {...feature} index={index} link={feature.link} />
       ))}
     </div>
   )
 }
 
-const Feature = ({
+const FeatureCards = ({
   title,
   description,
   icon,
@@ -192,11 +199,11 @@ const Feature = ({
       </div>
       <div className="text-lg font-bold mb-2 relative z-10 px-10">
         <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-orange-500 transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-neutral-100">
+        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-700 dark:text-neutral-100">
           {title}
         </span>
       </div>
-      <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
+      <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-xs relative z-10 px-10">
         {description}
       </p>
     </Link>
