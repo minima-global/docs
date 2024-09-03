@@ -38,7 +38,7 @@ export function NavChildren(): React.ReactElement {
   const mode = useMode()
 
   return (
-    <div className="rounded-md border  p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden md:block ">
+    <div className="rounded-md border  p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block ">
       {modes.map((m) => (
           <Link
             key={m.param}

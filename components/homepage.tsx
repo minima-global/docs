@@ -3,7 +3,7 @@ import { cn } from "@/app/lib/utils"
 
 export function DocsHomePage() {
   return (
-    <div className="h-screen bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
+    <div className="h-[calc(100vh-60px)] bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
       <div className="stars-container absolute inset-0 top-0 z-[9000] h-[30vh] overflow-hidden">
         <div className="stars"></div>
         <div className="stars2"></div>
