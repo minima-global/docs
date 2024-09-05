@@ -72,14 +72,6 @@ To add/remove parameters after a node has been started, you must `quit` the node
 
 `[]` square brackets indicate where an input is required, **the brackets should not be included**.
 
-<Callout>
-  To add/remove parameters after a node has been started, you must stop and
-  remove your minima9001 Docker container, then start it again, adding/removing
-  the required parameters in front of `-v ~/minimadocker9001:/home/minima/data`.
-  As long as you use the same minimadocker8001 folder, your previous node will
-  be preserved but will use different parameters.
-</Callout>
-
 <Heading as="h4">General</Heading>
 
 - `-clean` : CAREFUL! Clears existing data, starts a new fresh node. All coins will be lost.
@@ -204,7 +196,7 @@ height={500}
 
 If you set one, use the password you set as your -mdspassword when starting the node.
 
-<Callout title="Fotgot your password?" type="warn">
+<Callout title="Forgot your password?" type="warn">
   To check your password you can return to your desktop command line/terminal
   where the Minima logs are running and enter `mds`
 </Callout>
