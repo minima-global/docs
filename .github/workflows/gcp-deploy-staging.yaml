@@ -1,12 +1,12 @@
-name: Deploy to Google App Engine
+name: Deploy to Google App Engine Staging
 
 on:
   push:
     branches:
-      - main
+      - staging
   pull_request:
     branches:
-      - main
+      - staging
 
 jobs:
   build-and-deploy:
@@ -43,4 +43,4 @@ jobs:
 
       - name: Deploy to Google App Engine
         run: |
-          gcloud app deploy app.yaml --quiet
+          gcloud app deploy app.yaml --quiet --no-promote
