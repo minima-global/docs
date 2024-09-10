@@ -1,9 +1,8 @@
 ---
 title: Desktop Command Line
 description: Run a Minima node on your desktop using the command line interface
-tag: run-a-node 
+tag: run-a-node
 ---
-
 
 <Callout title="Note">
   The following process is for running a Minima node manually. You must leave
@@ -27,7 +26,7 @@ java -version
 <Steps>
 <Step>
 
-### Download the latest minima.jar 
+### Download the latest minima.jar
 
 You can download the latest version of Minima from the [Minima GitHub releases
 page](https://github.com/minima-global/Minima/releases).
@@ -46,7 +45,6 @@ Type the following command all on one line, replacing `INSERTUSERNAME` with the 
   minima.jar file into the command line window.
 </Callout>
 
-
 <Tabs items={["Mac/Linux", "Windows"]}>
   <Tab value="Mac/Linux">
   
@@ -62,7 +60,6 @@ java -jar C:\Users\INSERTUSERNAME\Downloads\minima.jar -mdsenable -mdspassword [
 
   </Tab>
 </Tabs>
-
 
 <Accordions type="single">
 <Accordion title="Startup parameters">
@@ -158,6 +155,7 @@ Minima @ 14/03/2022 17:32:30 [5.1 MB] : ****************************************
 ```
 
 Your node is now installed & running!
+
 </Step>
 
 <Step>
@@ -187,12 +185,11 @@ Go to https://127.0.0.1:9003/ in your web browser. You may have to proceed past 
 You will see the login page to your node.
 
 <ImageZoom
-src="/img/runanode/mds_login.png"
-alt="mds_login"
-width={500}
-height={500}
+  src="/img/runanode/mds_login.png"
+  alt="mds_login"
+  width={500}
+  height={500}
 />
-
 
 If you set one, use the password you set as your -mdspassword when starting the node.
 
@@ -252,10 +249,10 @@ The `status` command will show details of your node including version, last bloc
 2. Check `block` and `time`, this is your tip block and the `time` of that block, time should be within a few minutes of the current time.
 
 <ImageZoom
-src="/img/runanode/docker_vps_terminalstatus.png"
-alt="docker_vps_terminalstatus"
-width={500}
-height={500}
+  src="/img/runanode/docker_vps_terminalstatus.png"
+  alt="docker_vps_terminalstatus"
+  width={500}
+  height={500}
 />
 
 <Callout title="Checking your node is in sync" type="warn">

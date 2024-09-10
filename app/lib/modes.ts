@@ -5,13 +5,13 @@ import {
   PencilRulerIcon,
   ShapesIcon,
   type LucideIcon,
-} from "lucide-react";
+} from "lucide-react"
 
 export interface Mode {
-  param: string;
-  name: string;
-  description: string;
-  icon: LucideIcon;
+  param: string
+  name: string
+  description: string
+  icon: LucideIcon
 }
 
 export const modes: Mode[] = [
@@ -33,17 +33,16 @@ export const modes: Mode[] = [
     description: "How to use Minima",
     icon: BookOpen,
   },
-
-  {
-    param: "development",
-    name: "Developer Tutorials",
-    description: "Develop on Minima",
-    icon: PencilRulerIcon,
-  },
   {
     param: "learn",
     name: "Knowledge Base",
     description: "Learn how Minima works",
     icon: ShapesIcon,
   },
-];
+  {
+    param: "development",
+    name: "Developer Tutorials",
+    description: "Develop on Minima",
+    icon: PencilRulerIcon,
+  },
+]

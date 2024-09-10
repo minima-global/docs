@@ -15,13 +15,10 @@ For detailed help, use `help command:` followed by the command.
 
 ## General Commands
 
-
-
 <Accordions>
 <Accordion title="balance">
 
 `Show your total balance of Minima and tokens.`
-
 
 <CommandTable
   type={{
@@ -41,14 +38,14 @@ For detailed help, use `help command:` followed by the command.
         '(Optional) Set the number of block confirmations required before a coin is considered confirmed in your balance. Default is 3.',
 
     }
-  }}
-/>
 
+}}
+/>
 
 Examples:
 
 ```bash title="Terminal"
-balance 
+balance
 ```
 
 ```bash title="Terminal"
@@ -58,35 +55,29 @@ balance tokenid:0xFED5.. confirmations:10
 ```bash title="Terminal"
 balance address:0xFF..
 ```
-</Accordion>
 
+</Accordion>
 
 <Accordion title="block">
 
 `Return the top block`
 
 ```bash title="Terminal"
-block 
+block
 ```
-
-
 
 Examples:
 
-
 </Accordion>
 
-
 <Accordion title="checkaddress">
-
 
 `Check the validity of an address and whether it belongs to your node.`
 
 <CommandTable
   type={{
     address: {
-      description:
-        'The 0x or Mx address to check.',
+      description: "The 0x or Mx address to check.",
     },
   }}
 />
@@ -97,20 +88,17 @@ Examples:
 checkaddress address:0xFED...
 ```
 
-
 </Accordion>
 
-<Accordion title="Coincheck">
-
+<Accordion title="coincheck">
 
 `Check a coin exists and is valid. Can only check unspent coins.`
-
 
 <CommandTable
   type={{
     data: {
       description:
-        'The data of a coin. Can be found using the `coinexport` command.',
+        "The data of a coin. Can be found using the `coinexport` command.",
     },
   }}
 />
@@ -120,6 +108,7 @@ Examples:
 ```bash title="Terminal"
 coincheck data:0x00000..
 ```
+
 </Accordion>
 
 <Accordion title="coinexport">
@@ -128,14 +117,12 @@ coincheck data:0x00000..
 
 A coin can then be imported and tracked on another node using the 'coinimport' command.
 
-This does not allow the spending of a coin - just the knowledge of its existence. 
-
+This does not allow the spending of a coin - just the knowledge of its existence.
 
 <CommandTable
   type={{
     coinid: {
-      description:
-        'The id of a coin. Can be found using the `coins` command.',
+      description: "The id of a coin. Can be found using the `coins` command.",
     },
   }}
 />
@@ -147,8 +134,6 @@ coinexport coinid:0xCD34..
 ```
 
 </Accordion>
-
-
 
 <Accordion title="coinimport">
 
@@ -170,7 +155,7 @@ Importing does not allow the spending of a coin - just the knowledge of its exis
       
     }
 
-  }}
+}}
 />
 
 Examples:
@@ -178,6 +163,7 @@ Examples:
 ```bash title="Terminal"
 coinimport data:0x00000..
 ```
+
 ```bash title="Terminal"
 coinimport data:0x00000.. track:true
 ```
@@ -194,12 +180,11 @@ Track a coin to keep its MMR proof up-to-date and know when it becomes spent. St
   type={{
     enable: {
       description:
-        'true or false, true will add the coin to your relevant coins, false will remove it from your relevant coins.',
+        "true or false, true will add the coin to your relevant coins, false will remove it from your relevant coins.",
     },
     coinid: {
-      description:
-        'The id of a coin. Can be found using the `coins` command.',
-    }
+      description: "The id of a coin. Can be found using the `coins` command.",
+    },
   }}
 />
 
@@ -219,36 +204,35 @@ Must have at least 3 coins.
 
 Useful to prevent having many coins of tiny value and to manage the number of coins you are tracking. Optionally set the minimum coin age (in blocks), maximum number of coins, and maximum number of signatures for the transaction.
 
-
 <CommandTable
   type={{
     tokenid: {
       description:
-        'The tokenid for Minima or custom token to consolidate coins for. Minima is 0x00.',
+        "The tokenid for Minima or custom token to consolidate coins for. Minima is 0x00.",
     },
     coinage: {
       description:
-        '(Optional) The minimum number of blocks deep (confirmations) a coin needs to be. Default is 3.',
+        "(Optional) The minimum number of blocks deep (confirmations) a coin needs to be. Default is 3.",
     },
     maxcoins: {
       description:
-        '(Optional) The maximum number of coins to consolidate. Minimum 3, up to 20. Coins are first sorted by value (smallest first) before adding to the transaction. Default is 20.',
+        "(Optional) The maximum number of coins to consolidate. Minimum 3, up to 20. Coins are first sorted by value (smallest first) before adding to the transaction. Default is 20.",
     },
     maxsigs: {
       description:
-        '(Optional) The maximum number of signatures for the transaction, up to 5. Coins are then sorted by address to minimize the number of signatures required. Default is 5.',
+        "(Optional) The maximum number of signatures for the transaction, up to 5. Coins are then sorted by address to minimize the number of signatures required. Default is 5.",
     },
     burn: {
       description:
-        '(Optional) Amount of Minima to burn with the transaction. Default is 0.',
+        "(Optional) Amount of Minima to burn with the transaction. Default is 0.",
     },
     debug: {
       description:
-        '(Optional) true or false, true will print more detailed logs. Default is false.',
+        "(Optional) true or false, true will print more detailed logs. Default is false.",
     },
     dryrun: {
       description:
-        '(Optional) true or false, true will simulate the consolidate transaction but not execute it. Default is false.',
+        "(Optional) true or false, true will simulate the consolidate transaction but not execute it. Default is false.",
     },
   }}
 />
@@ -258,15 +242,19 @@ Examples:
 ```bash title="Terminal"
 consolidate tokenid:0x00
 ```
+
 ```bash title="Terminal"
 consolidate tokenid:0x00 coinage:10
 ```
+
 ```bash title="Terminal"
 consolidate tokenid:0x00 maxcoins:5
 ```
+
 ```bash title="Terminal"
 consolidate tokenid:0x00 coinage:10 maxcoins:8 burn:1
 ```
+
 ```bash title="Terminal"
 consolidate tokenid:0x00 coinage:10 maxcoins:8 maxsigs:3 burn:1 dryrun:true
 ```
@@ -299,12 +287,10 @@ Returns the time taken in milliseconds and speed in megahashes/second.
 
 E.g. A speed of 0.5 MH/s indicates 500000 hashes per second.
 
-
 <CommandTable
   type={{
     amount: {
-      description:
-        '(Optional) Number of hashes to execute.',
+      description: "(Optional) Number of hashes to execute.",
     },
   }}
 />
@@ -328,13 +314,12 @@ hashtest amount:1000000
 <CommandTable
   type={{
     max: {
-      description:
-        '(Optional) Maximum number of TxPoW to retrieve.',
+      description: "(Optional) Maximum number of TxPoW to retrieve.",
     },
     offset: {
       description:
-        '(Optional) Start the list from this point. (v1.0.41 onwards)',
-    }
+        "(Optional) Start the list from this point. (v1.0.41 onwards)",
+    },
   }}
 />
 
@@ -343,6 +328,7 @@ Examples:
 ```bash title="Terminal"
 history max:20
 ```
+
 ```bash title="Terminal"
 history max:20 offset:45
 ```
@@ -353,18 +339,18 @@ history max:20 offset:45
 
 `Get a list of all your public keys or create a new key.`
 
-
 <CommandTable
   type={{
     action: {
       description:
-        '(Optional) action:list, action:checkkeys, action:new, action:genkey.',
+        "(Optional) action:list, action:checkkeys, action:new, action:genkey.",
     },
-      publickey: {
-      description: '(Optional) Search for a specific public key.',
+    publickey: {
+      description: "(Optional) Search for a specific public key.",
     },
     phrase: {
-      description: '(Optional) The phrase to use to generate the private/public key pair.',
+      description:
+        "(Optional) The phrase to use to generate the private/public key pair.",
     },
   }}
 />
@@ -373,17 +359,19 @@ Parameters used with the `action:` parameter:
 
 <CommandTable
   type={{
-   checkkeys: {
-      description: 'action:checkkeys Checks if your Public and Private keys are correct.',
+    checkkeys: {
+      description:
+        "action:checkkeys Checks if your Public and Private keys are correct.",
     },
-       genkey: {
-      description: 'action:genkey Generate a new private/public key pair and wallet address from a new random seed phrase or from a given phrase. This is independent from the node\'s wallet.',
+    genkey: {
+      description:
+        "action:genkey Generate a new private/public key pair and wallet address from a new random seed phrase or from a given phrase. This is independent from the node's wallet.",
     },
-      list: {
-      description: 'action:list List your existing public keys. The default. ',
+    list: {
+      description: "action:list List your existing public keys. The default. ",
     },
-      new: {
-      description: 'action:new Create a new key pair.',
+    new: {
+      description: "action:new Create a new key pair.",
     },
   }}
 />
@@ -393,12 +381,15 @@ Examples:
 ```bash title="Terminal"
 keys action:list
 ```
+
 ```bash title="Terminal"
 keys action:checkkeys
 ```
+
 ```bash title="Terminal"
 keys action:list publickey:0xFFEE56..
 ```
+
 ```bash title="Terminal"
 keys action:new
 ```
@@ -439,17 +430,15 @@ printmmr
 
 Default depth 32 blocks, can be increased to see more of the txpow tree.
 
-
 <CommandTable
   type={{
     depth: {
       description:
-        '(Optional) Number of blocks back from the tip to show in the txpow tree.',
+        "(Optional) Number of blocks back from the tip to show in the txpow tree.",
     },
     cascade: {
-      description:
-        '(Optional) true or false, true shows the cascade.',
-    }
+      description: "(Optional) true or false, true shows the cascade.",
+    },
   }}
 />
 
@@ -462,13 +451,14 @@ printtree
 ```bash title="Terminal"
 printtree depth:500
 ```
+
 ```bash title="Terminal"
 printtree cascade:true
 ```
 
 </Accordion>
 
-<Accordion title="Quit">
+<Accordion title="quit">
 
 `Shutdown Minima safely. Ensure you have a backup before shutting down.`
 
@@ -478,17 +468,17 @@ Ensure you have a backup before shutting down.
   type={{
     compact: {
       description:
-        '(Optional) true or false, true will compact the node databases.',
+        "(Optional) true or false, true will compact the node databases.",
     },
   }}
 />
-
 
 Examples:
 
 ```bash title="Terminal"
 quit
 ```
+
 ```bash title="Terminal"
 quit compact:true
 ```
@@ -502,8 +492,7 @@ quit compact:true
 <CommandTable
   type={{
     modifier: {
-      description:
-        'The modifier - added to seed before hash.',
+      description: "The modifier - added to seed before hash.",
     },
   }}
 />
@@ -525,9 +514,8 @@ Prints details for general status, memory used, chain info, stored txpow units, 
 <CommandTable
   type={{
     clean: {
-      description:
-        '(Optional) true only, clear the RAM.',
-      type: 'True',
+      description: "(Optional) true only, clear the RAM.",
+      type: "True",
     },
   }}
 />
@@ -537,51 +525,50 @@ Examples:
 ```bash title="Terminal"
 status
 ```
+
 ```bash title="Terminal"
 status clean:true
 ```
+
 </Accordion>
 
 <Accordion title="tokencreate">
 
 `Create (mint) custom tokens or NFTs.`
 
-
 You must have some sendable Minima in your wallet as tokens are 'colored coins', a fraction of 1 Minima.
 
 <CommandTable
   type={{
     name: {
-      description:
-        'The name of the token. Can be a string or JSON Object.',
+      description: "The name of the token. Can be a string or JSON Object.",
     },
     amount: {
       description:
-        'The amount of total supply to create for the token. Between 1 and 1 Trillion.',
-    }, 
+        "The amount of total supply to create for the token. Between 1 and 1 Trillion.",
+    },
     decimals: {
       description:
-        '(Optional) The number of decimal places for the token. Default is 8, maximum 16.',
+        "(Optional) The number of decimal places for the token. Default is 8, maximum 16.",
     },
     script: {
       description:
-        '(Optional) Add a custom script that must return \'TRUE\' when spending any coin of this token.',
+        "(Optional) Add a custom script that must return 'TRUE' when spending any coin of this token.",
     },
     state: {
-      description:
-        '(Optional) List of state variables, if adding a script.',
+      description: "(Optional) List of state variables, if adding a script.",
     },
     signtoken: {
       description:
-        '(Optional) Provide a public key to sign the token with. Useful for proving you are the creator of the token/NFT.',
+        "(Optional) Provide a public key to sign the token with. Useful for proving you are the creator of the token/NFT.",
     },
     webvalidate: {
       description:
-        '(Optional) Provide a URL to a publicly viewable .txt file you are hosting which stores the tokenid for validation purposes.',
+        "(Optional) Provide a URL to a publicly viewable .txt file you are hosting which stores the tokenid for validation purposes.",
     },
     burn: {
       description:
-        '(Optional) Amount to burn with the tokencreate minting transaction.',
+        "(Optional) Amount to burn with the tokencreate minting transaction.",
     },
   }}
 />
@@ -591,12 +578,15 @@ Examples:
 ```bash title="Terminal"
 tokencreate name:newtoken amount:1000000
 ```
+
 ```bash title="Terminal"
 tokencreate amount:10 name:\{"name":"newcoin","link":"http:mysite.com","description":"A very cool token"}
 ```
+
 ```bash title="Terminal"
 tokencreate name:mynft amount:10 decimals:0 webvalidate:https://www.mysite.com/nftvalidation.txt signtoken:0xFF.. burn:0.1
 ```
+
 ```bash title="Terminal"
 tokencreate name:charitycoin amount:1000 script:"ASSERT VERIFYOUT(@TOTOUT-1 0xMyAddress 1 0x00 TRUE)"
 ```
@@ -607,12 +597,10 @@ tokencreate name:charitycoin amount:1000 script:"ASSERT VERIFYOUT(@TOTOUT-1 0xMy
 
 `Validate the signature and webvalidate link in a token.`
 
-
 <CommandTable
   type={{
     tokenid: {
-      description:
-        'The tokenid of the custom token/NFT to validate.',
+      description: "The tokenid of the custom token/NFT to validate.",
     },
   }}
 />
@@ -625,21 +613,18 @@ tokenvalidate tokenid:0xFED5..
 
 </Accordion>
 
-
 <Accordion title="trace">
 
 `Show the message stacks of the internal Minima Engine with optional filter string.`
 
-
 <CommandTable
   type={{
     enable: {
-      description:
-        'true or false, true to enable or false to disable.',
+      description: "true or false, true to enable or false to disable.",
     },
     filter: {
       description:
-        '(Optional) A case-sensitive string to filter the messages by.',
+        "(Optional) A case-sensitive string to filter the messages by.",
     },
   }}
 />
@@ -649,28 +634,34 @@ Examples:
 ```bash title="Terminal"
 trace enable:true
 ```
+
 ```bash title="Terminal"
 trace enable:true filter:MAIN
 ```
+
 ```bash title="Terminal"
 trace enable:true filter:MINER
 ```
+
 ```bash title="Terminal"
 trace enable:true filter:MDS
 ```
+
 ```bash title="Terminal"
 trace enable:true filter:NOTIFYMANAGER
 ```
+
 ```bash title="Terminal"
 trace enable:true filter:TXPOWPROCESSOR
 ```
+
 ```bash title="Terminal"
 trace enable:false
 ```
+
 </Accordion>
 
 </Accordions>
-  
 
 ## Backup
 
@@ -690,69 +681,65 @@ Only use a seed re-sync if you have lost your node and do not have a backup.
 
 You can also check the integrity of your archive db.
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      'action:resync, action:integrity, action:export, action:import, action:inspect, action:addresscheck',
-  },
-  host: {
-    description:
-      '(Optional) ip:port of the archive node to sync from or check the integrity of.',
-  },
-  file: {
-    description:
-      '(Optional) name or path of the archive export gzip file to export/import/inspect',
-  },
-  phrase: {
-    description:
-      '(Optional) Your 24 word seed phrase in double quotes, to perform a seed re-sync.',
-  },
-  keys: {
-    description:
-      '(Optional) Number of keys to create if you need to do a seed re-sync.',
-  },
-  keyuses: {
-    description:
-      '(Optional) How many times at most you used your keys.',
-  },
-  address: {
-    description:
-      '(Optional) The wallet address to check.',
-  },
-}}
+  type={{
+    action: {
+      description:
+        "action:resync, action:integrity, action:export, action:import, action:inspect, action:addresscheck",
+    },
+    host: {
+      description:
+        "(Optional) ip:port of the archive node to sync from or check the integrity of.",
+    },
+    file: {
+      description:
+        "(Optional) name or path of the archive export gzip file to export/import/inspect",
+    },
+    phrase: {
+      description:
+        "(Optional) Your 24 word seed phrase in double quotes, to perform a seed re-sync.",
+    },
+    keys: {
+      description:
+        "(Optional) Number of keys to create if you need to do a seed re-sync.",
+    },
+    keyuses: {
+      description: "(Optional) How many times at most you used your keys.",
+    },
+    address: {
+      description: "(Optional) The wallet address to check.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  resync: {
-    description:
-      'Do a resync. If you wish to perform a chain re-sync only, do not provide your 24 word seed phrase.',
-  },
-  integrity: {
-    description:
-      'On an Archive node, check the integrity of your Archive db. No host required.',
-  },
-  export: {
-    description:
-      'Export your archive db to a gzip file.',
-  },
-  import: {
-    description:
-      'Do a chain or seed re-sync using an archive gzip file. Use with `file`.',
-  },
-  inspect: {
-    description:
-      'Inspect an archive export gzip file. If `last:1` then the file can re-sync any node from genesis.',
-  },
-  addresscheck: {
-    description:
-      'Check your archive db for spent and unspent coins at a specific address.',
-  },
-}}
+  type={{
+    resync: {
+      description:
+        "Do a resync. If you wish to perform a chain re-sync only, do not provide your 24 word seed phrase.",
+    },
+    integrity: {
+      description:
+        "On an Archive node, check the integrity of your Archive db. No host required.",
+    },
+    export: {
+      description: "Export your archive db to a gzip file.",
+    },
+    import: {
+      description:
+        "Do a chain or seed re-sync using an archive gzip file. Use with `file`.",
+    },
+    inspect: {
+      description:
+        "Inspect an archive export gzip file. If `last:1` then the file can re-sync any node from genesis.",
+    },
+    addresscheck: {
+      description:
+        "Check your archive db for spent and unspent coins at a specific address.",
+    },
+  }}
 />
 
 Examples:
@@ -789,39 +776,33 @@ archive action:inspect file:archiveexport-ddmmyy.gzip
 archive action:addresscheck address:Mx..
 ```
 
-
-
-
 </Accordion>
 
 <Accordion title="backup">
 
 `Backup your node. Uses a timestamped name by default.`
 
-
 <CommandTable
-type={{
-  password: {
-    description:
-      '(Optional) Set a password using letters and numbers only.',
-    type: 'True',
-  },
-  file: {
-    description:
-      '(Optional) Specify a filename ending in .bak, optionally include a local path for the backup.',
-    type: 'True',
-  },
-  auto: {
-    description:
-      '(Optional) true or false, true will schedule a non-password protected backup every 24 hours.',
-    type: 'True',
-  },
-  maxhistory: {
-    description:
-      '(Optional) Max relevant TxPoW to add - your history.',
-    type: 'True',
-  },
-}}
+  type={{
+    password: {
+      description: "(Optional) Set a password using letters and numbers only.",
+      type: "True",
+    },
+    file: {
+      description:
+        "(Optional) Specify a filename ending in .bak, optionally include a local path for the backup.",
+      type: "True",
+    },
+    auto: {
+      description:
+        "(Optional) true or false, true will schedule a non-password protected backup every 24 hours.",
+      type: "True",
+    },
+    maxhistory: {
+      description: "(Optional) Max relevant TxPoW to add - your history.",
+      type: "True",
+    },
+  }}
 />
 
 Examples:
@@ -854,42 +835,36 @@ backup auto:true
 
 You must be running with the -megammr start up parameter.
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:info, action:export, action:import',
-    type: 'True',
-  },
-  file: {
-    description:
-      '(Optional) A .mmr file. Use with export and import.',
-    type: 'True',
-  },
-}}
+  type={{
+    action: {
+      description: "(Optional) action:info, action:export, action:import",
+      type: "True",
+    },
+    file: {
+      description: "(Optional) A .mmr file. Use with export and import.",
+      type: "True",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  info: {
-    description:
-      'Show info about your MegaMMR.',
-    type: 'True',
-  },
-  export: {
-    description:
-      'Export a MegaMMR data file.',
-    type: 'True',
-  },
-  import: {
-    description:
-      'Import a MegaMMR data file.',
-    type: 'True',
-  },
-}}
+  type={{
+    info: {
+      description: "Show info about your MegaMMR.",
+      type: "True",
+    },
+    export: {
+      description: "Export a MegaMMR data file.",
+      type: "True",
+    },
+    import: {
+      description: "Import a MegaMMR data file.",
+      type: "True",
+    },
+  }}
 />
 
 Examples:
@@ -924,56 +899,51 @@ You can load an old backup and resync to the chain tip aswell.
 The host you connect to MUST be running with -megammr.
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:mydetails, action:resync',
-  },
-  host: {
-    description:
-      'ip:port of the node to sync from. Use with action:resync.',
-  },
-  phrase: {
-    description:
-      '(Optional) To seed re-sync, enter your seed phrase in double quotes. Use with action:resync.',
-  },
-  anyphrase: {
-    description:
-      '(Optional) true or false. If you set a custom seed phrase on startup, you can set this to true. Default is false.',
-  },
-  keys: {
-    description:
-      '(Optional) Number of keys to create if you need to do a seed re-sync. Default is 64.',
-  },
-  keyuses: {
-    description:
-      '(Optional) How many times at most you used your keys.. Every time you re-sync with seed phrase this needs to be higher as Minima Signatures are stateful. Defaults to 1000 - the max is 262144 for normal keys.',
-  },
-  file: {
-    description:
-      '(Optional) Specify the filename or local path of the backup to restore',
-  },
-  password: {
-    description:
-      '(Optional) Enter the password of the backup',
-  },
-}}
+  type={{
+    action: {
+      description: "(Optional) action:mydetails, action:resync",
+    },
+    host: {
+      description: "ip:port of the node to sync from. Use with action:resync.",
+    },
+    phrase: {
+      description:
+        "(Optional) To seed re-sync, enter your seed phrase in double quotes. Use with action:resync.",
+    },
+    anyphrase: {
+      description:
+        "(Optional) true or false. If you set a custom seed phrase on startup, you can set this to true. Default is false.",
+    },
+    keys: {
+      description:
+        "(Optional) Number of keys to create if you need to do a seed re-sync. Default is 64.",
+    },
+    keyuses: {
+      description:
+        "(Optional) How many times at most you used your keys.. Every time you re-sync with seed phrase this needs to be higher as Minima Signatures are stateful. Defaults to 1000 - the max is 262144 for normal keys.",
+    },
+    file: {
+      description:
+        "(Optional) Specify the filename or local path of the backup to restore",
+    },
+    password: {
+      description: "(Optional) Enter the password of the backup",
+    },
+  }}
 />
-
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  mydetails: {
-    description:
-      'Shows which addresses and public keys you are searching for.',
-  },
-  resync: {
-    description:
-      'Perform the actual MegaMMR resync. (i.e. QuickSync)',
-  },
-}}
+  type={{
+    mydetails: {
+      description:
+        "Shows which addresses and public keys you are searching for.",
+    },
+    resync: {
+      description: "Perform the actual MegaMMR resync. (i.e. QuickSync)",
+    },
+  }}
 />
 
 Examples:
@@ -1008,54 +978,50 @@ Additionally export the MySQL db to a .dat or .gzip file for resyncing with 'res
 
 You can also create a coins db in MySQL to search for coins using SQL queries.
 
-
 <CommandTable
-type={{
-  host: {
-    description:
-      'The ip:port (or name of Docker container) running the MySQL db.',
-  },
-  database: {
-    description:
-      'name of the MySQL db being used to store the archive db data.',
-  },
-  user: {
-    description:
-      'MySQL user to login to as.',
-  },
-  password: {
-    description:
-      'MySQL password for the user provided.',
-  },
-  readonly: {
-    description:
-      'true or false, connect in readonly mode.',
-  },
-  action: {
-    description:
-      'action:info, action:integrity, action:update, action:addresscheck, action:autobackup, action:resync, action:wipe, action:h2export, action:h2import, action:rawexport, action:findtxpow',
-  },
-  phrase: {
-    description:
-      '(Optional) Use with action:resync. The BIP39 seed phrase of the node to re-sync.',
-  },
-  keys: {
-    description:
-      '(Optional) If the seed phrase is provided, optionally set the number of keys to create.',
-  },
-  keyuses: {
-    description:
-      '(Optional) If the seed phrase is provided, optionally set the number of previous uses for each key created.',
-  },
-  address: {
-    description:
-      '(Optional) Use with action:checkaddress. The address to check the history of spent and unspent coins for.',
-  },
-  enable: {
-    description:
-      '(Optional) Use with action:autobackup. Automatically save data to MySQL archive DB.',
-  },
-}}
+  type={{
+    host: {
+      description:
+        "The ip:port (or name of Docker container) running the MySQL db.",
+    },
+    database: {
+      description:
+        "name of the MySQL db being used to store the archive db data.",
+    },
+    user: {
+      description: "MySQL user to login to as.",
+    },
+    password: {
+      description: "MySQL password for the user provided.",
+    },
+    readonly: {
+      description: "true or false, connect in readonly mode.",
+    },
+    action: {
+      description:
+        "action:info, action:integrity, action:update, action:addresscheck, action:autobackup, action:resync, action:wipe, action:h2export, action:h2import, action:rawexport, action:findtxpow",
+    },
+    phrase: {
+      description:
+        "(Optional) Use with action:resync. The BIP39 seed phrase of the node to re-sync.",
+    },
+    keys: {
+      description:
+        "(Optional) If the seed phrase is provided, optionally set the number of keys to create.",
+    },
+    keyuses: {
+      description:
+        "(Optional) If the seed phrase is provided, optionally set the number of previous uses for each key created.",
+    },
+    address: {
+      description:
+        "(Optional) Use with action:checkaddress. The address to check the history of spent and unspent coins for.",
+    },
+    enable: {
+      description:
+        "(Optional) Use with action:autobackup. Automatically save data to MySQL archive DB.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
@@ -1111,30 +1077,36 @@ type={{
 
 />
 
-
 Examples:
 
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:info
 ```
+
 ```bash title="Terminal"
 mysql host:dockermysql database:archivedb user:archiveuser password:archivepassword action:info
 ```
+
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:integrity
 ```
+
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:update
 ```
+
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:addresscheck address:MxG08..
 ```
+
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync
 ```
+
 ```bash title="Terminal"
 mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync phrase:"24 WORDS HERE" keys:90 keyuses:2000
 ```
+
 </Accordion>
 
 <Accordion title="mysqlcoins">
@@ -1148,103 +1120,90 @@ Use the same database you already use for your TxBlocks. This creates a new tabl
 You can then search for coins using SQL queries.
 
 <CommandTable
-type={{
-  host: {
-    description:
-      'The ip:port (or name of Docker container) running the MySQL db.',
-  },
-  database: {
-    description:
-      'name of the MySQL db being used to store the archive db data.',
-  },
-  user: {
-    description:
-      'MySQL user to login to as.',
-  },
-  password: {
-    description:
-      'MySQL password for the user provided.',
-  },
-  readonly: {
-    description:
-      '(Optional) true or false, connect in readonly mode.',
-  },
-  logs: {
-    description:
-      '(Optional) true or false, show detailed logs, default true.',
-  },
-  action: {
-    description:
-      'action:info, action:update, action:wipe, action:search',
-  },
-  maxcoins: {
-    description:
-      '(Optional) The maximum number of coins to add. The update can take a VERY long time so this way you can limit it.',
-  },
-  where: {
-    description:
-      '(Optional) The search criteria. String data MUST be in single quotes. You can use multiple parameters.',
-  },
-  query: {
-    description:
-      '(Optional) the full sql query',
-  },
-  address: {
-    description:
-      '(Optional) the address to check for',
-  },
-  spent: {
-    description:
-      '(Optional) true or false, if the coin is spent or unspent',
-  },
-  limit: {
-    description:
-      '(Optional) limit the number of rows returned',
-  }
-}}
+  type={{
+    host: {
+      description:
+        "The ip:port (or name of Docker container) running the MySQL db.",
+    },
+    database: {
+      description:
+        "name of the MySQL db being used to store the archive db data.",
+    },
+    user: {
+      description: "MySQL user to login to as.",
+    },
+    password: {
+      description: "MySQL password for the user provided.",
+    },
+    readonly: {
+      description: "(Optional) true or false, connect in readonly mode.",
+    },
+    logs: {
+      description:
+        "(Optional) true or false, show detailed logs, default true.",
+    },
+    action: {
+      description: "action:info, action:update, action:wipe, action:search",
+    },
+    maxcoins: {
+      description:
+        "(Optional) The maximum number of coins to add. The update can take a VERY long time so this way you can limit it.",
+    },
+    where: {
+      description:
+        "(Optional) The search criteria. String data MUST be in single quotes. You can use multiple parameters.",
+    },
+    query: {
+      description: "(Optional) the full sql query",
+    },
+    address: {
+      description: "(Optional) the address to check for",
+    },
+    spent: {
+      description: "(Optional) true or false, if the coin is spent or unspent",
+    },
+    limit: {
+      description: "(Optional) limit the number of rows returned",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  info: {
-    description:
-      'Get information about the Coins DB.',
-  },
-  update: {
-    description:
-      'Update the coins db from the latest coin added with MySQL data.',
-  },
-  wipe: {
-    description:
-      'Wipe the Coins DB.',
-  },
-  search: {
-    description:
-      'Perform a search on the data. You can specify any valid query params.',
-  }
-}}
+  type={{
+    info: {
+      description: "Get information about the Coins DB.",
+    },
+    update: {
+      description:
+        "Update the coins db from the latest coin added with MySQL data.",
+    },
+    wipe: {
+      description: "Wipe the Coins DB.",
+    },
+    search: {
+      description:
+        "Perform a search on the data. You can specify any valid query params.",
+    },
+  }}
 />
 
 Examples:
 
 ```bash title="Terminal"
-mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
 ```
 
 ```bash title="Terminal"
-mysqlcoins action:search where:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103'" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+mysqlcoins action:search where:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103'" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
 ```
 
 ```bash title="Terminal"
-mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103' AND state LIKE '%0xFFEEDD%' LIMIT 10" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser 
+mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103' AND state LIKE '%0xFFEEDD%' LIMIT 10" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
 ```
-
-
 
 </Accordion>
-
 
 <Accordion title="reset">
 
@@ -1252,57 +1211,53 @@ mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B26149
 
 You MUST wait until all your original keys are created before this is allowed.
 
-
 <CommandTable
-type={{
-  archivefile: {
-    description:
-      'Specify the the archive **.dat** or **.gzip** file. Should be recently exported from an archive node.',
-  },
-  action: {
-    description:
-      'action:chainsync, action:seedsync, action:restore',
-  },
-  file: {
-    description:
-      '(Optional) Specify the filename or local path of the backup to restore',
-  },
-  password: {
-    description:
-      '(Optional) Enter the password of the backup',
-  },
-  phrase: {
-    description:
-      '(Optional) Your 24 word seed phrase in double quotes, to import a seed phrase and sync the entire chain.',
-  },
-  keys: {
-    description:
-      '(Optional) Number of keys to create if you need to do a seed re-sync.',
-  },
-  keyuses: {
-    description:
-      '(Optional) How many times at most you used your keys.',
-  }
-}}
+  type={{
+    archivefile: {
+      description:
+        "Specify the the archive **.dat** or **.gzip** file. Should be recently exported from an archive node.",
+    },
+    action: {
+      description: "action:chainsync, action:seedsync, action:restore",
+    },
+    file: {
+      description:
+        "(Optional) Specify the filename or local path of the backup to restore",
+    },
+    password: {
+      description: "(Optional) Enter the password of the backup",
+    },
+    phrase: {
+      description:
+        "(Optional) Your 24 word seed phrase in double quotes, to import a seed phrase and sync the entire chain.",
+    },
+    keys: {
+      description:
+        "(Optional) Number of keys to create if you need to do a seed re-sync.",
+    },
+    keyuses: {
+      description: "(Optional) How many times at most you used your keys.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  chainsync: {
-    description:
-      'Re-sync all blocks from the archivefile to get back onto the right chain. Seed phrase is not required, the private keys will remain unchanged.',
-  },
-  seedsync: {
-    description:
-      'Wipe the wallet and re-generate your keys from your seed phrase. Your coins will be restored.',
-  },
-  restore: {
-    description:
-      'Restore a backup and re-sync the entire chain from the archivefile.',
-  }
-}}
+  type={{
+    chainsync: {
+      description:
+        "Re-sync all blocks from the archivefile to get back onto the right chain. Seed phrase is not required, the private keys will remain unchanged.",
+    },
+    seedsync: {
+      description:
+        "Wipe the wallet and re-generate your keys from your seed phrase. Your coins will be restored.",
+    },
+    restore: {
+      description:
+        "Restore a backup and re-sync the entire chain from the archivefile.",
+    },
+  }}
 />
 
 Examples:
@@ -1327,20 +1282,18 @@ reset archivefile:archiveexport-jul23.gz action:restore file:backup-jul23.bak pa
 
 You MUST wait until all your original keys are created before this is allowed.
 
-
 <CommandTable
-type={{
-  file: {
-    description:
-      'Specify the filename or local path of the backup to restore',
-    type: 'True',
-  },
-  password: {
-    description:
-      '(optional) Enter the password of the backup',
-    type: 'True',
-  }
-}}
+  type={{
+    file: {
+      description:
+        "Specify the filename or local path of the backup to restore",
+      type: "True",
+    },
+    password: {
+      description: "(optional) Enter the password of the backup",
+      type: "True",
+    },
+  }}
 />
 
 Examples:
@@ -1359,26 +1312,23 @@ The node will be restored and an archive chain sync will commence from the last 
 
 You MUST wait until all your original keys are created before this is allowed.
 
-
 <CommandTable
-type={{
-  file: {
-    description:
-      'Specify the filename or local path of the backup to restore',
-  },
-  password: {
-    description:
-      '(Optional) Enter the password of the backup',
-  },
-  host: {
-    description:
-      '(Optional) ip:port of the archive node to sync from.',
-  },
-  keyuses: {
-    description:
-      '(Optional) Increment (not set) the number of key uses per key.',
-  }
-}}
+  type={{
+    file: {
+      description:
+        "Specify the filename or local path of the backup to restore",
+    },
+    password: {
+      description: "(Optional) Enter the password of the backup",
+    },
+    host: {
+      description: "(Optional) ip:port of the archive node to sync from.",
+    },
+    keyuses: {
+      description:
+        "(Optional) Increment (not set) the number of key uses per key.",
+    },
+  }}
 />
 
 Examples:
@@ -1401,52 +1351,48 @@ restoresync file:my-full-backup-01-Jan-22 password:Longsecurepassword456 keyuses
 DO NOT SHARE YOUR SEED PHRASE WITH ANYONE.
 
 BE CAREFUL. ENSURE YOU HAVE A BACKUP AND SECURE RECORD OF YOUR PASSPHRASE BEFORE LOCKING.
+
 </Callout>
 
 You must have your passphrase to unlock your private keys.
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:seed, action:wipekeys, action:restorekeys, action:passwordlock, action:passwordunlock',
-  },
-  seed: {
-    description:
-      '(Optional) Enter your seed to lock your node. This will delete your private keys.',
-  },
-  phrase: {
-    description:
-      '(Optional) Enter your passphrase in double quotes to restore your node. This will reinstate your private keys.',
-  }
-}}
+  type={{
+    action: {
+      description:
+        "(Optional) action:seed, action:wipekeys, action:restorekeys, action:passwordlock, action:passwordunlock",
+    },
+    seed: {
+      description:
+        "(Optional) Enter your seed to lock your node. This will delete your private keys.",
+    },
+    phrase: {
+      description:
+        "(Optional) Enter your passphrase in double quotes to restore your node. This will reinstate your private keys.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  seed: {
-    description:
-      'Show your seed phrase. The default.',
-  },
-  wipekeys: {
-    description:
-      'Wipe your private keys - keep the public.',
+  type={{
+    seed: {
+      description: "Show your seed phrase. The default.",
     },
-  restorekeys: {
-    description:
-      'Restore your private keys.',
-  },
-  passwordlock: {
-    description:
-      'Lock your node by password encrypting private keys.',
-  },
-  passwordunlock: {
-    description:
-      'Unlock your node to reinstating your private keys.',
-  }
-}}
+    wipekeys: {
+      description: "Wipe your private keys - keep the public.",
+    },
+    restorekeys: {
+      description: "Restore your private keys.",
+    },
+    passwordlock: {
+      description: "Lock your node by password encrypting private keys.",
+    },
+    passwordunlock: {
+      description: "Unlock your node to reinstating your private keys.",
+    },
+  }}
 />
 
 Examples:
@@ -1454,15 +1400,19 @@ Examples:
 ```bash title="Terminal"
   vault action:wipekeys seed:0xDD4E..
 ```
+
 ```bash title="Terminal"
   vault action:restorekeys phrase:\"SPRAY LAMP..\"
 ```
+
 ```bash title="Terminal"
 vault action:passwordlock password:your_password
 ```
+
 ```bash title="Terminal"
 vault action:passwordlock password:your_password confirm:your_password
 ```
+
 ```bash title="Terminal"
 vault action:passwordunlock password:your_password
 ```
@@ -1470,7 +1420,6 @@ vault action:passwordunlock password:your_password
 </Accordion>
 
 </Accordions>
-
 
 ## MiniDapp System
 
@@ -1485,32 +1434,71 @@ DO NOT give WRITE permissions to MiniDapps you do not trust!
 Accept/deny pending commands from MiniDapps with READ permissions.
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) list, install, update, uninstall, pending, accept, deny, permission, publicmds',
-  },
-  file: {
-    description:
-      '(Optional) The file name of the MiniDapp to install. Can either be in the Minima folder or specify the file path.',
-  },
-  uid: {
-    description:
-      '(Optional) The uid of the MiniDapp to update, uninstall.',
-  },
-  trust: {
-    description:
-      '(Optional) The ip:port to send a message to. Use with action:send.',
-  },
-  enable: {
-    description:
-      '(Optional) true or false, default is false. Enable the public wallet on https://nodeip:port/publicmds/.',
-  }
-}}
+  type={{
+    action: {
+      description:
+        "(Optional) list, install, update, uninstall, pending, accept, deny, permission, publicmds",
+    },
+    file: {
+      description:
+        "(Optional) The file name of the MiniDapp to install. Can either be in the Minima folder or specify the file path.",
+    },
+    uid: {
+      description: "(Optional) The uid of the MiniDapp to update, uninstall.",
+    },
+    trust: {
+      description:
+        "(Optional) The ip:port to send a message to. Use with action:send.",
+    },
+    enable: {
+      description:
+        "(Optional) true or false, default is false. Enable the public wallet on https://nodeip:port/publicmds/.",
+    },
+  }}
+/>
+
+Parameters used with the `action:` parameter:
+
+<CommandTable
+  type={{
+    list: {
+      description: " List your installed MiniDapps. Default parameter.",
+    },
+    install: {
+      description:
+        "Install a new MiniDapp and optionally set its permission. Must specify 'file'.",
+    },
+    update: {
+      description:
+        "Update and replace an existing MiniDapp. Must specify MiniDapp 'uid' and 'file' of new MiniDapp.",
+    },
+    uninstall: {
+      description: "Uninstall a MiniDapp. Must specify MiniDapp 'uid'.",
+    },
+    pending: {
+      description:
+        "List all pending commands waiting to be accepted or denied.",
+    },
+    accept: {
+      description:
+        "Accept a pending command. Must specify 'uid' of the pending command.",
+    },
+    deny: {
+      description:
+        "Deny a pending command. Must specify 'uid' of the pending command.",
+    },
+    permission: {
+      description:
+        "Set permission for a MiniDapp to READ or WRITE. Must specify existing MiniDapp 'uid' and 'trust'.",
+    },
+    publicmds: {
+      description:
+        "Turn publicly accessible wallet on or off. (v1.0.41 onwards)",
+    },
+  }}
 />
 
 Examples:
-
 
 ```bash title="Terminal"
 mds action:list
@@ -1519,31 +1507,34 @@ mds action:list
 ```bash title="Terminal"
 mds action:install file:wallet_1.0.mds.zip
 ```
+
 ```bash title="Terminal"
 mds action:install file:/Users/MyUser/Downloads/wallet_1.0.mds.zip trust:write
 ```
+
 ```bash title="Terminal"
 mds action:update uid:0xABA3.. file:wallet_2.0.mds.zip
 ```
+
 ```bash title="Terminal"
 mds action:uninstall uid:0xABA3..
 ```
+
 ```bash title="Terminal"
 mds action:pending
 ```
+
 ```bash title="Terminal"
 mds action:accept uid:0xCDF6..
 ```
+
 ```bash title="Terminal"
 mds action:deny uid:0xCDF6..
 ```
+
 ```bash title="Terminal"
 mds action:permission uid:0xABA3.. trust:write
 ```
-
-
-
-
 
 </Accordion>
 
@@ -1556,6 +1547,7 @@ Can be called from a MiniDapp to check whether it is in READ or WRITE mode.
 ```bash title="Terminal"
 checkmode
 ```
+
 </Accordion>
 
 <Accordion title="checkpending">
@@ -1565,6 +1557,7 @@ checkmode
 ```bash title="Terminal"
 checkpending
 ```
+
 </Accordion>
 
 <Accordion title="checkrestore">
@@ -1576,10 +1569,10 @@ Check whether Minima is currently being restored, is shutting down and if shutdo
 ```bash title="Terminal"
 checkrestore
 ```
+
 </Accordion>
 
 </Accordions>
-
 
 ## Network
 
@@ -1593,14 +1586,12 @@ Connect to another node to join the main network or to create a private test net
 Set your own host using the -host parameter at start up.
 
 <CommandTable
-type={{
-  host: {
-    description:
-      'The external ip:port of the node to connect to.',
-  }
-}}
+  type={{
+    host: {
+      description: "The external ip:port of the node to connect to.",
+    },
+  }}
 />
-
 
 Examples:
 
@@ -1616,14 +1607,13 @@ connect host:94.0.239.117:9001
 
 Optionally disconnect from all hosts.
 
-
 <CommandTable
-type={{
-  uid: {
-    description:
-      'Use \'all\' to disconnect from all hosts or enter the uid of the host to disconnect from.',
-  }
-}}
+  type={{
+    uid: {
+      description:
+        "Use 'all' to disconnect from all hosts or enter the uid of the host to disconnect from.",
+    },
+  }}
 />
 
 Examples:
@@ -1642,18 +1632,16 @@ disconnect uid:CVNPMLPOCQ0HQ
 
 `Send a message to one or all of your direct peers.`
 
-
 <CommandTable
-type={{
-  data: {
-    description:
-      'The message as a string.',
-  },
-  uid: {
-    description:
-      '(Optional) Leave blank to send a message to all peers or enter the uid of the peer to send the message to.',
-  }
-}}
+  type={{
+    data: {
+      description: "The message as a string.",
+    },
+    uid: {
+      description:
+        "(Optional) Leave blank to send a message to all peers or enter the uid of the peer to send the message to.",
+    },
+  }}
 />
 
 Examples:
@@ -1673,31 +1661,27 @@ network
 ```
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) list, reset, recalculateip',
-  }
-}}
+  type={{
+    action: {
+      description: "(Optional) list, reset, recalculateip",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List the direct peers you are connected to.',
-  },
-  reset: {
-    description:
-      'Restart the traffic counter from 0.',
-  },
-  recalculateip: {
-    description:
-      'Reset your IP - when you move to a different WiFi.',
-    }
-}}
+  type={{
+    list: {
+      description: "List the direct peers you are connected to.",
+    },
+    reset: {
+      description: "Restart the traffic counter from 0.",
+    },
+    recalculateip: {
+      description: "Reset your IP - when you move to a different WiFi.",
+    },
+  }}
 />
 
 Examples:
@@ -1705,12 +1689,15 @@ Examples:
 ```bash title="Terminal"
 network
 ```
+
 ```bash title="Terminal"
 network action:list
 ```
+
 ```bash title="Terminal"
 network action:reset
 ```
+
 ```bash title="Terminal"
 network action:recalculateip
 ```
@@ -1722,32 +1709,27 @@ network action:recalculateip
 `Prints the peers list this node has. P2P must be enabled.`
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) list, addpeers',
-  },
-  peerslist: {
-    description:
-      '(Optional) JSON array of new peers [ip:port,ip:port,..]',
-  }
-}}
+  type={{
+    action: {
+      description: "(Optional) list, addpeers",
+    },
+    peerslist: {
+      description: "(Optional) JSON array of new peers [ip:port,ip:port,..]",
+    },
+  }}
 />
-
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List your peers.',
-  },
-  addpeers: {
-    description:
-      'Add a list of new peers.',
-  }
-}}
+  type={{
+    list: {
+      description: "List your peers.",
+    },
+    addpeers: {
+      description: "Add a list of new peers.",
+    },
+  }}
 />
 
 Examples:
@@ -1755,30 +1737,30 @@ Examples:
 ```bash title="Terminal"
 peers
 ```
+
 ```bash title="Terminal"
 peers action:list
 ```
+
 ```bash title="Terminal"
 peers action:addpeers peerslist:["31.125.188.214:9001","94.0.239.117:9001"]
 ```
+
 </Accordion>
 
 <Accordion title="ping">
 
 `Ping a host and get back Minima Node info.`
 
-
 <CommandTable
-type={{
-  host: {
-    description:
-      'ip:port to ping.',
-  }
-}}
+  type={{
+    host: {
+      description: "ip:port to ping.",
+    },
+  }}
 />
 
 Examples:
-
 
 ```bash title="Terminal"
 ping host:
@@ -1791,20 +1773,19 @@ ping host:
 `Enable and disable RPC on port 9005 (default is off).`
 
 <CommandTable
-type={{
-  enable: {
-    description:
-      'true or false, true to enable rpc or false to disable.',
-  },
-  ssl: {
-    description:
-      'true or false, true to enable Self signed SSL - you can use stunnel yourself.',
-  },
-  password: {
-    description:
-      'the Basic Auth password used in headers - ONLY secure if used with SSL.',
-  }
-}}
+  type={{
+    enable: {
+      description: "true or false, true to enable rpc or false to disable.",
+    },
+    ssl: {
+      description:
+        "true or false, true to enable Self signed SSL - you can use stunnel yourself.",
+    },
+    password: {
+      description:
+        "the Basic Auth password used in headers - ONLY secure if used with SSL.",
+    },
+  }}
 />
 
 Examples:
@@ -1831,45 +1812,37 @@ rpc enable:false
 
 `Add a web hook that is called with Minima events as they happen.`
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) list, add, remove, clear',
-  },
-  hook: {
-    description:
-      '(Optional) The URL, must be a POST endpoint.',
-  },
-  filter: {
-    description:
-      '(Optional) Filters which events get posted.',
-  }
-}}
+  type={{
+    action: {
+      description: "(Optional) list, add, remove, clear",
+    },
+    hook: {
+      description: "(Optional) The URL, must be a POST endpoint.",
+    },
+    filter: {
+      description: "(Optional) Filters which events get posted.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List your existing webhooks.',
-  },
-  add: {
-    description:
-      'Add a new webhook.',
-  },
-  remove: {
-    description:
-      'Remove an existing webhook.',
-  },
-  clear: {
-    description:
-      'Clear the existing webhooks.',
-  }
-}}
+  type={{
+    list: {
+      description: "List your existing webhooks.",
+    },
+    add: {
+      description: "Add a new webhook.",
+    },
+    remove: {
+      description: "Remove an existing webhook.",
+    },
+    clear: {
+      description: "Clear the existing webhooks.",
+    },
+  }}
 />
 
 Examples:
@@ -1893,6 +1866,7 @@ webhooks action:add hook:http://127.0.0.1/myapi.php filter:MINING
 ```bash title="Terminal"
 webhooks action:clear
 ```
+
 </Accordion>
 </Accordions>
 
@@ -1904,50 +1878,44 @@ webhooks action:clear
 
 `Manage your Maxima contacts. List, refresh, add, remove or search contacts.`
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      'action:list, add, remove, search',
-  },
-  contact: {
-    description:
-      '(Optional) The Maxima contact address of another node. Can be found using the "maxima" command.',
-  },
-  id: {
-    description:
-      '(Optional) The id of an existing contact to remove or search for.',
-  },
-  publickey: {
-    description:
-      '(Optional) The Maxima public key of an existing contact to remove or search for.',
-  }
-}}
+  type={{
+    action: {
+      description: "action:list, add, remove, search",
+    },
+    contact: {
+      description:
+        '(Optional) The Maxima contact address of another node. Can be found using the "maxima" command.',
+    },
+    id: {
+      description:
+        "(Optional) The id of an existing contact to remove or search for.",
+    },
+    publickey: {
+      description:
+        "(Optional) The Maxima public key of an existing contact to remove or search for.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List your existing webhooks.',
-  },
-  add: {
-    description:
-      'Add a new contact.',
-    type: 'True',
-  },
-  remove: {
-    description:
-      'Remove an existing contact.',
-  },
-  search: {
-    description:
-      'Search for a contact.',
-  }
-}}
+  type={{
+    list: {
+      description: "List your existing webhooks.",
+    },
+    add: {
+      description: "Add a new contact.",
+      type: "True",
+    },
+    remove: {
+      description: "Remove an existing contact.",
+    },
+    search: {
+      description: "Search for a contact.",
+    },
+  }}
 />
 
 Examples:
@@ -1963,12 +1931,15 @@ maxcontacts action:list
 ```bash title="Terminal"
 maxcontacts action:add contact:MxG18H..
 ```
+
 ```bash title="Terminal"
 maxcontacts action:remove id:1
 ```
+
 ```bash title="Terminal"
 maxcontacts action:search publickey:0x3081..
 ```
+
 </Accordion>
 
 <Accordion title="maxcreate">
@@ -1987,81 +1958,80 @@ maxcreate
 
 `Perform extra functions on Maxima.`
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      'action:staticmls, addpermanent, removepermanent, listpermanent, clearpermanent, getaddress, mlsinfo, allowallcontacts, addallowed, listallowed, clearallowed',
-  },
-  publickey: {
-    description:
-      '(Optional) The Maxima public key of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.',
-  },
-  maxaddress: {
-    description:
-      '(Optional) The Maxima maxaddress of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.',
-  },
-  enable: {
-    description:
-      '(Optional) true or false, use with action:allowallcontacts to enable or disable all new contacts.',
-  },
-  host: {
-    description:
-      '(Optional) The p2pidentity of a server node which is always online.',
-  }
-}}
+  type={{
+    action: {
+      description:
+        "action:staticmls, addpermanent, removepermanent, listpermanent, clearpermanent, getaddress, mlsinfo, allowallcontacts, addallowed, listallowed, clearallowed",
+    },
+    publickey: {
+      description:
+        "(Optional) The Maxima public key of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.",
+    },
+    maxaddress: {
+      description:
+        "(Optional) The Maxima maxaddress of the user who wants to share their permanent maxaddress to be publicly contactable over Maxima.",
+    },
+    enable: {
+      description:
+        "(Optional) true or false, use with action:allowallcontacts to enable or disable all new contacts.",
+    },
+    host: {
+      description:
+        "(Optional) The p2pidentity of a server node which is always online.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  staticmls: {
-    description:
-      'Set an unchanging Maxima Location Service (mls) host for yourself.',
-  },
-  addpermanent: {
-    description:
-      'On your static mls node, add your Maxima public key to allow `getaddress` requests from anyone.',
-  },
-  removepermanent: {
-    description:
-      'On your static mls node, remove your Maxima public key to stop allowing `getaddress` requests.',
-  },
-  listpermanent: {
-    description:
-      'On your static mls node, list all public keys currently allowing public requests for their contact address.',
-  },
-  clearpermanent: {
-    description:
-      'On your static mls node, remove ALL public keys currently allowing requests for their contact address.',
-  },
-  getaddress: {
-    description:
-      'Request the current contact address of a permanently accessible user from their static mls host.',
-  },
-  mlsinfo: {
-    description:
-      'List info about users using you as their mls and the public keys of their contacts.',
-  },
-  allowallcontacts: {
-    description:
-      'If you have shared your permanent maxaddress, you can disable/enable users adding you as a contact.',
-  },
-  addallowed: {
-    description:
-      'If `allowallcontacts` is disabled, you can authorize specific users to add you as a contact. Stored in RAM.',
-  },
-  listallowed: {
-    description:
-      'List all the public keys which are allowed to add you as a Maxima contact.',
-  },
-  clearallowed: {
-    description:
-      'Remove the public keys of ALL users which are allowed to add you as a Maxima contact.',
-  }
-}}
+  type={{
+    staticmls: {
+      description:
+        "Set an unchanging Maxima Location Service (mls) host for yourself.",
+    },
+    addpermanent: {
+      description:
+        "On your static mls node, add your Maxima public key to allow `getaddress` requests from anyone.",
+    },
+    removepermanent: {
+      description:
+        "On your static mls node, remove your Maxima public key to stop allowing `getaddress` requests.",
+    },
+    listpermanent: {
+      description:
+        "On your static mls node, list all public keys currently allowing public requests for their contact address.",
+    },
+    clearpermanent: {
+      description:
+        "On your static mls node, remove ALL public keys currently allowing requests for their contact address.",
+    },
+    getaddress: {
+      description:
+        "Request the current contact address of a permanently accessible user from their static mls host.",
+    },
+    mlsinfo: {
+      description:
+        "List info about users using you as their mls and the public keys of their contacts.",
+    },
+    allowallcontacts: {
+      description:
+        "If you have shared your permanent maxaddress, you can disable/enable users adding you as a contact.",
+    },
+    addallowed: {
+      description:
+        "If `allowallcontacts` is disabled, you can authorize specific users to add you as a contact. Stored in RAM.",
+    },
+    listallowed: {
+      description:
+        "List all the public keys which are allowed to add you as a Maxima contact.",
+    },
+    clearallowed: {
+      description:
+        "Remove the public keys of ALL users which are allowed to add you as a Maxima contact.",
+    },
+  }}
 />
 
 Examples:
@@ -2116,83 +2086,73 @@ maxextra action:clearallowed
 
 </Accordion>
 
-
 <Accordion title="maxima">
 
 `Check your Maxima details, send a message/data.`
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      'action:info, setname, hosts, send, sendall, refresh',
-  },
-  name: {
-    description:
-      '(Optional) The name of the user.',
-  },
-  id: {
-    description:
-      '(Optional) The id of the user.',
-  },
-  to: {
-    description:
-      '(Optional) The to of the user.',
-  },
-  publickey: {
-    description:
-      '(Optional) The public key of the user.',
-  },
-  application: {
-    description:
-      '(Optional) The application of the user.',
-  },
-  data: {
-    description:
-      '(Optional) The data of the user.',
-  },
-  poll: {
-    description:
-      '(Optional) true or false, true will poll the send action until successful.',
-    type: 'True',
-  },
-  delay: {
-    description:
-      '(Optional) Only used with poll or with sendall. Delay sending the message by this many milliseconds.',
-  }
-}}
+  type={{
+    action: {
+      description: "action:info, setname, hosts, send, sendall, refresh",
+    },
+    name: {
+      description: "(Optional) The name of the user.",
+    },
+    id: {
+      description: "(Optional) The id of the user.",
+    },
+    to: {
+      description: "(Optional) The to of the user.",
+    },
+    publickey: {
+      description: "(Optional) The public key of the user.",
+    },
+    application: {
+      description: "(Optional) The application of the user.",
+    },
+    data: {
+      description: "(Optional) The data of the user.",
+    },
+    poll: {
+      description:
+        "(Optional) true or false, true will poll the send action until successful.",
+      type: "True",
+    },
+    delay: {
+      description:
+        "(Optional) Only used with poll or with sendall. Delay sending the message by this many milliseconds.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  info: {
-    description:
-      'Show your Maxima details - name, publickey, staticmls, mls, local identity, and contact address.',
-  },
-  setname: {
-    description:
-      'Set your Maxima name so your contacts recognize you. Default "noname".',
-  },
-  hosts: {
-    description:
-      'List your Maxima hosts and see their Maxima public key, contact address, last seen time, and if you are connected.',
-  },
-  send: {
-    description:
-      'Send a message to a contact. Must specify "id|to|publickey", "application", and "data" parameters.',
-  },
-  sendall: {
-    description:
-      'Send a message to ALL your contacts. Must specify "application" and "data" parameters.',
-  },
-  refresh: {
-    description:
-      'Refresh your contacts by sending them a network message.',
-  }
-}}
+  type={{
+    info: {
+      description:
+        "Show your Maxima details - name, publickey, staticmls, mls, local identity, and contact address.",
+    },
+    setname: {
+      description:
+        'Set your Maxima name so your contacts recognize you. Default "noname".',
+    },
+    hosts: {
+      description:
+        "List your Maxima hosts and see their Maxima public key, contact address, last seen time, and if you are connected.",
+    },
+    send: {
+      description:
+        'Send a message to a contact. Must specify "id|to|publickey", "application", and "data" parameters.',
+    },
+    sendall: {
+      description:
+        'Send a message to ALL your contacts. Must specify "application" and "data" parameters.',
+    },
+    refresh: {
+      description: "Refresh your contacts by sending them a network message.",
+    },
+  }}
 />
 
 Examples:
@@ -2200,24 +2160,31 @@ Examples:
 ```bash title="Terminal"
 maxima action:info
 ```
+
 ```bash title="Terminal"
 maxima action:setname name:myname
 ```
+
 ```bash title="Terminal"
 maxima action:hosts
 ```
+
 ```bash title="Terminal"
 maxima action:send id:1 application:appname data:0xFED5..
 ```
+
 ```bash title="Terminal"
 maxima action:send to:MxG18H.. application:appname data:0xFED5..
 ```
+
 ```bash title="Terminal"
 maxima action:send publickey:0xCD34.. application:ip:port data:0xFED5.. poll:true
 ```
+
 ```bash title="Terminal"
 maxima action:refresh
 ```
+
 </Accordion>
 
 <Accordion title="maxsign">
@@ -2226,18 +2193,16 @@ maxima action:refresh
 
 Returns the signature of the data, signed with your Maxima private key or the specified key.
 
-
 <CommandTable
-type={{
-  data: {
-    description:
-      'The 0x HEX data to sign.',
-  },
-  privatekey: {
-    description:
-      '(Optional) The 0x HEX data of the private key from maxcreate. Uses your Maxima ID otherwise.',
-  }
-}}
+  type={{
+    data: {
+      description: "The 0x HEX data to sign.",
+    },
+    privatekey: {
+      description:
+        "(Optional) The 0x HEX data of the private key from maxcreate. Uses your Maxima ID otherwise.",
+    },
+  }}
 />
 
 Examples:
@@ -2249,28 +2214,25 @@ maxsign data:0xCD34..
 ```bash title="Terminal"
 maxsign data:0xCD34.. privatekey:0x3081..
 ```
+
 </Accordion>
 
 <Accordion title="maxverify">
 
 `Verify data with a Maxima public key. Returns valid true or false.`
 
-
 <CommandTable
-type={{
-  data: {
-    description:
-      'The 0x HEX data to verify the signature for.',
-  },
-  publickey: {
-    description:
-      'The Maxima public key of the signer.',
-  },
-  signature: {
-    description:
-      'The signature of the data.',
-  }
-}}
+  type={{
+    data: {
+      description: "The 0x HEX data to verify the signature for.",
+    },
+    publickey: {
+      description: "The Maxima public key of the signer.",
+    },
+    signature: {
+      description: "The signature of the data.",
+    },
+  }}
 />
 
 Examples:
@@ -2278,9 +2240,9 @@ Examples:
 ```bash title="Terminal"
 maxverify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
 ```
+
 </Accordion>
 </Accordions>
-
 
 ## Scripts
 
@@ -2292,22 +2254,21 @@ maxverify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
 
 Track ALL coins with this script address or just ones with state variables relevant to you.
 
-
 <CommandTable
-type={{
-  script: {
-    description:
-      'The script to add to your node. Your node will then know about coins with this script address.',
-  },
-  trackall: {
-    description:
-      'true or false, true will track all coins with this script address. false will only track coins with this script address that are relevant to you.',
-  },
-  clean: {
-    description:
-      '(Optional) true or false, true will clean the script to its minimal correct representation. Default is false.',
-  }
-}}
+  type={{
+    script: {
+      description:
+        "The script to add to your node. Your node will then know about coins with this script address.",
+    },
+    trackall: {
+      description:
+        "true or false, true will track all coins with this script address. false will only track coins with this script address that are relevant to you.",
+    },
+    clean: {
+      description:
+        "(Optional) true or false, true will clean the script to its minimal correct representation. Default is false.",
+    },
+  }}
 />
 
 Examples:
@@ -2333,12 +2294,11 @@ removescript
 ```
 
 <CommandTable
-type={{
-  address: {
-    description:
-      'The address of the script.',
-  }
-}}
+  type={{
+    address: {
+      description: "The address of the script.",
+    },
+  }}
 />
 
 Examples:
@@ -2359,34 +2319,32 @@ removescript address:MxFFE678768CDE..
 
 Scripts will be auto cleaned for you.
 
-
 <CommandTable
-type={{
-  script: {
-    description:
-      'The script to run, surrounded by double quotes.',
-  },
-  state: {
-    description:
-      '(Optional) State variable values to use when running the script. JSON object in the format {0:value,1:value,..}.',
-  },
-  prevstate: {
-    description:
-      '(Optional) The previous state variable values (for the input coin) to use when running the script. JSON object in the format {0:value,1:value,..}.',
-  },
-  globals: {
-    description:
-      '(Optional) The Global variable values to use when running the script. JSON object in the format {0:value,1:value,..}.',
-  },
-  signatures: {
-    description:
-      '(Optional) The signatures required for the script. JSON array.',
-  },
-  extrascripts: {
-    description:
-      '(Optional) Extra scripts required for MAST contracts. JSON object in the format {script:proof,..}.',
-  }
-}}
+  type={{
+    script: {
+      description: "The script to run, surrounded by double quotes.",
+    },
+    state: {
+      description:
+        "(Optional) State variable values to use when running the script. JSON object in the format {0:value,1:value,..}.",
+    },
+    prevstate: {
+      description:
+        "(Optional) The previous state variable values (for the input coin) to use when running the script. JSON object in the format {0:value,1:value,..}.",
+    },
+    globals: {
+      description:
+        "(Optional) The Global variable values to use when running the script. JSON object in the format {0:value,1:value,..}.",
+    },
+    signatures: {
+      description:
+        "(Optional) The signatures required for the script. JSON array.",
+    },
+    extrascripts: {
+      description:
+        "(Optional) Extra scripts required for MAST contracts. JSON object in the format {script:proof,..}.",
+    },
+  }}
 />
 
 Examples:
@@ -2409,15 +2367,12 @@ runscript script:"MAST 0x0E3.." extrascripts:\{"RETURN TRUE":"0x000.."}
 
 `List all scripts or search for a script / basic address your node is tracking.`
 
-
-
 <CommandTable
-type={{
-  address: {
-    description:
-      '(Optional) The address of the script.',
-  }
-}}
+  type={{
+    address: {
+      description: "(Optional) The address of the script.",
+    },
+  }}
 />
 
 Examples:
@@ -2425,13 +2380,14 @@ Examples:
 ```bash title="Terminal"
 scripts
 ```
+
 ```bash title="Terminal"
 scripts address:0xFED5..
 ```
+
 ```bash title="Terminal"
 scripts address:MxG087..
 ```
-
 
 </Accordion>
 
@@ -2446,7 +2402,6 @@ tutorial
 </Accordion>
 </Accordions>
 
-
 ## Search
 
 <Accordions>
@@ -2456,50 +2411,47 @@ tutorial
 `Search for coins that are relevant to you or in the unpruned chain.`
 
 <CommandTable
-type={{
-  relevant: {
-    description:
-      '(Optional) true or false, true will only return coins you are tracking. False will search all coins in the unpruned chain. Default is false unless no other parameters are provided.',
-  },
-  sendable: {
-    description:
-      '(Optional) true only, filter out coins that are not sendable, they might be locked in a contract. Default is to return sendable and unsendable coins.',
-  },
-  coinid: {
-    description:
-      '(Optional) A coinid, to search for a single coin.',
-  },
-  amount: {
-    description:
-      '(Optional) The coin value to search for.',
-  },
-  address: {
-    description:
-      '(Optional) Address of a coin to search for, could be a script address. Can be a 0x or Mx address.',
-  },
-  tokenid: {
-    description:
-      '(Optional) A tokenid, to search for coins of a specific token. Minima is 0x00.',
-  },
-  checkmempool: {
-    description:
-      '(Optional) Check if the coin is in the mempool.',
-  },
-  coinage: {
-    description:  
-      '(Optional) How old does the coin have to be.',
-  },
-  order: {
-    description:
-      '(Optional) Order asc or desc (Ascending or Descending).',
-  }
-}}
+  type={{
+    relevant: {
+      description:
+        "(Optional) true or false, true will only return coins you are tracking. False will search all coins in the unpruned chain. Default is false unless no other parameters are provided.",
+    },
+    sendable: {
+      description:
+        "(Optional) true only, filter out coins that are not sendable, they might be locked in a contract. Default is to return sendable and unsendable coins.",
+    },
+    coinid: {
+      description: "(Optional) A coinid, to search for a single coin.",
+    },
+    amount: {
+      description: "(Optional) The coin value to search for.",
+    },
+    address: {
+      description:
+        "(Optional) Address of a coin to search for, could be a script address. Can be a 0x or Mx address.",
+    },
+    tokenid: {
+      description:
+        "(Optional) A tokenid, to search for coins of a specific token. Minima is 0x00.",
+    },
+    checkmempool: {
+      description: "(Optional) Check if the coin is in the mempool.",
+    },
+    coinage: {
+      description: "(Optional) How old does the coin have to be.",
+    },
+    order: {
+      description: "(Optional) Order asc or desc (Ascending or Descending).",
+    },
+  }}
 />
 
 Examples:
+
 ```bash title="Terminal"
 coins
 ```
+
 ```bash title="Terminal"
 coins relevant:true sendable:true
 ```
@@ -2522,7 +2474,8 @@ coins relevant:true address:0xCEF6.. tokenid:0x00
 
 ```bash title="Terminal"
 coins relevant:true address:MxABC9..
-```    
+```
+
 </Accordion>
 
 <Accordion title="keys">
@@ -2531,37 +2484,31 @@ coins relevant:true address:MxABC9..
 
 Each public key can be used for signing securely 262144 (64^3) times.
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:list, action:checkkeys, action:new',
-  },
-  publickey: {
-    description:
-      '(Optional) The public key to search for.',
-  }
-}}
+  type={{
+    action: {
+      description: "(Optional) action:list, action:checkkeys, action:new",
+    },
+    publickey: {
+      description: "(Optional) The public key to search for.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List all your public keys.',
-  },
-  checkkeys: {
-    description:
-      'Check if your Public and Private keys are correct.',
-  },
-  new: {
-    description:
-      'Create a new key pair.',
-  }
-}}
+  type={{
+    list: {
+      description: "List all your public keys.",
+    },
+    checkkeys: {
+      description: "Check if your Public and Private keys are correct.",
+    },
+    new: {
+      description: "Create a new key pair.",
+    },
+  }}
 />
 
 Examples:
@@ -2569,16 +2516,18 @@ Examples:
 ```bash title="Terminal"
 keys
 ```
+
 ```bash title="Terminal"
 keys action:list
 ```
+
 ```bash title="Terminal"
 keys action:list publickey:0xFFEE56..
 ```
+
 ```bash title="Terminal"
 keys action:new
 ```
-
 
 </Accordion>
 
@@ -2588,37 +2537,33 @@ keys action:new
 
 Optionally import or export tokens to share token data.
 
-
 <CommandTable
-type={{
-  tokenid: {
-    description:
-      '(Optional) The tokenid of the token to search for or export.',
-  },
-  action: {
-    description:
-      '(Optional) The action to perform.',
-  },
-  data: {
-    description:
-      '(Optional) The data of the token to import, generated from the export.',
-  }
-}}
+  type={{
+    tokenid: {
+      description:
+        "(Optional) The tokenid of the token to search for or export.",
+    },
+    action: {
+      description: "(Optional) The action to perform.",
+    },
+    data: {
+      description:
+        "(Optional) The data of the token to import, generated from the export.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  import: {
-    description:
-      'Import a token.',
-  },
-  export: {
-    description:
-      'Export a token.',
-  }
-}}
+  type={{
+    import: {
+      description: "Import a token.",
+    },
+    export: {
+      description: "Export a token.",
+    },
+  }}
 />
 
 Examples:
@@ -2647,30 +2592,26 @@ tokens action:import data:0x000..
 
 Search by txpowid, block or 0x / Mx address.
 
-
 <CommandTable
-type={{
-  txpowid: {
-    description:
-      '(Optional) The txpowid of the TxPoW to search for.',
-  },
-  block: {
-    description:
-      '(Optional) Block number to search in. Must be in the unpruned chain.',
-  },
-  address: {
-    description:
-      '(Optional) 0x or Mx address. Search for TxPoWs containing this specific address.',
-  },
-  max: {
-    description:
-      '(Optional) The maximum number of TxPoWs to retrieve.',
-  }
-}}
+  type={{
+    txpowid: {
+      description: "(Optional) The txpowid of the TxPoW to search for.",
+    },
+    block: {
+      description:
+        "(Optional) Block number to search in. Must be in the unpruned chain.",
+    },
+    address: {
+      description:
+        "(Optional) 0x or Mx address. Search for TxPoWs containing this specific address.",
+    },
+    max: {
+      description: "(Optional) The maximum number of TxPoWs to retrieve.",
+    },
+  }}
 />
 
-Examples: 
-
+Examples:
 
 ```bash title="Terminal"
 txpow txpowid:0x000..
@@ -2686,7 +2627,6 @@ txpow address:0xCEF6..
 
 </Accordion>
 
-
 </Accordions>
 
 ## Send
@@ -2699,85 +2639,76 @@ txpow address:0xCEF6..
 
 Provide your Vault password to temporarily decrypt the private keys when creating the coin or signing a transaction.
 
-
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:create, action:getkey, action:list, action:spend, action:sign, action:post, action:view',
-  },
-  id: {
-    description:
-      '(Optional) The id of the multisig coin to search for or create.',
-  },
-  amount: {
-    description:
-      '(Optional) The amount of the multisig coin to create.',
-  },
-  publickeys: {
-    description:
-      '(Optional) The public keys to create the multisig coin with.',
-  },
-  required: {
-    description:
-      '(Optional) The number of public keys required to sign the multisig coin.',
-  },
-  root: {
-    description:
-      '(Optional) The root public key to create the multisig coin with.',
-  },
-  coinid: {
-    description:
-      '(Optional) The coinid of the multisig coin to spend.',
-  },
-  address: {
-    description:
-      '(Optional) The address to send the multisig coin to.',
-  },
-  file: {
-    description:
-      '(Optional) The file to create, sign or post.',
-  },
-  password: {
-    description:
-      '(Optional) The password to decrypt the private keys.',
-  }
-}}
+  type={{
+    action: {
+      description:
+        "(Optional) action:create, action:getkey, action:list, action:spend, action:sign, action:post, action:view",
+    },
+    id: {
+      description:
+        "(Optional) The id of the multisig coin to search for or create.",
+    },
+    amount: {
+      description: "(Optional) The amount of the multisig coin to create.",
+    },
+    publickeys: {
+      description:
+        "(Optional) The public keys to create the multisig coin with.",
+    },
+    required: {
+      description:
+        "(Optional) The number of public keys required to sign the multisig coin.",
+    },
+    root: {
+      description:
+        "(Optional) The root public key to create the multisig coin with.",
+    },
+    coinid: {
+      description: "(Optional) The coinid of the multisig coin to spend.",
+    },
+    address: {
+      description: "(Optional) The address to send the multisig coin to.",
+    },
+    file: {
+      description: "(Optional) The file to create, sign or post.",
+    },
+    password: {
+      description: "(Optional) The password to decrypt the private keys.",
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  create: {
-    description:
-      'Create a new multisig coin.',
-  },
-  getkey: {
-    description:
-      'Get one of your default public keys to be provided when creating the coin.',
-  },
-  list: {
-    description:
-      'List all existing multisig coins.',
-  },
-  spend: {
-    description:
-      'Create an unsigned transaction (.txn) file to spend a specified amount of a multisig coin.',
-  },
-  sign: {
-    description:
-      'Sign a multisig transaction (.txn) file with the relevant public keys and outputs a new signed file.',
-  },
-  post: {
-    description:
-      'Post the transaction to the network, must be signed as required by the contract before posting.',
-  },
-  view: {
-    description:
-      'View the details of a multisig transaction file.',
-  }
-}}
+  type={{
+    create: {
+      description: "Create a new multisig coin.",
+    },
+    getkey: {
+      description:
+        "Get one of your default public keys to be provided when creating the coin.",
+    },
+    list: {
+      description: "List all existing multisig coins.",
+    },
+    spend: {
+      description:
+        "Create an unsigned transaction (.txn) file to spend a specified amount of a multisig coin.",
+    },
+    sign: {
+      description:
+        "Sign a multisig transaction (.txn) file with the relevant public keys and outputs a new signed file.",
+    },
+    post: {
+      description:
+        "Post the transaction to the network, must be signed as required by the contract before posting.",
+    },
+    view: {
+      description: "View the details of a multisig transaction file.",
+    },
+  }}
 />
 
 Examples:
@@ -2785,6 +2716,7 @@ Examples:
 ```bash title="Terminal"
 multisig action:create id:2of3multisig amount:100 publickeys:["0xFED5..","0xABD6..","0xFD8B.."] required:2 password:your_password
 ```
+
 ```bash title="Terminal"
 multisig action:create id:3of3multisigroot amount:100 publickeys:["0xFED5..","0xABD6..","0xFD8B.."] required:3 root:0xFFE..
 ```
@@ -2796,6 +2728,7 @@ multisig action:list
 ```bash title="Terminal"
 multisig action:list id:2of3multisig
 ```
+
 ```bash title="Terminal"
 multisig action:spend id:3of3multisigroot amount:5 address:0xFF..
 ```
@@ -2826,77 +2759,73 @@ multisig action:post file:signed_multisig.txn
 
 </Accordion>
 
-
 <Accordion title="send">
 
 `Send Minima or custom tokens to a wallet or custom script address.`
 
 Optionally, send to multiple addresses in one transaction; split UTxOs; add state variables or include a burn.
 
-
 <CommandTable
-type={{
-  address: {
-    description:
-      '(Optional) A Minima 0x or Mx wallet address or custom script address.',
-  },
-  amount: {
-    description:
-      '(Optional) The amount of Minima or custom tokens to send to the specified address.',
-  },
-  multi: {
-    description:
-      '(Optional) JSON Array listing addresses and amounts to send in one transaction. Takes the format ["address:amount","address2:amount2",..], with each set in double quotes.',
-  },
-  tokenid: {
-    description:
-      '(Optional) If sending a custom token, you must specify its tokenid. Defaults to Minima (0x00).',
-  },
-  state: {
-    description:
-      '(Optional) List of state variables, if sending coins to a script. A JSON object in the format {"port":"value",..}.',
-  },
-  burn: {
-    description:
-      '(Optional) The amount of Minima to burn with this transaction.',
-  },
-  password: {
-    description:
-      '(Optional) If your Wallet is password locked, you can unlock it for this one transaction - then relock it.',
-  },
-  split: {
-    description:
-      '(Optional) You can set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.',
-  },
-  coinage: {
-    description:
-      '(Optional) How old must the coins be in blocks.',
-  },
-  debug: {
-    description:
-      '(Optional) true or false, true will print more detailed logs.',
-  },
-  dryrun: {
-    description:
-      '(Optional) true or false, true will simulate the send transaction but not execute it.',
-  },
-  mine: {
-    description:
-      '(Optional) true or false - should you mine the transaction immediately.',
-  },
-  fromaddress: {
-    description:
-      '(Optional) Only use this address for input coins.',
-  },
-  signkey: {
-    description:
-      '(Optional) Sign the txn with only this key (use with fromaddress).',
-  },
-  storestate: {
-    description:
-      '(Optional) true or false - defaults to true. Should the output coins store the state (will still appear in NOTIFYCOIN messages).',
-  }
-}}
+  type={{
+    address: {
+      description:
+        "(Optional) A Minima 0x or Mx wallet address or custom script address.",
+    },
+    amount: {
+      description:
+        "(Optional) The amount of Minima or custom tokens to send to the specified address.",
+    },
+    multi: {
+      description:
+        '(Optional) JSON Array listing addresses and amounts to send in one transaction. Takes the format ["address:amount","address2:amount2",..], with each set in double quotes.',
+    },
+    tokenid: {
+      description:
+        "(Optional) If sending a custom token, you must specify its tokenid. Defaults to Minima (0x00).",
+    },
+    state: {
+      description:
+        '(Optional) List of state variables, if sending coins to a script. A JSON object in the format {"port":"value",..}.',
+    },
+    burn: {
+      description:
+        "(Optional) The amount of Minima to burn with this transaction.",
+    },
+    password: {
+      description:
+        "(Optional) If your Wallet is password locked, you can unlock it for this one transaction - then relock it.",
+    },
+    split: {
+      description:
+        "(Optional) You can set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.",
+    },
+    coinage: {
+      description: "(Optional) How old must the coins be in blocks.",
+    },
+    debug: {
+      description:
+        "(Optional) true or false, true will print more detailed logs.",
+    },
+    dryrun: {
+      description:
+        "(Optional) true or false, true will simulate the send transaction but not execute it.",
+    },
+    mine: {
+      description:
+        "(Optional) true or false - should you mine the transaction immediately.",
+    },
+    fromaddress: {
+      description: "(Optional) Only use this address for input coins.",
+    },
+    signkey: {
+      description:
+        "(Optional) Sign the txn with only this key (use with fromaddress).",
+    },
+    storestate: {
+      description:
+        "(Optional) true or false - defaults to true. Should the output coins store the state (will still appear in NOTIFYCOIN messages).",
+    },
+  }}
 />
 
 Examples:
@@ -2932,31 +2861,28 @@ sendpoll
 ```
 
 <CommandTable
-type={{
-  action: {
-    description:
-      '(Optional) action:list, action:remove',
-  },
-  uid: {
-    description:
-      '(Optional) The uid of a "send" command you wish to remove from the polling list. Use with action:remove.',
-  }
-}}
+  type={{
+    action: {
+      description: "(Optional) action:list, action:remove",
+    },
+    uid: {
+      description:
+        '(Optional) The uid of a "send" command you wish to remove from the polling list. Use with action:remove.',
+    },
+  }}
 />
 
 Parameters used with the `action:` parameter:
 
 <CommandTable
-type={{
-  list: {
-    description:
-      'List all the "send" commands in the polling list.',
-  },
-  remove: {
-    description:
-      'Remove a "send" command from the polling list.',
-  }
-}}
+  type={{
+    list: {
+      description: 'List all the "send" commands in the polling list.',
+    },
+    remove: {
+      description: 'Remove a "send" command from the polling list.',
+    },
+  }}
 />
 
 Examples:
@@ -2983,52 +2909,51 @@ sendpoll action:remove uid:0x..
 
 `Create a txn but don't sign it.`
 
-Constructs and outputs an unsigned transaction to a file in the base folder. 
+Constructs and outputs an unsigned transaction to a file in the base folder.
 
-The output .txn file can then be imported to an offline node for signing. Must be done from an online node as the MMR proofs for the input coins are added. 
+The output .txn file can then be imported to an offline node for signing. Must be done from an online node as the MMR proofs for the input coins are added.
 
 Useful when the keys on an online node are wiped or password locked.
 
-
 <CommandTable
-type={{
-  address: {
-    description:
-      '(Optional) A Minima 0x or Mx wallet address or custom script address.',
-  },
-  amount: {
-    description:
-      '(Optional) The amount of Minima or custom tokens to send to the specified address.',
-  },
-  multi: {
-    description:
-      '(Optional) JSON Array listing addresses and amounts to send in one transaction.',
-  },
-  tokenid: {
-    description:
-      '(Optional) If sending a custom token, you must specify its tokenid.',
-  },
-  state: {
-    description:
-      '(Optional) List of state variables, if sending coins to a script.',
-  },
-  burn: {
-    description:
-      '(Optional) The amount of Minima to burn with this transaction.',
-  },
-  split: {
-    description:
-      '(Optional) Set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.',
-  },
-  file: {
-    description:
-      '(Optional) Specify the file to output, otherwise default chosen.',
-  },
-  debug: {
-    description:
-      '(Optional) true or false, true will print more detailed logs.',
-  }
-}}
+  type={{
+    address: {
+      description:
+        "(Optional) A Minima 0x or Mx wallet address or custom script address.",
+    },
+    amount: {
+      description:
+        "(Optional) The amount of Minima or custom tokens to send to the specified address.",
+    },
+    multi: {
+      description:
+        "(Optional) JSON Array listing addresses and amounts to send in one transaction.",
+    },
+    tokenid: {
+      description:
+        "(Optional) If sending a custom token, you must specify its tokenid.",
+    },
+    state: {
+      description:
+        "(Optional) List of state variables, if sending coins to a script.",
+    },
+    burn: {
+      description:
+        "(Optional) The amount of Minima to burn with this transaction.",
+    },
+    split: {
+      description:
+        "(Optional) Set the number of coins the recipient will receive, between 1 and 20. Default is 1. The amount being sent will be split into multiple coins of equal value. You can split your own coins by sending to your own address. Useful if you want to send multiple transactions without waiting for change to be confirmed.",
+    },
+    file: {
+      description:
+        "(Optional) Specify the file to output, otherwise default chosen.",
+    },
+    debug: {
+      description:
+        "(Optional) true or false, true will print more detailed logs.",
+    },
+  }}
 />
 
 Examples:
@@ -3059,26 +2984,23 @@ sendnosign amount:1 address:0xFF.. state:{"0":"0xEE..","1":"0xDD.."}
 
 `Sign a transaction previously created by the 'sendnosign' command, by specifying its .txn file.`
 
-Optionally, if the node is Vault password locked, provide the Vault password to decrypt the keys for signing. 
+Optionally, if the node is Vault password locked, provide the Vault password to decrypt the keys for signing.
 
-The keys will be automatically re-encrypted after signing. 
+The keys will be automatically re-encrypted after signing.
 
 Can be signed on an offline node, then posted from an online node.
 
-
 <CommandTable
-type={{
-  file: {
-    description:
-      'Name of the unsigned transaction (.txn) file to sign, located in the node\'s base folder. If not in the base folder, specify the full file path.',
-  },
-  password: {
-    description:
-      'The Vault password, if the node is password locked.',
-  }
-}}
+  type={{
+    file: {
+      description:
+        "Name of the unsigned transaction (.txn) file to sign, located in the node's base folder. If not in the base folder, specify the full file path.",
+    },
+    password: {
+      description: "The Vault password, if the node is password locked.",
+    },
+  }}
 />
-
 
 Examples:
 
@@ -3098,14 +3020,13 @@ sendsign file:C:\\Users\\unsignedtransaction-1674907380057.txn password:your_vau
 
 View the details of a transaction created by the 'sendnosign' command by specifying its .txn file.
 
-
 <CommandTable
-type={{
-  file: {
-    description:
-      'Name of the transaction (.txn) file to view, located in the node\'s base folder. If not in the base folder, specify the full file path.',
-  }
-}}
+  type={{
+    file: {
+      description:
+        "Name of the transaction (.txn) file to view, located in the node's base folder. If not in the base folder, specify the full file path.",
+    },
+  }}
 />
 
 Examples:
@@ -3126,14 +3047,13 @@ sendview file:C:\\Users\\unsignedtransaction-1674907380057.txn
 
 Must be posted from an online node within approximately 24 hours of creation to ensure MMR proofs are valid.
 
-
 <CommandTable
-type={{
-  file: {
-    description:
-      'Name of the signed transaction (.txn) file to post, located in the node\'s base folder. If not in the base folder, specify the full file path.',
-  }
-}}
+  type={{
+    file: {
+      description:
+        "Name of the signed transaction (.txn) file to post, located in the node's base folder. If not in the base folder, specify the full file path.",
+    },
+  }}
 />
 
 Examples:
@@ -3149,9 +3069,6 @@ sendpost file:C:\\Users\\signedtransaction-1674907380057.txn
 </Accordion>
 </Accordions>
 
-
-
-
 ## Signatures
 
 <Accordions>
@@ -3162,20 +3079,17 @@ sendpost file:C:\\Users\\signedtransaction-1674907380057.txn
 
 Returns the signature of the data, signed with the corresponding private key.
 
-
 <CommandTable
-type={{
-  data: {
-    description:
-      'The 0x HEX data to sign.',
-  }
-}}
+  type={{
+    data: {
+      description: "The 0x HEX data to sign.",
+    },
+  }}
 />
 
 ```bash title="Terminal"
 sign data:0xCD34..
 ```
-
 
 </Accordion>
 
@@ -3185,22 +3099,18 @@ sign data:0xCD34..
 
 Returns valid true or false.
 
-
 <CommandTable
-type={{
-  data: {
-    description:
-      'The 0x HEX data to verify the signature for.',
-  },
-  publickey: {
-    description:
-      'The public key of the signer.',
-  },
-  signature: {
-    description:
-      'The signature of the data.',
-  }
-}}
+  type={{
+    data: {
+      description: "The 0x HEX data to verify the signature for.",
+    },
+    publickey: {
+      description: "The public key of the signer.",
+    },
+    signature: {
+      description: "The signature of the data.",
+    },
+  }}
 />
 
 Examples:
@@ -3209,15 +3119,11 @@ Examples:
 verify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
 ```
 
-
 </Accordion>
 
 </Accordions>
 
-
-
 ## Transactions
-
 
 <Accordions>
 
@@ -3227,7 +3133,7 @@ verify data:0xCD34.. publickey:0xFED5.. signature:0x4827..
 
 View the number of burn transactions and the maximum, median, average and minimum burn metrics for the last 1, 10 and 50 blocks.
 
-Use as an indicator for an appropriate burn amount for transactions. 
+Use as an indicator for an appropriate burn amount for transactions.
 
 **Examples:**
 
@@ -3244,32 +3150,32 @@ burn
 Enable detailed logs for script errors, mining activity, Maxima, network messages, blocks, or IBD processing.
 
 <CommandTable
-type={{
-  scripts: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for script errors.',
-  },
-  mining: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for mining start/end activity.',
-  },
-  maxima: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for Maxima.',
-  },
-  networking: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for Network Messages.',
-  },
-  blocks: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for Blocks.',
-  },
-  ibd: {
-    description:
-      '(Optional) true or false. Setting it to true turns on detailed logs for IBD processing.',
-  }
-}}
+  type={{
+    scripts: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for script errors.",
+    },
+    mining: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for mining start/end activity.",
+    },
+    maxima: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for Maxima.",
+    },
+    networking: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for Network Messages.",
+    },
+    blocks: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for Blocks.",
+    },
+    ibd: {
+      description:
+        "(Optional) true or false. Setting it to true turns on detailed logs for IBD processing.",
+    },
+  }}
 />
 
 Examples:
@@ -3295,12 +3201,11 @@ txnbasics
 ```
 
 <CommandTable
-type={{
-  id: {
-    description:
-      'The ID of the transaction.',
-  }
-}}
+  type={{
+    id: {
+      description: "The ID of the transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3322,12 +3227,11 @@ txncheck
 ```
 
 <CommandTable
-type={{
-  id: {
-    description:
-      '(Optional) The ID of the transaction.',
-  }
-}}
+  type={{
+    id: {
+      description: "(Optional) The ID of the transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3338,22 +3242,18 @@ txncheck id:multisig
 
 </Accordion>
 
-
-
 <Accordion title="txnclear">
 
 `Clear ALL the Witness data for a transaction.`
 
 Clears signatures, mmr proofs and script proofs.
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      '(Optional) The ID of the transaction.',
-  }
-}}
+  type={{
+    id: {
+      description: "(Optional) The ID of the transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3370,14 +3270,12 @@ txnclear id:multisig
 
 The first step before defining the inputs and outputs.
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      'The ID of the transaction.',
-  }
-}}
+  type={{
+    id: {
+      description: "The ID of the transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3388,18 +3286,16 @@ txncreate id:multisig
 
 </Accordion>
 
-
 <Accordion title="txndelete">
 
 `Delete a previously created custom transaction.`
 
 <CommandTable
-type={{
-  id: {
-    description:
-      '(Optional) The ID of the transaction.',
-  }
-}}
+  type={{
+    id: {
+      description: "(Optional) The ID of the transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3414,18 +3310,16 @@ txndelete id:multisig
 
 `Export a transaction as HEX or to a file.`
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      'The ID of the transaction.',
-  },
-  file: {
-    description:
-      '(Optional) File name/path to export the transaction to, must use the .txn extension.',
-  }
-}}
+  type={{
+    id: {
+      description: "The ID of the transaction.",
+    },
+    file: {
+      description:
+        "(Optional) File name/path to export the transaction to, must use the .txn extension.",
+    },
+  }}
 />
 
 Examples:
@@ -3444,22 +3338,21 @@ txnexport id:multisig file:multisig.txn
 
 `Import a transaction from previously exported HEX data or a .txn file.`
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      '(Optional) Choose an ID for the transaction you are importing.',
-  },
-  file: {
-    description:
-      '(Optional) File name/path to the previously exported .txn file.',
-  },
-  data: {
-    description:
-      '(Optional) HEX data of the previously exported transaction.',
-  }
-}}
+  type={{
+    id: {
+      description:
+        "(Optional) Choose an ID for the transaction you are importing.",
+    },
+    file: {
+      description:
+        "(Optional) File name/path to the previously exported .txn file.",
+    },
+    data: {
+      description:
+        "(Optional) HEX data of the previously exported transaction.",
+    },
+  }}
 />
 
 Examples:
@@ -3487,40 +3380,36 @@ txnimport id:multisig file:multisig.txn
 ```
 
 <CommandTable
-type={{
-  id: {
-    description:
-      'The id of the transaction to add an input to.',
-  },
-  coinid: {
-    description:
-      '(Optional) The id of the coin to add as an input.',
-  },
-  coindata: {
-    description:
-      '(Optional) The data of the coin to add, instead of coinid. Can be from the `coinexport` command or `outputcoindata` from another transaction.',
-  },
-  floating: {
-    description:
-      '(Optional) true or false, true will add an unspecified, floating ELTOO coin as an input. If true, also specify address, amount, tokenid. If false, specify a coinid or coindata.',
-  },
-  address: {
-    description:
-      'Coin address to use for the floating input. Can be 0x or Mx address.',
-  },
-  amount: {
-    description:
-      'Amount of a coin for the floating input.',
-  },
-  tokenid: {
-    description:
-      'tokenid of a coin for the floating input.',
-  },
-  scriptmmr: {
-    description:
-      'true or false, true will add the scripts and MMR proof for the coin.',
-  }
-}}
+  type={{
+    id: {
+      description: "The id of the transaction to add an input to.",
+    },
+    coinid: {
+      description: "(Optional) The id of the coin to add as an input.",
+    },
+    coindata: {
+      description:
+        "(Optional) The data of the coin to add, instead of coinid. Can be from the `coinexport` command or `outputcoindata` from another transaction.",
+    },
+    floating: {
+      description:
+        "(Optional) true or false, true will add an unspecified, floating ELTOO coin as an input. If true, also specify address, amount, tokenid. If false, specify a coinid or coindata.",
+    },
+    address: {
+      description:
+        "Coin address to use for the floating input. Can be 0x or Mx address.",
+    },
+    amount: {
+      description: "Amount of a coin for the floating input.",
+    },
+    tokenid: {
+      description: "tokenid of a coin for the floating input.",
+    },
+    scriptmmr: {
+      description:
+        "true or false, true will add the scripts and MMR proof for the coin.",
+    },
+  }}
 />
 
 Examples:
@@ -3540,21 +3429,19 @@ txninput id:posttxn coindata:0x000..
 ```bash title="Terminal"
 txninput id:eltootxn floating:true address:0xFED5.. amount:10 tokenid:0x00
 ```
-      
+
 </Accordion>
 
 <Accordion title="txnlist">
 
 `List your custom transactions. Includes previously posted transactions.`
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      '(Optional) The id of a single transaction to list.',
-  }
-}}
+  type={{
+    id: {
+      description: "(Optional) The id of a single transaction to list.",
+    },
+  }}
 />
 
 Examples:
@@ -3562,9 +3449,11 @@ Examples:
 ```bash title="Terminal"
 txnlist
 ```
+
 ```bash title="Terminal"
 txnlist id:multisig
 ```
+
 </Accordion>
 
 <Accordion title="txnoutput">
@@ -3576,28 +3465,27 @@ This will create a new coin (UTxO).
 If the sum of inputs > outputs, the difference will be burned unless change to the sender is defined as an output.
 
 <CommandTable
-type={{
-  id: {
-    description:
-      'The id of the transaction to add an output to.',
-  },
-  amount: {
-    description:
-      'The amount for the output. To send to the specified address.',
-  },
-  address: {
-    description:
-      'Address of the recipient/script to send the output to. Can be 0x or Mx address.',
-  },
-  tokenid: {
-    description:
-      '(Optional) tokenid of the output. Default is Minima (0x00).',
-  },
-  storestate: {
-    description:
-      '(Optional) true or false, true will keep the state variables of the transaction in the newly created output coin. Default is true.',
-  }
-}}
+  type={{
+    id: {
+      description: "The id of the transaction to add an output to.",
+    },
+    amount: {
+      description:
+        "The amount for the output. To send to the specified address.",
+    },
+    address: {
+      description:
+        "Address of the recipient/script to send the output to. Can be 0x or Mx address.",
+    },
+    tokenid: {
+      description:
+        "(Optional) tokenid of the output. Default is Minima (0x00).",
+    },
+    storestate: {
+      description:
+        "(Optional) true or false, true will keep the state variables of the transaction in the newly created output coin. Default is true.",
+    },
+  }}
 />
 
 Examples:
@@ -3624,18 +3512,16 @@ If it is a single script, and not one created with mmrcreate, leave the proof bl
 
 If it is an mmrcreate script, include the proof.
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      'The id of the transaction.',
-  },
-  scripts: {
-    description:
-      'JSON holds the script and the proof in the format \{script:proof}',
-  }
-}}
+  type={{
+    id: {
+      description: "The id of the transaction.",
+    },
+    scripts: {
+      description:
+        "JSON holds the script and the proof in the format {script:proof}",
+    },
+  }}
 />
 
 Examples:
@@ -3659,32 +3545,30 @@ txnsign
 ```
 
 <CommandTable
-type={{
-  id: {
-    description:
-      'The id of the transaction.',
-  },
-  publickey: {
-    description:
-      'The public key specified in a custom script, or auto for transactions with simple inputs.',
-  },
-  txnpostauto: {
-    description:
-      'Do you want to post this transaction. Use the same values as you would for txnpost auto (sort MMR and Scripts).',
-  },
-  txnpostburn: {
-    description:
-      'If you also post this transaction, do you want to add a burn transaction.',
-  },
-  txnpostmine: {
-    description:
-      'If you also post this transaction, do you want to mine it immediately.',
-  },
-  txndelete: {
-    description:
-      'true or false - delete this txn after signing AND posting.',
-  }
-}}
+  type={{
+    id: {
+      description: "The id of the transaction.",
+    },
+    publickey: {
+      description:
+        "The public key specified in a custom script, or auto for transactions with simple inputs.",
+    },
+    txnpostauto: {
+      description:
+        "Do you want to post this transaction. Use the same values as you would for txnpost auto (sort MMR and Scripts).",
+    },
+    txnpostburn: {
+      description:
+        "If you also post this transaction, do you want to add a burn transaction.",
+    },
+    txnpostmine: {
+      description:
+        "If you also post this transaction, do you want to mine it immediately.",
+    },
+    txndelete: {
+      description: "true or false - delete this txn after signing AND posting.",
+    },
+  }}
 />
 
 Examples:
@@ -3711,22 +3595,18 @@ txnsign id:simpletxn publickey:auto txnpostauto:true
 
 `Add a state variable to a transaction.`
 
-
 <CommandTable
-type={{
-  id: {
-    description:
-      'The id of the transaction.',
-  },
-  port: {
-    description:
-      'Port number of the state variable, from 0-255.',
-  },
-  value: {
-    description:
-      'Value for the state variable.',
-  }
-}}
+  type={{
+    id: {
+      description: "The id of the transaction.",
+    },
+    port: {
+      description: "Port number of the state variable, from 0-255.",
+    },
+    value: {
+      description: "Value for the state variable.",
+    },
+  }}
 />
 
 Examples:
@@ -3746,18 +3626,15 @@ txnstate id:multisig port:1 value:"string"
 </Accordion>
 </Accordions>
 
-
-
-## External wallet transactions 
+## External wallet transactions
 
 These are available from v1.0.41 onwards.
 
 The following commands allow you to construct, sign (online or offline) and post transactions on behalf of specific wallets that are separate from the node's own wallet.
 
-They should be used alongside the `keys action:genkey` OR `keys action:genkey phrase:"MY SEED PHRASE"` command which generate a new private/public key pair and wallet address from a random or given seed phrase that is independent from the node itself. 
+They should be used alongside the `keys action:genkey` OR `keys action:genkey phrase:"MY SEED PHRASE"` command which generate a new private/public key pair and wallet address from a random or given seed phrase that is independent from the node itself.
 
 Note that `sendfrom` and `createfrom` require a [Mega MMR node](/docs/runanode/meganode).
-
 
 <Accordions>
 
@@ -3765,43 +3642,37 @@ Note that `sendfrom` and `createfrom` require a [Mega MMR node](/docs/runanode/m
 
 `Send Minima or Tokens from a certain address with a given private key.`
 
-Must be used from an ONLINE node. 
+Must be used from an ONLINE node.
 
 <CommandTable
-type={{
-  fromaddress: {
-    description:
-      'Wallet address to send from.',
-  },
-  address: {
-    description:
-      'Wallet address to send to.',
-  },
-  amount: {
-    description:
-      'Amount to send.',
-  },
-  tokenid: {
-    description:
-      '(Optional) tokenid of the token to send. Default is Minima 0x00.',
-  },
-  script: {
-    description:
-      'The script of the fromaddress.',
-  },
-  privatekey: {
-    description:
-      'The private key to sign with. From `keys action:genkey`.',
-  },
-  keyuses: {
-    description:
-      'Set the key uses for this privatekey.',
-  },
-  mine: {
-    description:
-      '(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.',
-  }
-}}
+  type={{
+    fromaddress: {
+      description: "Wallet address to send from.",
+    },
+    address: {
+      description: "Wallet address to send to.",
+    },
+    amount: {
+      description: "Amount to send.",
+    },
+    tokenid: {
+      description:
+        "(Optional) tokenid of the token to send. Default is Minima 0x00.",
+    },
+    script: {
+      description: "The script of the fromaddress.",
+    },
+    privatekey: {
+      description: "The private key to sign with. From `keys action:genkey`.",
+    },
+    keyuses: {
+      description: "Set the key uses for this privatekey.",
+    },
+    mine: {
+      description:
+        "(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.",
+    },
+  }}
 />
 
 Examples:
@@ -3810,39 +3681,33 @@ Examples:
 sendfrom fromaddress:0xFEEED.. address:0xABCD.. script:"INSERT SCRIPT" privatekey:0xGHFK.. keyuses:5
 ```
 
-
-
 </Accordion>
 
 <Accordion title="createfrom">
 
 `Create and export an unsigned txn from a certain address.`
 
-Must be run from a node using the `-megammr` start up parameter. Can be used from an ONLINE or OFFLINE node. 
+Must be run from a node using the `-megammr` start up parameter. Can be used from an ONLINE or OFFLINE node.
 
 <CommandTable
-type={{
-  fromaddress: {
-    description:
-      'Wallet address to send from.',
-  },
-  address: {
-    description:
-      'Wallet address to send to.',
-  },
-  amount: {
-    description:
-      'Amount to send.',
-  },
-  tokenid: {
-    description:
-      '(Optional) tokenid of the token to send. Default is Minima 0x00.',
-  },
-  script: {
-    description:
-      'The script of the fromaddress.',
-  }
-}}
+  type={{
+    fromaddress: {
+      description: "Wallet address to send from.",
+    },
+    address: {
+      description: "Wallet address to send to.",
+    },
+    amount: {
+      description: "Amount to send.",
+    },
+    tokenid: {
+      description:
+        "(Optional) tokenid of the token to send. Default is Minima 0x00.",
+    },
+    script: {
+      description: "The script of the fromaddress.",
+    },
+  }}
 />
 
 Examples:
@@ -3859,23 +3724,20 @@ Examples:
 
 `Sign a createfrom txn.`
 
-Can be used from an ONLINE or OFFLINE node. 
+Can be used from an ONLINE or OFFLINE node.
 
 <CommandTable
-type={{
-  data: {
-    description:
-      'transaction data output from createfrom.',
-  },
-  privatekey: {
-    description:
-      'The private key to sign with. From `keys action:genkey`.',
-  },
-  keyuses: {
-    description:
-      'Set the key uses for this privatekey.',
-  }
-}}
+  type={{
+    data: {
+      description: "transaction data output from createfrom.",
+    },
+    privatekey: {
+      description: "The private key to sign with. From `keys action:genkey`.",
+    },
+    keyuses: {
+      description: "Set the key uses for this privatekey.",
+    },
+  }}
 />
 
 Examples:
@@ -3890,19 +3752,18 @@ signfrom data:0x000000.. address:0xABCD.. script:"INSERT SCRIPT" keyuses:5
 
 `Post a signfrom txn to the network`
 
-Must be used from an ONLINE node. 
+Must be used from an ONLINE node.
 
 <CommandTable
-type={{
-  data: {
-    description:
-      'transaction data output from createfrom.',
-  },
-  mine: {
-    description:
-      '(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.',
-  }
-}}
+  type={{
+    data: {
+      description: "transaction data output from createfrom.",
+    },
+    mine: {
+      description:
+        "(Optional) true or false - should you mine the transaction immediately to get the correct txpowid. Default is false.",
+    },
+  }}
 />
 
 Examples:
@@ -3914,13 +3775,3 @@ postfrom data:0x000000.. mine:true
 </Accordion>
 
 </Accordions>
-
-
-
-
-
-
-
-
-
-
