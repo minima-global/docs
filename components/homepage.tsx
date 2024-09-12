@@ -7,7 +7,7 @@ export function DocsHomePage() {
   return (
     <div className="h-[calc(100vh-60px)] bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
       <div className=" absolute inset-0 top-0 z-[9000] h-[30vh] overflow-hidden">
-      <SparklesCore
+        <SparklesCore
           id="tsparticlesfullpage"
           background="transparent"
           minSize={0.6}
@@ -118,7 +118,7 @@ const Cards = () => {
       title: "Knowledge Base",
       description: "A deep dive into the Minima protocol and its architecture",
       link: "/docs/learn",
-      icon: ( 
+      icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -160,7 +160,12 @@ const Cards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-5  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full  ">
       {features.map((feature, index) => (
-        <FeatureCards key={feature.title} {...feature} index={index} link={feature.link} />
+        <FeatureCards
+          key={feature.title}
+          {...feature}
+          index={index}
+          link={feature.link}
+        />
       ))}
     </div>
   )
@@ -171,7 +176,7 @@ const FeatureCards = ({
   description,
   icon,
   index,
-  link
+  link,
 }: {
   title: string
   description: string
@@ -183,9 +188,11 @@ const FeatureCards = ({
     <Link
       href={link}
       className={cn(
-        "flex flex-col lg:border-r group  py-10 relative group/feature dark:border-neutral-800 cursor-pointer  ",
-        (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
-        index < 3 && "lg:border-b dark:border-neutral-800"
+        "flex flex-col lg:border-r group  py-10 relative group/feature dark:border-neutral-800 cursor-pointer",
+        (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800 ",
+        index < 3 && "lg:border-b dark:border-neutral-800",
+        index === 3 && " rounded-bl-xl",
+        index === 5 && " rounded-br-xl"
       )}
     >
       {index < 4 && (

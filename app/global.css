@@ -63,16 +63,16 @@
 }
 
 .box {
-  border: 3px solid #615a5400;
+  border: 1px solid #615a5400;
   border-radius: 0.75rem;
   animation: 5s rotate linear infinite;
   background: linear-gradient(#fbfbfb, #fbfbfb) padding-box,
-    linear-gradient(var(--angle), #fbfbfb, #a5a3a1) border-box;
+    linear-gradient(var(--angle), #fbfbfb, #9d9898) border-box;
 }
 
 .dark\:box:is(.dark *) {
   background: linear-gradient(#000000, #000000) padding-box,
-    linear-gradient(var(--angle), #070707, #504f4e) border-box;
+    linear-gradient(var(--angle), #070707, #9d9898) border-box;
 }
 
 @keyframes rotate {
