@@ -1,12 +1,12 @@
 ---
-title:  Messaging
+title: Messaging
 description: Maxima Messaging is a way to send messages to other devices on the network.
 tag: learn
 ---
 
-## Maxima Hosts 
+## Maxima Hosts
 
-Each user has a set of Maxima hosts which facilitate the relaying of messages to the user. 
+Each user has a set of Maxima hosts which facilitate the relaying of messages to the user.
 Maxima hosts are randomly selected server nodes a user has previously connected to.
 
 At any given time, only one Maxima host is responsible for forwarding a user’s encrypted message.
@@ -16,6 +16,7 @@ You can see your Maxima hosts, including the one you are currently connected to,
 The host you are connected to determines the ip:port shown in your contact address.
 
 **Example Contact Address**
+
 ```
 MxG18HGG6FJ038614Y8CW46US6G20810K0070CD00Z83282G60G1JP0Y8WHVT0JJPGJ01YAQPCEU3PWF51V5J5UKA4RBHYUZFYTTH98KYHZ1K6MF3V6D30DCDD
 YAH34AJ1PZ4GWHCW7SEDQ0HQ9R4TU2G7NS8N816V13ERQ532PYWK9Z732RBZ7KFCQCENAMAJP9V7EH3R06493T25U9PY7HJAS0Z311WA6K24P0BZ82NTQNY2BQ
@@ -23,14 +24,11 @@ TB5VUJRV6QYVK1060800712NCHC@187.220.305.194:9001
 ```
 
 <ThemeAwareSVG
-  src="/img/maxima/MaximaMessageDeliveryTopLm.svg"
+  src="/img/maxima/maximaMessageDeliveryTopLm.svg"
   alt="Maxima Message Delivery Top"
   width={500}
   height={500}
 />
-
-
-
 
 ## Sending Messages
 
@@ -44,21 +42,22 @@ Sending a message over Maxima has the following steps:
 
 4. **Send: Sender to Host** - the signed, encrypted message and mined TxPoW unit is sent to the recipient's Maxima host who checks whether the TxPoW is valid and the minimum amount of ‘work’ has been completed.
 
-5. **Send: Host to Recipient** -  If the TxPoW is valid and the minimum amount of ‘work’ has been completed, the message will be forwarded to the recipient, else it is discarded (off-chain process).
+5. **Send: Host to Recipient** - If the TxPoW is valid and the minimum amount of ‘work’ has been completed, the message will be forwarded to the recipient, else it is discarded (off-chain process).
 
 6. **Block propagation** - If the TxPoW unit is a block, it will be propagated to ALL nodes for processing, otherwise the TxPoW unit will be discarded (on-chain).
 
-:::note
-All Maxima messages are encrypted end-to-end using asymmetric RSA encryption. Messages can only be decrypted and read by the recipient, other nodes involved in the relaying of the message cannot read the data.
-:::
+<Callout title="Note" type="info">
+  All Maxima messages are encrypted end-to-end using asymmetric RSA encryption.
+  Messages can only be decrypted and read by the recipient, other nodes involved
+  in the relaying of the message cannot read the data.
+</Callout>
 
 <ThemeAwareSVG
-  src="/img/maxima/MaximaHowitworksLm.svg"
+  src="/img/maxima/maximaHowitworksLm.svg"
   alt="Maxima How it works"
   width={700}
   height={700}
 />
-
 
 **Orange**: A Maxima process<br/>
 **Blue**: A Minima process
