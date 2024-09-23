@@ -1,0 +1,56 @@
+/**
+ * shade for nav since we don't use radix for scrollbar
+ */
+.nav-shade {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(0, transparent, black);
+    height: 40px;
+    display: inline-block;
+    z-index: 100;
+}
+
+/**
+ * Custom scrollbar for Minidapp
+ */
+
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: #000000;
+    margin-right: 2px;
+    border-right: 2px solid black;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #aeaeae;
+    border-radius: 5px;
+    position: relative;
+    z-index: 100;
+    width: 8px;
+    border-right: 3px solid #ffffff;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #1c1c1c;
+    border-radius: 5px;
+    position: relative;
+    z-index: 100;
+    width: 8px;
+    border-right: 2px solid black;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #616161;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #272727;
+}
