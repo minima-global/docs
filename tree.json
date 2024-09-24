@@ -85,16 +85,16 @@
           "props": {
             "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
             "children": {
-              "type": {
-                "displayName": "Code"
-              },
+              "type": {},
               "key": null,
               "ref": null,
               "props": {},
-              "_owner": null
+              "_owner": null,
+              "_store": {}
             }
           },
-          "_owner": null
+          "_owner": null,
+          "_store": {}
         },
         "url": "/docs/development"
       },
@@ -113,16 +113,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Code"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/development"
         },
@@ -136,16 +136,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Component"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/development/start-testnet"
         },
@@ -159,16 +159,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Network"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/development/testnet-multiple"
         },
@@ -182,16 +182,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Terminal"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/development/terminal-commands"
         },
@@ -397,16 +397,16 @@
           "props": {
             "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
             "children": {
-              "type": {
-                "displayName": "Album"
-              },
+              "type": {},
               "key": null,
               "ref": null,
               "props": {},
-              "_owner": null
+              "_owner": null,
+              "_store": {}
             }
           },
-          "_owner": null
+          "_owner": null,
+          "_store": {}
         },
         "url": "/docs/learn"
       },
@@ -421,16 +421,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Album"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/learn"
         },
@@ -444,16 +444,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Layers"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/learn/network"
         },
@@ -467,16 +467,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Book"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/learn/glossary"
         },
@@ -642,16 +642,16 @@
           "props": {
             "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
             "children": {
-              "type": {
-                "displayName": "Zap"
-              },
+              "type": {},
               "key": null,
               "ref": null,
               "props": {},
-              "_owner": null
+              "_owner": null,
+              "_store": {}
             }
           },
-          "_owner": null
+          "_owner": null,
+          "_store": {}
         },
         "url": "/docs/run-a-node"
       },
@@ -666,16 +666,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Zap"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/run-a-node"
         },
@@ -689,16 +689,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "BatteryFull"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/run-a-node/system-requirements"
         },
@@ -780,16 +780,16 @@
           "props": {
             "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
             "children": {
-              "type": {
-                "displayName": "KeyRound"
-              },
+              "type": {},
               "key": null,
               "ref": null,
               "props": {},
-              "_owner": null
+              "_owner": null,
+              "_store": {}
             }
           },
-          "_owner": null
+          "_owner": null,
+          "_store": {}
         },
         "url": "/docs/user-guides"
       },
@@ -808,16 +808,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "KeyRound"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/user-guides"
         },
@@ -831,16 +831,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Network"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/user-guides/jointhenetwork"
         },
@@ -854,16 +854,16 @@
             "props": {
               "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
               "children": {
-                "type": {
-                  "displayName": "Lock"
-                },
+                "type": {},
                 "key": null,
                 "ref": null,
                 "props": {},
-                "_owner": null
+                "_owner": null,
+                "_store": {}
               }
             },
-            "_owner": null
+            "_owner": null,
+            "_store": {}
           },
           "url": "/docs/user-guides/secure-your-seedphrase"
         },

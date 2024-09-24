@@ -14,7 +14,7 @@ export function ThemeAwareSVG({ src, alt, width, height }: ThemeAwareSVGProps) {
 
   const themeAwareSrc = src.replace(
     "Lm.svg",
-    getTheme() === "dark" ? "Dm.svg" : "Lm.svg"
+    getTheme() === "light" ? "Lm.svg" : "Dm.svg"
   )
 
   return (
