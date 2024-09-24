@@ -9,6 +9,7 @@
     "build-zip": "bun run build && cd out && rm -rf ./docs && zip -r docs_$npm_package_version.mds.zip . && mv docs_$npm_package_version.mds.zip ../minidapp"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.0.1",
     "@radix-ui/react-separator": "^1.1.0",
     "@tabler/icons-react": "^3.10.0",
     "@tsparticles/engine": "^3.5.0",

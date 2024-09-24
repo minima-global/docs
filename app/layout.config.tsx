@@ -12,14 +12,12 @@ export const baseOptions: HomeLayoutProps = {
   nav: {
     url: "/",
     title: (
-   
-        <Logo
-          props={{
-            className: "h-[30px] w-[120px] -mt-3",
-          }}
-          pathClassName="dark:fill-white fill-black"
-        />
-    
+      <Logo
+        props={{
+          className: "h-[30px] w-[120px] -mt-3",
+        }}
+        pathClassName="dark:fill-white fill-black"
+      />
     ),
     transparentMode: "top",
     children: <NavChildren />,
@@ -30,6 +28,7 @@ export const baseOptions: HomeLayoutProps = {
 export const docsOptions: DocsLayoutProps = {
   ...baseOptions,
   tree: pageTree,
+
   sidebar: {
     collapsible: false,
     banner: (

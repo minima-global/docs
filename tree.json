@@ -1,0 +1,986 @@
+{
+  "name": "",
+  "children": [
+    {
+      "type": "folder",
+      "name": "Core",
+      "root": true,
+      "index": {
+        "type": "page",
+        "name": "About Minima",
+        "url": "/docs/core"
+      },
+      "children": [
+        {
+          "type": "separator",
+          "name": "Minima"
+        },
+        {
+          "type": "page",
+          "name": "About Minima",
+          "url": "/docs/core"
+        },
+        {
+          "type": "page",
+          "name": "Get Involved",
+          "url": "/docs/core/get-involved"
+        },
+        {
+          "type": "page",
+          "name": "Use Cases",
+          "url": "/docs/core/use-cases"
+        },
+        {
+          "type": "page",
+          "name": "Tokenomics",
+          "url": "/docs/core/tokenomics"
+        },
+        {
+          "type": "separator",
+          "name": "Terms of Use"
+        },
+        {
+          "type": "page",
+          "name": "MiniDapp Terms of Use",
+          "url": "/docs/core/minidapp-terms"
+        },
+        {
+          "type": "page",
+          "name": "Website Terms of Use",
+          "url": "/docs/core/website-terms"
+        },
+        {
+          "type": "page",
+          "name": "Minima Privacy Policy",
+          "url": "/docs/core/minima-privacy-policy"
+        },
+        {
+          "type": "page",
+          "name": "Presale Privacy Policy",
+          "url": "/docs/core/presale"
+        },
+        {
+          "type": "separator",
+          "name": " Whitepaper"
+        },
+        {
+          "type": "page",
+          "name": "Minima Whitepaper",
+          "url": " https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf",
+          "external": true
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Development",
+      "root": true,
+      "index": {
+        "type": "page",
+        "name": "Introduction",
+        "icon": {
+          "type": "div",
+          "key": null,
+          "ref": null,
+          "props": {
+            "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+            "children": {
+              "type": {
+                "displayName": "Code"
+              },
+              "key": null,
+              "ref": null,
+              "props": {},
+              "_owner": null
+            }
+          },
+          "_owner": null
+        },
+        "url": "/docs/development"
+      },
+      "children": [
+        {
+          "type": "separator",
+          "name": "Get Started"
+        },
+        {
+          "type": "page",
+          "name": "Introduction",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Code"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/development"
+        },
+        {
+          "type": "page",
+          "name": "Single Node Testnet",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Component"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/development/start-testnet"
+        },
+        {
+          "type": "page",
+          "name": "Multiple Node Testnet",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Network"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/development/testnet-multiple"
+        },
+        {
+          "type": "page",
+          "name": "Terminal Commands",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Terminal"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/development/terminal-commands"
+        },
+        {
+          "type": "separator",
+          "name": "MiniDapp Tutorials"
+        },
+        {
+          "type": "page",
+          "name": "MiniDapp Hub",
+          "url": "/docs/development/start"
+        },
+        {
+          "type": "page",
+          "name": "Basic MiniDapp",
+          "url": "/docs/development/basic-minidapp"
+        },
+        {
+          "type": "page",
+          "name": "Interactive MiniDapp",
+          "url": "/docs/development/interactive-minidapp"
+        },
+        {
+          "type": "page",
+          "name": "React MiniDapp",
+          "url": "/docs/development/react-minidapp"
+        },
+        {
+          "type": "page",
+          "name": "MiniDapp Stores",
+          "url": "/docs/development/minidapp-stores"
+        },
+        {
+          "type": "separator",
+          "name": "Smart Contract Tutorials"
+        },
+        {
+          "type": "page",
+          "name": "Pruning",
+          "url": "/docs/development/pruning"
+        },
+        {
+          "type": "page",
+          "name": "Tokens",
+          "url": "/docs/development/tokens"
+        },
+        {
+          "type": "folder",
+          "name": "Layer 1 - On Chain ",
+          "root": false,
+          "index": {
+            "type": "page",
+            "name": "Introduction",
+            "url": "/docs/development/layer1"
+          },
+          "children": [
+            {
+              "type": "page",
+              "name": "Basic signed contract",
+              "url": "/docs/development/layer1/basic-contract"
+            },
+            {
+              "type": "page",
+              "name": "Simple Transaction",
+              "url": "/docs/development/layer1/simple-txn"
+            },
+            {
+              "type": "page",
+              "name": "Time Lock Contract",
+              "url": "/docs/development/layer1/time-lock-contract"
+            },
+            {
+              "type": "page",
+              "name": "Multisig Contract",
+              "url": "/docs/development/layer1/multisig"
+            },
+            {
+              "type": "page",
+              "name": "M of N Multisig",
+              "url": "/docs/development/layer1/mofnmultisig"
+            },
+            {
+              "type": "page",
+              "name": "The Vault",
+              "url": "/docs/development/layer1/thevault"
+            },
+            {
+              "type": "page",
+              "name": "Slow Cash",
+              "url": "/docs/development/layer1/slowcash"
+            },
+            {
+              "type": "page",
+              "name": "Hashed Timelock Contract",
+              "url": "/docs/development/layer1/hashed-timelock-contract"
+            },
+            {
+              "type": "page",
+              "name": "Exchange Contract",
+              "url": "/docs/development/layer1/exchange-contract"
+            },
+            {
+              "type": "page",
+              "name": "Flash Cash",
+              "url": "/docs/development/layer1/flashcash"
+            },
+            {
+              "type": "page",
+              "name": "MAST Contracts",
+              "url": "/docs/development/layer1/mast-contract"
+            },
+            {
+              "type": "page",
+              "name": "The Vault",
+              "url": "/docs/development/layer1/thevault"
+            },
+            {
+              "type": "page",
+              "name": "Coin Flip",
+              "url": "/docs/development/layer1/coinflip"
+            }
+          ]
+        },
+        {
+          "type": "folder",
+          "name": "Layer 2 - Off Chain ",
+          "root": false,
+          "index": {
+            "type": "page",
+            "name": "Introduction",
+            "url": "/docs/development/layer2"
+          },
+          "children": [
+            {
+              "type": "page",
+              "name": "Uni-directional Channel",
+              "url": "/docs/development/layer2/uni-directional-channel"
+            },
+            {
+              "type": "page",
+              "name": "Bi-directional Payments",
+              "url": "/docs/development/layer2/bi-directional-payments"
+            },
+            {
+              "type": "page",
+              "name": "ELTOO Channel",
+              "url": "/docs/development/layer2/eltoo-channel"
+            },
+            {
+              "type": "page",
+              "name": "ELTOO Pre-Coin Txn",
+              "url": "/docs/development/layer2/eltoo-precoin"
+            },
+            {
+              "type": "page",
+              "name": "ELTOO Floating Coin",
+              "url": "/docs/development/layer2/eltoo-floating-coin"
+            },
+            {
+              "type": "page",
+              "name": "Full ELTOO Sequence",
+              "url": "/docs/development/layer2/eltoo-full-sequence"
+            },
+            {
+              "type": "page",
+              "name": "State Chains",
+              "url": "/docs/development/layer2/state-chains"
+            },
+            {
+              "type": "page",
+              "name": "Coin flip V2",
+              "url": "/docs/development/layer2/coinflipv2"
+            }
+          ]
+        },
+        {
+          "type": "separator",
+          "name": "Smart Contract Examples"
+        },
+        {
+          "type": "page",
+          "name": "Future Cash",
+          "url": "/docs/development/future-cash"
+        },
+        {
+          "type": "page",
+          "name": "Vestr",
+          "url": "/docs/development/vestr"
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Learn",
+      "root": true,
+      "index": {
+        "type": "page",
+        "name": "Core Concepts",
+        "icon": {
+          "type": "div",
+          "key": null,
+          "ref": null,
+          "props": {
+            "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+            "children": {
+              "type": {
+                "displayName": "Album"
+              },
+              "key": null,
+              "ref": null,
+              "props": {},
+              "_owner": null
+            }
+          },
+          "_owner": null
+        },
+        "url": "/docs/learn"
+      },
+      "children": [
+        {
+          "type": "page",
+          "name": "Core Concepts",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Album"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/learn"
+        },
+        {
+          "type": "page",
+          "name": "Network Overview",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Layers"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/learn/network"
+        },
+        {
+          "type": "page",
+          "name": "Glossary",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Book"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/learn/glossary"
+        },
+        {
+          "type": "separator",
+          "name": "Minima"
+        },
+        {
+          "type": "page",
+          "name": "Transactions",
+          "url": "/docs/learn/transactions"
+        },
+        {
+          "type": "page",
+          "name": "MMR Database",
+          "url": "/docs/learn/mmr-database"
+        },
+        {
+          "type": "page",
+          "name": "TxPoW Units & Blocks",
+          "url": "/docs/learn/txpow"
+        },
+        {
+          "type": "page",
+          "name": "The Blockchain",
+          "url": "/docs/learn/the-blockchain"
+        },
+        {
+          "type": "page",
+          "name": "Mining and Consensus",
+          "url": "/docs/learn/miningandconsensus"
+        },
+        {
+          "type": "page",
+          "name": "Coloured Coins",
+          "url": "/docs/learn/coloured-coins"
+        },
+        {
+          "type": "page",
+          "name": "Keys and Signatures",
+          "url": "/docs/learn/keysandsignatures"
+        },
+        {
+          "type": "page",
+          "name": "Scripting",
+          "url": "/docs/learn/scripting"
+        },
+        {
+          "type": "page",
+          "name": "Quantum Security",
+          "url": "/docs/learn/quantumsecurity"
+        },
+        {
+          "type": "page",
+          "name": "Archive Nodes",
+          "url": "/docs/learn/archivenodes"
+        },
+        {
+          "type": "separator",
+          "name": "Maxima"
+        },
+        {
+          "type": "page",
+          "name": "About",
+          "url": "/docs/learn/about-maxima"
+        },
+        {
+          "type": "page",
+          "name": "Contacts",
+          "url": "/docs/learn/maxima-contacts"
+        },
+        {
+          "type": "page",
+          "name": "Messaging",
+          "url": "/docs/learn/maxima-messaging"
+        },
+        {
+          "type": "page",
+          "name": "Location Service",
+          "url": "/docs/learn/maxima-mls"
+        },
+        {
+          "type": "page",
+          "name": "FAQ",
+          "url": "/docs/learn/maxima-faq"
+        },
+        {
+          "type": "separator",
+          "name": "MiniDapps"
+        },
+        {
+          "type": "page",
+          "name": "About",
+          "url": "/docs/learn/about-minidapps"
+        },
+        {
+          "type": "page",
+          "name": "MiniDapp Structure",
+          "url": "/docs/learn/minidapp-structure"
+        },
+        {
+          "type": "page",
+          "name": "Config File",
+          "url": "/docs/learn/minidapp-configfile"
+        },
+        {
+          "type": "page",
+          "name": "mds.js library",
+          "url": "/docs/learn/minidapp-mds"
+        },
+        {
+          "type": "page",
+          "name": "Events",
+          "url": "/docs/learn/minidapp-events"
+        },
+        {
+          "type": "page",
+          "name": "MiniBrowser",
+          "url": "/docs/learn/mini-browser"
+        },
+        {
+          "type": "page",
+          "name": "service.js",
+          "url": "/docs/learn/service-js"
+        },
+        {
+          "type": "separator",
+          "name": "Smart Contracts"
+        },
+        {
+          "type": "page",
+          "name": "Transaction Basics",
+          "url": "/docs/learn/contract-basics"
+        },
+        {
+          "type": "page",
+          "name": "KISS VM",
+          "url": "/docs/learn/contract-kissvm"
+        },
+        {
+          "type": "page",
+          "name": "Scripting Basics",
+          "url": "/docs/learn/contract-scripting"
+        },
+        {
+          "type": "page",
+          "name": "Token/NFT scripts",
+          "url": "/docs/learn/contract-tokenscript"
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Run a node",
+      "root": true,
+      "index": {
+        "type": "page",
+        "name": "Quick Start",
+        "icon": {
+          "type": "div",
+          "key": null,
+          "ref": null,
+          "props": {
+            "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+            "children": {
+              "type": {
+                "displayName": "Zap"
+              },
+              "key": null,
+              "ref": null,
+              "props": {},
+              "_owner": null
+            }
+          },
+          "_owner": null
+        },
+        "url": "/docs/run-a-node"
+      },
+      "children": [
+        {
+          "type": "page",
+          "name": "Quick Start",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Zap"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/run-a-node"
+        },
+        {
+          "type": "page",
+          "name": "System Requirements",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "BatteryFull"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/run-a-node/system-requirements"
+        },
+        {
+          "type": "separator",
+          "name": "Select your Platform"
+        },
+        {
+          "type": "page",
+          "name": "Android",
+          "url": "/docs/run-a-node/android"
+        },
+        {
+          "type": "page",
+          "name": "Windows",
+          "url": "/docs/run-a-node/windows"
+        },
+        {
+          "type": "page",
+          "name": "Mac",
+          "url": "/docs/run-a-node/mac"
+        },
+        {
+          "type": "page",
+          "name": "Docker Desktop",
+          "url": "/docs/run-a-node/docker-desktop"
+        },
+        {
+          "type": "page",
+          "name": "Linux VPS (Docker)",
+          "url": "/docs/run-a-node/linux-vps"
+        },
+        {
+          "type": "page",
+          "name": "Linux VPS (Systemd service)",
+          "url": "/docs/run-a-node/linux-vps-system"
+        },
+        {
+          "type": "page",
+          "name": "Desktop Command Line",
+          "url": "/docs/run-a-node/desktop-cli"
+        },
+        {
+          "type": "separator",
+          "name": "Archive Node"
+        },
+        {
+          "type": "page",
+          "name": "Run an Archive Node",
+          "url": "/docs/run-a-node/archive-node"
+        },
+        {
+          "type": "separator",
+          "name": "Mega Node (NEW)"
+        },
+        {
+          "type": "page",
+          "name": "Run a Mega Node",
+          "url": "/docs/run-a-node/mega-node"
+        },
+        {
+          "type": "page",
+          "name": "Host a Public Wallet",
+          "url": "/docs/run-a-node/public-wallet"
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "User Guides",
+      "root": true,
+      "index": {
+        "type": "page",
+        "name": "Login to Minima",
+        "icon": {
+          "type": "div",
+          "key": null,
+          "ref": null,
+          "props": {
+            "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+            "children": {
+              "type": {
+                "displayName": "KeyRound"
+              },
+              "key": null,
+              "ref": null,
+              "props": {},
+              "_owner": null
+            }
+          },
+          "_owner": null
+        },
+        "url": "/docs/user-guides"
+      },
+      "children": [
+        {
+          "type": "separator",
+          "name": "Guides"
+        },
+        {
+          "type": "page",
+          "name": "Login to Minima",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "KeyRound"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/user-guides"
+        },
+        {
+          "type": "page",
+          "name": "Join the network",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Network"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/user-guides/jointhenetwork"
+        },
+        {
+          "type": "page",
+          "name": "Secure your seedphrase",
+          "icon": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "rounded-md border bg-gradient-to-b from-secondary p-1 shadow-sm",
+              "children": {
+                "type": {
+                  "displayName": "Lock"
+                },
+                "key": null,
+                "ref": null,
+                "props": {},
+                "_owner": null
+              }
+            },
+            "_owner": null
+          },
+          "url": "/docs/user-guides/secure-your-seedphrase"
+        },
+        {
+          "type": "separator",
+          "name": "General"
+        },
+        {
+          "type": "page",
+          "name": "Check your node status",
+          "url": "/docs/user-guides/check-node-status"
+        },
+        {
+          "type": "page",
+          "name": "Set your profile",
+          "url": "/docs/user-guides/set-your-profile"
+        },
+        {
+          "type": "separator",
+          "name": "Security"
+        },
+        {
+          "type": "page",
+          "name": "Lock your wallet",
+          "url": "/docs/user-guides/lock-your-wallet"
+        },
+        {
+          "type": "page",
+          "name": "Backup your wallet",
+          "url": "/docs/user-guides/backup-your-wallet"
+        },
+        {
+          "type": "separator",
+          "name": "MiniDapp System"
+        },
+        {
+          "type": "page",
+          "name": "MiniDapp Permissions",
+          "url": "/docs/user-guides/minidapp-permissions"
+        },
+        {
+          "type": "page",
+          "name": "Approve Transactions",
+          "url": "/docs/user-guides/approve-transactions"
+        },
+        {
+          "type": "page",
+          "name": "Managing MiniDapps",
+          "url": "/docs/user-guides/manage-minidapps"
+        },
+        {
+          "type": "separator",
+          "name": "Maxima"
+        },
+        {
+          "type": "page",
+          "name": "Manage Maxima contacts",
+          "url": "/docs/user-guides/maxima-contacts"
+        },
+        {
+          "type": "page",
+          "name": "Advanced Maxima Options",
+          "url": "/docs/user-guides/advanced-maxima-options"
+        },
+        {
+          "type": "separator",
+          "name": "Node Recovery"
+        },
+        {
+          "type": "page",
+          "name": "Recover Options",
+          "url": "/docs/user-guides/node-recovery/recover-options"
+        },
+        {
+          "type": "page",
+          "name": "Chain Resync",
+          "url": "/docs/user-guides/node-recovery/chain-resync"
+        },
+        {
+          "type": "page",
+          "name": "Restoring your backup",
+          "url": "/docs/user-guides/node-recovery/restore-backup"
+        },
+        {
+          "type": "page",
+          "name": "Import your seed phrase",
+          "url": "/docs/user-guides/node-recovery/import-seed-phrase"
+        },
+        {
+          "type": "separator",
+          "name": "Archive Node"
+        },
+        {
+          "type": "page",
+          "name": "Archive File Export",
+          "url": "/docs/user-guides/manage-archive-node/archive-export"
+        },
+        {
+          "type": "page",
+          "name": "Exporting to MySQL",
+          "url": "/docs/user-guides/manage-archive-node/archive-export-sql"
+        },
+        {
+          "type": "separator",
+          "name": "Advanced"
+        },
+        {
+          "type": "page",
+          "name": "Cold Storage setup",
+          "url": "/docs/user-guides/advanced/cold-storage"
+        },
+        {
+          "type": "page",
+          "name": "Log messages",
+          "url": "/docs/user-guides/advanced/log-messages"
+        }
+      ]
+    }
+  ]
+}
