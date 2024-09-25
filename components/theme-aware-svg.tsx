@@ -17,6 +17,8 @@ export function ThemeAwareSVG({ src, alt, width, height }: ThemeAwareSVGProps) {
     getTheme() === "light" ? "Lm.svg" : "Dm.svg"
   )
 
+  console.log("themeAwareSrc", themeAwareSrc)
+
   return (
     <ImageZoom src={themeAwareSrc} alt={alt} width={width} height={height} />
   )

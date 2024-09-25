@@ -3,7 +3,7 @@ const withMDX = createMDX()
 
 /** @type {import('next').NextConfig} */
 const config = {
-  // output: "export",
+  output: "export",
   assetPrefix: "./",
   images: {
     unoptimized: true,

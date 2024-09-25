@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react"
 import useTheme from "@/__minidapp/hooks/useTheme"
 import useTitle from "@/__minidapp/hooks/useTitle"
 import { MENU, SECTION_MENU } from "@/__minidapp/constants"
+import TitleBar from "../Home/title-bar"
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   useTitle()
@@ -30,6 +31,7 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <>
+      <TitleBar />
       <header
         id="nd-subnav"
         className="sticky top-0 z-50 border-b transition-colors border-fd-foreground/10 bg-fd-background/60 backdrop-blur-md flex h-14 flex-row items-center px-4 md:hidden"

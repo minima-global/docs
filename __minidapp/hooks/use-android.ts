@@ -14,7 +14,7 @@ export const useAndroidShowTitleBar = () => {
     }
   }, [])
 
-  return openTitleBar
+  return { openTitleBar, isMinimaBrowser }
 }
 
 export default useAndroidShowTitleBar

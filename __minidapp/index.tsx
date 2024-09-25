@@ -1,7 +1,7 @@
 "use client"
 import "./minidapp.css"
 import React from "react"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
+import { HashRouter, MemoryRouter, Route, Routes } from "react-router-dom"
 import { default as Home } from "@/__minidapp/Home"
 import { default as PageLayout } from "@/__minidapp/Page/layout"
 import Page from "@/__minidapp/Page"

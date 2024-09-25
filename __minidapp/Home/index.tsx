@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { SparklesCore } from "@/__minidapp/Home/sparkles"
 import useTheme from "@/__minidapp/hooks/useTheme"
 import useTitle from "@/__minidapp/hooks/useTitle"
+import TitleBar from "./title-bar"
 
 export function Home() {
   useTitle()
@@ -11,6 +12,7 @@ export function Home() {
 
   return (
     <div>
+      <TitleBar />
       <header
         id="nd-nav"
         className="sticky top-0 z-50 border-b transition-colors border-transparent h-14"
