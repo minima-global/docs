@@ -6,7 +6,7 @@ import { ImageZoom } from "fumadocs-ui/components/image-zoom"
 import { Step, Steps } from "fumadocs-ui/components/steps"
 import { Tab, Tabs } from "fumadocs-ui/components/tabs"
 import defaultComponents from "fumadocs-ui/mdx"
-import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { TypeTable } from "fumadocs-ui/components/type-table"
 import type { MDXComponents } from "mdx/types"
 import {
   GoogelPlayIcon,
@@ -17,15 +17,25 @@ import {
 import { ThemeAwareSVG } from "@/components/theme-aware-svg"
 import { Separator } from "@/components/seperator"
 import CommandTable from "@/components/table"
-
-
+import Image from "next/image"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
     ...components,
     Link,
-    ImageZoom,
+    ImageZoom: (props) => {
+      if (props.src.startsWith(".")) {
+        return <ImageZoom {...props} />
+      }
+      return <ImageZoom {...props} src={`.${props.src}`} />
+    },
+    Image: (props) => {
+      if (props.src.startsWith(".")) {
+        return <Image {...props} />
+      }
+      return <Image {...props} src={`.${props.src}`} />
+    },
     Heading,
     ul: (props) => <ul className=" pl-[1.6em]  indent-[-1.4em]  " {...props} />,
     SvgComponent,
@@ -40,7 +50,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Tab,
     Accordions,
     Accordion,
-    ThemeAwareSVG,
+    ThemeAwareSVG: (props) => {
+      if (props.src.startsWith(".")) {
+        return <ImageZoom {...props} />
+      }
+      return <ImageZoom {...props} src={`.${props.src}`} />
+    },
     TypeTable,
     pre: ({ ref: _ref, ...props }) => (
       <CodeBlock {...props}>

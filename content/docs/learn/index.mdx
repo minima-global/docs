@@ -5,14 +5,18 @@ icon: Album
 tag: learn
 ---
 
-
 Minima uses the UTxO (Unspent Transaction Output) Model, like Bitcoin. A Transaction Output is a specific amount of Minima, identifiable through a unique ID called a Coin ID. Each Transaction Output can be considered analogous to a physical coin in that they can represent different amounts of currency and must be spent in whole.
 
 The Minima blockchain keeps track of the UTxO set on the network and who can spend them. The UTxO set circulating in the network fluctuates as users spend coins and create new ones as outputs from transactions. The sum of the value of all the UTxOs in the network will equal at most 1 billion Minima. One or more UTxOs are used as inputs into transactions and one or more new UTxOs will be created as outputs.
 
 The example below shows a transaction of 30 Minima from Bob to Alice. A UTxO worth 50 Minima is used as an input and two new UTxOs are created as outputs - one worth 30 Minima which is sent to the recipient and one of 20 Minima which is returned to the sender as change. Just like change is received when physical coins are spent.
 
-** Insert image here **
+<ThemeAwareSVG
+  src="/img/learn/coreConceptsLm.svg"
+  width={500}
+  height={500}
+  alt="core concepts"
+/>
 
 ## Transaction Proof-of-Work (TxPoW)
 

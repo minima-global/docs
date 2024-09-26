@@ -1,14 +1,15 @@
 {
   "name": "minima-docs",
-  "version": "0.0.0",
+  "version": "2.1.1",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "build-zip": "bun run build && cd out && zip -r docs_$npm_package_version.mds.zip . && mv docs_$npm_package_version.mds.zip ../minidapp"
+    "build-zip": "bun run build && bun run ./patcher.ts && cd out && rm -rf ./docs && zip -r docs-$npm_package_version.mds.zip . && mv docs-$npm_package_version.mds.zip ../minidapp"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.0.1",
     "@radix-ui/react-separator": "^1.1.0",
     "@tabler/icons-react": "^3.10.0",
     "@tsparticles/engine": "^3.5.0",
@@ -27,6 +28,7 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
     "tailwind-merge": "^2.5.2",
     "zod": "^3.23.8"
   },

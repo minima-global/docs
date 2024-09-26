@@ -19,12 +19,36 @@ Coins are hashed in pairs, building up the largest **binary tree** possible unti
 
 When the total number of leaf nodes (Coins/TxOs) are not equal to `2n where n = int{0,...,256},`there will be multiple trees of different heights, creating multiple peak nodes as shown below.
 
-**Insert image here**
-**Insert image here**
+_Diagram: Merkle Mountain Range (MMR) with 11 coins (green) and three peaks (blue)_
+
+<ThemeAwareSVG
+  src="/img/learn/mMRDatabase1Lm.svg"
+  width={600}
+  height={600}
+  alt="MMR Database"
+/>
+
+To create a single MMR tree, the peaks must be collected (or ‘bagged’) starting from left to right. Until a single root hash is found.
+
+_Diagram: A complete Merkle Mountain Range (MMR) with three peaks and root_
+
+<ThemeAwareSVG
+  src="/img/learn/mMRDatabase2Lm.svg"
+  width={600}
+  height={600}
+  alt="MMR Database"
+/>
 
 Each node in the tree will have a globally unique reference to it by combining the row/level it is in and its entry number on the row. Using a hash table to track entries, each node can be identified through a reference [R,E] where R is the row number and E is the Entry number.
 
-**Insert image here**
+_Diagram: A complete MMR with hash table references [row, entry number]_
+
+<ThemeAwareSVG
+  src="/img/learn/mMRDatabase3Lm.svg"
+  width={600}
+  height={600}
+  alt="MMR Database"
+/>
 
 The maximum possible number of rows in the MMR is set to 256, using the MAXROWS parameter. With each two new coins, a new parent node is added, therefore the maximum number of coins in the MMR would result in a perfect binary tree with one peak and 2^256 coins.
 
@@ -56,7 +80,14 @@ Each node in the MMR has unique MMR Data consisting of a hash and a value, defin
 | Data (Hash) The coin could be spent or unspent. | Hash(coin object)                               | Hash[Hash(left child data object), Hash (right child data object),value object] | MiniData (32 byte hash) |
 | Value                                           | Minima Value of coin, if unspent Or 0, if spent | Sum of the calue of child nodes                                                 | MiniNumber              |
 
-** Insert image here **
+_Diagram: Example MMR Data for two coins and a parent node in the MMR._
+
+<ThemeAwareSVG
+  src="/img/learn/mMRDatabase4Lm.svg"
+  width={600}
+  height={600}
+  alt="MMR Database"
+/>
 
 | MMREntry Attribute | Description                                                                     | Type           |
 | ------------------ | ------------------------------------------------------------------------------- | -------------- |
@@ -72,7 +103,14 @@ Given a CoinProof, any node verifying a transaction can calculate the path (i.e.
 
 **Proof Chunks** consist of the MMR Data (hash and value) for an MMR entry and a True/False flag indicating whether it is a left sibling or not.
 
-**Insert image here**
+_Diagram: Example CoinProof for coin 7 (coin to peak)_
+
+<ThemeAwareSVG
+  src="/img/learn/mMRDatabase5Lm.svg"
+  width={600}
+  height={600}
+  alt="MMR Database"
+/>
 
 The CoinProof for coin 7 consists of the coin and the yellow Proof Chunks, i.e. entries `{[0,6],[0,7],[1,2],[2,0]}` , so that:
 

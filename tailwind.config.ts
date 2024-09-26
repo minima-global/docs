@@ -10,6 +10,7 @@ const {
 export default {
   presets: [createPreset()],
   content: [
+    "./__minidapp/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./content/**/*.{md,mdx}",

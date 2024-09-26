@@ -5,6 +5,9 @@ const withMDX = createMDX()
 const config = {
   output: "export",
   assetPrefix: "./",
+  images: {
+    unoptimized: true,
+  },
 }
 
 export default withMDX(config)
