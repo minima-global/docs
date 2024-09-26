@@ -3,7 +3,9 @@
   "root": true,
   "tag": ["core"],
   "pages": [
-    "---Minima---",
+    "--- Whitepaper---",
+    "[Minima Whitepaper]( https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)",
+    "---About Minima---",
     "index",
     "about-minima",
     "get-involved",
@@ -13,8 +15,6 @@
     "minidapp-terms",
     "website-terms",
     "minima-privacy-policy",
-    "presale",
-    "--- Whitepaper---",
-    "[Minima Whitepaper]( https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)"
+    "presale"
   ]
 }

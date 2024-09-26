@@ -42,7 +42,7 @@ export const modes: Mode[] = [
   {
     param: "development",
     name: "Developer Tutorials",
-    description: "Develop on Minima",
+    description: "Build on Minima",
     icon: PencilRulerIcon,
   },
 ]

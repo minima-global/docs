@@ -94,6 +94,24 @@ const Cards = () => {
         </svg>
       ),
     },
+        {
+      title: "Knowledge Base",
+      description: "A deep dive into the Minima protocol and its architecture",
+      link: "/docs/learn",
+      icon: ( 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          id="Layer_1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 32 32"
+          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
+        >
+          <path d="M10.7,21.3V10.7h10.7V0H32v32H0V21.3H10.7z" />
+        </svg>
+      ),
+    },
     {
       title: "Developer Tutorials",
       description:
@@ -111,24 +129,6 @@ const Cards = () => {
         >
           <path d="M16,16H0v16h16V16z" />
           <path d="M32,0H16v16h16V0z" />
-        </svg>
-      ),
-    },
-    {
-      title: "Knowledge Base",
-      description: "A deep dive into the Minima protocol and its architecture",
-      link: "/docs/learn",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          id="Layer_1"
-          x="0px"
-          y="0px"
-          viewBox="0 0 32 32"
-          className=" h-5 w-5 fill-neutral-500 group-hover:fill-orange-500 transition-colors"
-        >
-          <path d="M10.7,21.3V10.7h10.7V0H32v32H0V21.3H10.7z" />
         </svg>
       ),
     },

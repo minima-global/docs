@@ -1,0 +1,74 @@
+---
+title: Node Types
+description: Understand the different types of Minima node
+icon: BatteryFull
+tag: run-a-node
+---
+
+# Node Types
+
+All Minima nodes are full nodes that contribute to finding blocks, validate all transactions, and provide Proof of Work to secure the chain.
+
+All nodes include Maxima, the peer-to-peer communication layer, and support the MiniDapp system (MDS) for users to interact with their chosen Minima applications. 
+
+Standard full nodes are the default, they prune the chain to remain lightweight and use minimal power consumption. Other node types are available for those who wish to run a node that keeps more of the chain history. These use more disk space and processing power but can provide additional use cases.
+
+There are 3 types of nodes: 
+
+1. Full nodes - ideal for regular users who want to participate in the Minima network without worrying about significant storage or technical requirements.
+2. Archive nodes -  ideal for those who wish to hold a record of all previous block headers. Archive nodes will not prune blocks after 2 months.
+3. Mega MMR nodes - ideal for those who wish to assist others in the recovery of their nodes (in the case where the user has no recent backup), or host a Minima wallet for public use.
+
+Relay nodes - All 3 types of nodes can contribute more to the network's health and resilience by accepting both incoming and outgoing connections on the base port (default 9001). This is typically not the case when running a node on mobile or desktop as they do not allow incoming connections by default.
+
+Let's take a closer look at the differences between these 3 node types. 
+
+
+## Full node (Standard)
+
+A standard Minima Node is the default option and is perfect for everyday users and small devices wishing to utilise the Minima network. 
+
+Designed for efficiency, it uses the least amount of memory as possible, making it ideal for devices with limited storage. A full node can run on almost any device — be it a mobile phone, desktop computer, raspberry pi, or a server.
+
+Blockchain history: This node stores only the most recent blocks, roughly the last 24 hours' worth. It removes older blocks to keep the storage space minimal but keeps a compact record of the pruned history, called the Cascade, to ensure it can still validate transactions and create new blocks. 
+Users keep a record of their own transaction history which can be backed up or exported. 
+
+Coins: Full nodes only hold the proofs for the coins that are relevant to the user. This can be thought of as each user keeping their own page from the book as well as the spine. The spine is known by all users and allows them to validate transactions from other users without having to store a record of other users' coins. 
+
+Archive Blocks: The node also keeps the last two months of blocks in an archive. These are automatically shared with users rejoining the network after a short time offline, so that they can catch up to the latest block.
+
+## Archive node
+
+An Archive Node is typically run on desktop computers or servers because as it requires more storage space.
+
+Blockchain History: Unlike the standard full node, an archive node does not prune blocks, storing all block headers from the moment it was started. Full transaction details are still pruned.This helps save space while still keeping important historical data.
+
+Coins: It maintains a complete MMR database of the coins since the archive node was started, meaning it has proofs for more coins, not just the ones relevant to a single user. If the archive node is resynced from the Genesis block, it will hold a complete record of the coins. 
+
+archive nodes can help other nodes recover or sync, especially if they've been offline for a while. However, they can only assist with data from the point in time when the archive node was started.
+
+
+Mega MMR Node
+The Mega MMR Node is the powerhouse of Minima nodes. It requires a server or a high-capacity desktop because it needs a lot of storage and processing power.
+
+Complete Unspent Coin Set: This node stores the entire set of unspent coins for the whole blockchain. Think of it as having a record of all the coins that are still in use on the network since the very beginning.
+
+No Full Transaction History: While it doesn't keep every detail of every transaction ever made, it has all the proofs needed to verify any coin on the network.
+
+Hosting Public Wallets: Because it has such a complete set of data, a Mega MMR Node can host public wallets. This means it can provide the necessary information for any user to access and manage their coins through a public interface.
+
+Ideal For: Those who want to offer services like public wallets or need to recover data for any user, regardless of when they joined Minima. Setting up a Mega MMR Node is a bit more complex; it involves syncing from an archive node that has stored the blockchain since the beginning.
+
+Summing It Up
+Normal Nodes are great if you want a simple, efficient way to use Minima without needing much storage. They're perfect for daily use on personal devices.
+
+Archive Nodes are for users who have a bit more storage and want to help strengthen the network by keeping a longer history of sync blocks.
+
+Mega MMR Nodes are specialized nodes that store the complete unspent coin set. They're essential for hosting public wallets and providing comprehensive data for any coin on the network.
+
+Choosing the Right Node for You
+Just Getting Started? Stick with the Normal Node. It's easy to set up and doesn't demand much from your device.
+
+Want to Support the Network More? Consider an Archive Node. You'll contribute to the network's resilience and help other users sync their nodes.
+
+Need Full Coin Proofs or Hosting Services? Go for a Mega MMR Node. It's more complex but essential for advanced services like public wallets.
