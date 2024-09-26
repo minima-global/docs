@@ -1,8 +1,9 @@
 "use client"
 import { MDXProvider } from "@mdx-js/react"
 import { useLocation } from "react-router-dom"
-import { useEffect } from "react"
+import {PropsWithChildren, useEffect} from "react"
 import { useMDXComponents } from "@/mdx-components"
+import { Link } from "react-router-dom";
 
 export default function Page() {
   const { pathname, hash } = useLocation()
@@ -45,6 +46,13 @@ export default function Page() {
         <MDX.default
           components={{
             ...components,
+            a: (props: PropsWithChildren<{ href: string }>) => {
+              return (
+                  <Link {...props} to={props.href}>
+                    {props.children}
+                  </Link>
+              )
+            }
           }}
         />
       </MDXProvider>
