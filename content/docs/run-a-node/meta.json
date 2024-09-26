@@ -3,6 +3,7 @@
   "root": true,
   "pages": [
     "index",
+    "node-types",
     "system-requirements",
     "---Select your Platform---",
     "android",
@@ -12,10 +13,10 @@
     "linux-vps",
     "linux-vps-system",
     "desktop-cli",
-    "---Archive Node---",
-    "archive-node",
     "---Mega Node (NEW)---",
     "mega-node",
-    "public-wallet"
+    "public-wallet",
+    "---Archive Node---",
+    "archive-node"
   ]
 }

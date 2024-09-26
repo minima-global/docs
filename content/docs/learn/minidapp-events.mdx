@@ -10,7 +10,7 @@ The following events exist:
 
 `inited`: MDS has been initialised.
 
-`NEWBALANCE`: The balance of the node has changed. 
+`NEWBALANCE`: The balance of the node has changed. This occurs when the node receives a new unconfirmed coin. The coin will only become spendable once it is 3 blocks deep in the chain.
 
 `NEWBLOCK`: The chain tip has changed (i.e. a new block has been added to the chain). JSON data returned: The TxPoW object of the last block is returned as a JSON Object.
 

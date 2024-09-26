@@ -115,7 +115,7 @@ const Cards = () => {
     {
       title: "Developer Tutorials",
       description:
-        "Develop decentralized applications and create smart contracts on Minima",
+        "Build decentralized applications and create smart contracts on Minima",
       link: "/docs/development",
       icon: (
         <svg
