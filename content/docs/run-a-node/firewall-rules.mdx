@@ -1,16 +1,13 @@
 ---
-title: System Requirements
-description: Learn about the system requirements for running a Minima node
+title: Firewall Rules
+description: Learn about the port and firewall requirements for running a Minima node
 icon: MonitorCog
 tag: run-a-node
 ---
 
-Minima is a lightweight blockchain that can be run on any Android device (version 9 or above), general purpose computer or server (VPS).
+The following information is for Server and Desktop users. 
 
-There is no minimum amount of Minima coins required to run a node.
-
-The following information is for Server or Desktop users.
-
+{/* 
 ## Minimum hardware requirement
 
 The following requirements are separate to any specs required for non Minima related processes. GPU is not necessary.
@@ -51,28 +48,27 @@ The following requirements are separate to any specs required for non Minima rel
   consumption is considerably higher than a standard node.
 </Callout>
 
-The Mega node must be online constantly to remain in sync with the chain. Downtime of less than 24 hours is acceptable.
+The Mega node must be online constantly to remain in sync with the chain. Downtime of less than 24 hours is acceptable. */}
 
 ## Ports used
 
-By default, Minima reserves ports `9001-9005`, although an alternate 5-port range can be chosen by specifying a different main port on start up e.g. 8001.
+By default, Minima reserves ports `9001-9005`, although an alternate 5-port range can be chosen by specifying a different main port on start up e.g. 8001.   If specifying a different main port, the port range used will be the next consecutive 4 ports. e.g 8001-8005.
 
 ```bash title="Terminal"
 java -jar minima.jar -port 8001
 ```
 
-<Callout title="Note" type="info">
-  If specifying a different main port e.g. 8001, the port range used will be the
-  next consecutive 4 ports. e.g 8001-8005.
-</Callout>
-
 - **9001 TCP (main port):** The main Minima port, for peer-to-peer communication over Minima and Maxima
-- **9002 TCP(or main port +1):** Not currently used
-- **9003 TCP(or main port +2):** MiniDapp System (MDS) Web Server
-- **9004 TCP(or main port +3):** No longer used after v 1.0.37
-- **9005 TCP(or main port +4):** JSON-RPC over HTTP
+- **9002 TCP (or main port +1):** Not currently used
+- **9003 TCP (or main port +2):** MiniDapp System (MDS) Web Server
+- **9004 TCP (or main port +3):** No longer used after v 1.0.37
+- **9005 TCP (or main port +4):** JSON-RPC over HTTP
 
-Desktop nodes are not required to configure any port forwarding to use Minima.
+## Relaying
+
+To ensure your node faciliates the relaying of transactions and blocks across the network, you should allow inbound connections to the server on port 9001 (or other main port you have chosen). Relay nodes are the backbone of the Minima peer-to-peer network. If your inbound connection is closed, your node will still function but will only make outgoing connections and will not act as a relay node.
+
+Desktop nodes can contribute to relaying transactions and blocks by setting up port forwarding on port 9001, however this is not usually recommended for home networks.
 
 ## Recommended Firewall settings (VPS users)
 

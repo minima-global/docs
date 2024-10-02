@@ -4,7 +4,7 @@
   "pages": [
     "index",
     "node-types",
-    "system-requirements",
+    "firewall-rules",
     "---Select your Platform---",
     "android",
     "windows",

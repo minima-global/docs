@@ -2,7 +2,7 @@
   "title": "User Guides",
   "root": true,
   "pages": [
-    "---Guides---",
+    "---Essentials---",
     "index",
     "jointhenetwork",
     "secure-your-seedphrase",
@@ -11,6 +11,7 @@
     "set-your-profile",
     "---Security---",
     "lock-your-wallet",
+    "create-a-safe",
     "backup-your-wallet",
     "---MiniDapp System---",
     "minidapp-permissions",
