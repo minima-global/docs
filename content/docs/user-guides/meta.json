@@ -28,6 +28,12 @@
     "---Archive Node---",
     "manage-archive-node/archive-export",
     "manage-archive-node/archive-export-sql",
+    "---Mega Nodes---",
+    "public-wallet",
+    "---MySQL Integration---",
+    "mysql-setup",
+    "---Minima E-Gateway (MEG)---",
+    "meg-wallet-api",
     "---Advanced---",
     "advanced/cold-storage",
     "advanced/log-messages"

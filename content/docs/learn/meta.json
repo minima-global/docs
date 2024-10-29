@@ -13,9 +13,10 @@
     "miningandconsensus",
     "coloured-coins",
     "keysandsignatures",
-    "scripting",
     "quantumsecurity",
     "archivenodes",
+    "---Smart Contracts---",
+    "scripting",
     "---Maxima---",
     "about-maxima",
     "maxima-contacts",
@@ -23,14 +24,6 @@
     "maxima-mls",
     "maxima-faq",
     "---MiniDapps---",
-    "about-minidapps",
-    "minidapp-structure",
-    "minidapp-configfile",
-    "minidapp-mds",
-    "minidapp-events",
-    "mini-browser",
-    "service-js",
-    "---Smart Contracts---",
-    "..."
+    "about-minidapps"
   ]
 }

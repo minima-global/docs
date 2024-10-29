@@ -5,18 +5,21 @@
     "index",
     "node-types",
     "firewall-rules",
-    "---Select your Platform---",
+    "---Full Node---",
     "android",
     "windows",
     "mac",
     "docker-desktop",
-    "linux-vps",
-    "linux-vps-system",
+    "linux-vps-docker",
+    "linux-vps-service",
     "desktop-cli",
-    "---Mega Node (NEW)---",
+    "---Archive Node---",
+    "archive-node",
+    "---Mega Node---",
     "mega-node",
     "public-wallet",
-    "---Archive Node---",
-    "archive-node"
+     "---Minima E-Gateway (MEG)---",
+     "about-meg",
+     "meg-setup"
   ]
 }

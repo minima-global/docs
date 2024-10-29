@@ -127,23 +127,27 @@ You should see the response below, wait a few moments to receive the initial blo
 
 A Mega node should be backfilled with the chain history so that the node has a complete database of all the coins since the blockchain started.
 
-You can either:
-
-- [Chain resync](/docs/user-guides/node-recovery/chain-resync) the Mega node from an Archive node, or
-- Import a MegaMMR `.mmr` file shared from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
+Import a MegaMMR `.mmr` file, generated no longer than 1 week ago, from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
 
 Daily .mmr exports can be found [here](https://spartacusrex.com/megaarchive/).
-
-<Callout title="Info">
-  The .mmr file must have been generated no longer than 1 week ago.
-</Callout>
-
-To import the .mmr file, run the following command:
 
 ```bash title="Terminal"
 megammr action:import file:[PathToFile]/megammr.mmr
 ```
 
+Alternatively, you can [Chain resync](/docs/user-guides/node-recovery/chain-resync) the Mega node from an Archive node,
+
 </Step>
 
   </Steps>
+
+
+## Mega Node User Guides
+
+ <Cards>
+  <Card
+    title="Public MDS"
+    description="How to set up a public minidapp system"
+    href="/docs/user-guides/public-wallet"
+/>
+ </Cards>

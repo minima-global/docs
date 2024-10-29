@@ -1,0 +1,406 @@
+---
+title: MEG Setup
+description: How to setup MEG
+tag: run-a-node
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs"
+
+This guide explains how to
+
+- Set up a MEG (Minima E-Gateway) instance and connect it to a Minima node
+- Test the MEG setup
+- Store more of the chain history on the node, if required
+- Export the chain history to MySQL
+
+
+This is intended as a guide for setting up a proof-of-concept environment. In Production, the Minima node should be configured with secure SSL and appropriate [firewalls](/docs/run-a-node/firewall-rules) - this is your responsibility.
+
+## Downloads required
+
+You will need to download the latest [minima.jar](https://github.com/minima-global/Minima/releases) and [meg.jar](https://github.com/minima-global/MEG/releases) from GitHub.
+
+{/* 
+Minima nodes setup
+This guide will assume a dual-node setup, one online mega mmr node and one offline node for signing. 
+Offline node: No internet connection/bluetooth/nearby sharing should be enabled. This device will be used to sign transactions offline.
+Online node: Connected to the internet, this node will not hold any private keys and will only be able to create transactions and post transactions that have been signed by the offline device. 
+You will also need a USB or other method to transfer the unsigned/signed transaction files between devices.
+We assume that no keys will be stored on either the online node or the offline node. Accounts (wallets) can be generated from the offline Minima node and keys stored securely elsewhere.
+
+
+The online Minima node will run on ports 9001-9005.
+9001 is the peer-to-peer networking layer which can be open to inbound and outbound connections from anywhere. This ensures the node acts as a relay node - facilitating the relaying of transactions across the network.
+9002 is currently not used and should not be open externally.
+9003 is the MiniDapp system (MDS) port. Opening this port publicly will expose the login screen for the node. This should only be exposed to specific IP addresses if the minidapp system is enabled using the -mdsenable startup parameter (explained later). If the MiniDapp System is not enabled, it should not be exposed at all. 
+9004 is no longer used and should not be open externally.
+9005 is the RPC port which should only be allowed inbound to specific IP addresses that require remote connection to the Minima node (if any).
+
+
+Mega MMR Import
+If you skip this step, your Mega MMR node will only start to store coins from this point forward. 
+Optionally,  import a recent Mega MMR file to populate the Mega node with historic coin data, you can download a file from: https://spartacusrex.com/megaarchive/
+Then in the window where the Minima logs are, enter the command:
+megammr action:import file:[PathToFile]/megammr.mmr
+The MegaMMR will be loaded and the node will shutdown automatically.
+Restart the node as before using java -jar.... ensuring you do not use -clean.
+Online Node Maintenance & Recovery
+Add a Maxima contact 
+By adding a contact to your node, you can ensure that you are on the same block number as your contact. 
+To name your node, run 
+maxima action:setname name:yourname
+To find your contact address, run 
+maxima
+And copy the full contact address from the response. This changes at random intervals so if sharing your contact address, your contact must add it as soon as possible whilst it is still valid.
+To add a contact, ask them for their contact address and run the following command, inserting their contact address.
+maxcontacts action:add contact:
+Export the Mega MMR data
+You should export your Mega MMR data weekly and store the file in a different location to the node. This will contain a complete record of the UTxO (coin) set that is required to create transactions, and can be restored to a new node if the online node becomes corrupted somehow. 
+To export the complete set of coins, use the command:
+megammr action:export file:[PathToFile]/megammrexport-datetime.mmr
+This can be imported to another node by using the Mega MMR import command shown in the section above.
+Import the Mega MMR data
+If you need to recreate your Mega MMR node with the coin history, you can simply import a megammr file you previously created. See Mega MMR Import section above
+Importing a seed phrase
+You can restore the private keys from a given seed phrase to a node by importing the seed phrase to a new node. 
+You will need 
+a mega mmr node to connect to 
+the 24 word seed phrase you wish to restore
+The keyuses of the seed phrase 
+For each account, you must record the 24 word seed phrase and the key uses (the number of times you have generated a signature for an address.
+To restore a node to a given seed phrase, use the megammrsync command.
+Example:
+megammrsync action:resync host:xx.xx.xxx.xxx:9001 phrase:"YOUR 24 WORD SEED PHRASE" keyuses:2000
+Where the host is the ip:port of the megammr node to restore from. 
+This will NOT share the seed phrase with the Mega MMR node.
+If this node should be a mega mmr node, you will then need to re-import the megammr file.
+Resyncing to the chain tip
+If your node has fallen behind the chain tip, you can resync from another megammr node, using:
+megammrsync action:resync host:xx.xx.xxx.xxx:9001 
+If this node should be a mega mmr node, you will then need to re-import the megammr file.
+Backup/Restore
+You can backup the node using the backup command.
+The backup file will contain:
+The seed phrase and private keys for the node
+The coins proofs relevant to the node 
+The keyuses for this seed phrase
+Transaction history relevant to this seed phrase
+The backup file does not contain
+The mega mmr coins  
+Example:
+backup password:Longsecurepassword456 confirm:Longsecurepassword456 file:mybackupfile-ddmmyy.bak
+This can be done automatically by adding the auto:true parameter. 
+Backups can then be restored by providing the file parameter with the megammrsync command. This will restore the backup and use a megammr node to ensure you also sync to the current tip block:
+megammrsync action:resync host:xx.xx.xxx.xxx:9001 file:myoldbakup.bak password:backup_password
+If this node should also be a mega mmr node, you will then need to re-import the megammr file. */}
+
+## Minima setup
+
+You can choose which type of Minima node is appropriate depending on your implementation. If you are unsure, please see [Node Types.](/docs/run-a-node/node-types)
+
+We will continue the setup with a Mega node so that transactions can be creatd and posted for **any** user. 
+
+<Steps>
+<Step>
+
+### Start an online Minima Mega node
+
+You can run Minima from the CLI as a session in tmux or create it as a background service, e.g. as a [systemd service](/docs/run-a-node/linux-vps-service).
+
+From the CLI, start a Minima Mega node with the following start up parameters:
+
+
+| Start up parameter                                | Description                                                               |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `-megammr`                          | starts Minima as a Mega MMR node (tracks ALL coins on the network)                                  |
+| `-rpcenable`                        | enables RPC over port 9005 for communication via MEG                                                |
+| `-rpcpassword [yourrpcpassword]`    | set Basic Auth password for RPC calls ( Use with SSL / stunnel ). Only secure if used with SSL.     |
+| `-basefolder /home/minima`          | defines the backup/restore folder                                                                   |
+| `-data /home/minima/.minima`        | defines the configuration data folder                                                               |
+| `-p2pnodes https://spartacusrex.com/minimapeers.txt` | provides a list of peers to join the network                                       |
+| `-notifyalltxpow`                   | (Optional) creates a NEWTXPOW notification for all transactions                                     |
+| `-txpowdbstore`                     | (Optional) define how long to store full transaction details on the node. Default is 3.             |  
+| `-mysqlalltxpow`                    | (Optional) Store all TxPoW in MySQL when mysql autobackup is enabled                                |
+| `-mdsenable`                        | (Optional) enables the minidapp system e.g. for block explorer                                      |
+| `-mdspassword insertpasswordhere`   | (Optional) sets the password to login to the minidapp system                                        |
+| `-clean`                            | (Optional) to wipe and start a fresh node - ANY COINS ON THE NODE WILL BE WIPED                     |
+
+Example 
+
+```
+java -jar [path]/minima.jar -rpcenable -megammr -notifyalltxpow -basefolder /home/minima -data /home/minima/.minima -p2pnodes https://spartacusrex.com/minimapeers.txt
+```
+
+You should see something similar to the following:
+
+```
+Minima @ 05/07/2024 16:24:24 [9.0 MB] : Welcome to Minima v1.0.41 - for assistance type help. Then press enter.
+Minima @ 05/07/2024 16:24:25 [60.8 MB] : Generating Base Private Seed Key
+```
+
+
+Now the node is running and you should automatically join the network. A seed phrase will be generated along with 64 default wallet addresses for the node. 
+
+</Step>
+<Step>
+
+### Confirm the node is synced to the latest block
+
+Wait a few moments, then run the command `block` from the Minima Terminal, RPC Client or Terminal MiniDapp to ensure the node is connected to the network and up to date with the chain tip.
+
+</Step>
+ <Step>
+
+### Import historical coin data
+
+*This step can be skipped if not running a Mega node.*
+
+A Mega node should be backfilled with the chain history so that the node has a complete database of all the coins since the blockchain started.
+
+Import a MegaMMR `.mmr` file, generated no longer than 1 week ago, from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
+
+Daily .mmr exports can be found [here](https://spartacusrex.com/megaarchive/).
+
+```bash title="Terminal"
+megammr action:import file:[PathToFile]/megammr.mmr
+```
+
+</Step>
+
+{/*
+<Step>
+
+### Optionally start an offline Minima node
+
+Start a Minima node (offline)
+From the CLI, start a Minima node with the following start up parameters:
+-rpcenable : enables RPC over port 9005 for communication via a local instance of MEG
+-basefolder /home/minima : defines the folder used for exporting and importing backups, transactions and other files
+-data /home/minima/.minima :  defines the configuration data folder 
+-clean : optional to wipe and start a fresh node - ALL DATA FILES WILL BE WIPED AND A NEW SEED PHRASE WILL BE GENERATED 
+Note: Port 9001 is used as the base port by default and the RPC port is base port +4 i.e. 9005. To start Minima on a custom port, you can use the -port start-up parameter, this will reserve the 5 consecutive ports e.g. if using -port 8001, the RPC port will be 8005.
+On start up, a new seed phrase will be generated along with 64 wallet addresses for the node. 
+Run the Minima command vault to view the seed phrase of the node. 
+To wipe the seed phrase from the node, use 
+vault action:wipekeys seed:0x..
+To restore the seed phrase to the node, you will need the 24 words 
+vault action:restorekeys phrase:”"SPRAY LAMP…" */}
+
+{/* </Step> */}
+</Steps>
+
+
+## How to set up MEG
+
+
+<Steps>
+<Step>
+
+### Start a MEG instance
+
+Start a new terminal/tmux session and start MEG with the following parameters
+
+- `-data /home/meg/.megdata` : defines the configuration data folder
+- `-adminpassword insertadminpassword` : set the admin password
+- `-port 8080` : set the port for MEG to run over
+
+Example:
+
+```
+java -jar minima-meg-server.jar -port 8080 -data /home/meg/.megdata -adminpassword INSERTMEGPASSWORD
+```
+
+</Step>
+
+### Access the MEG interface
+
+Access the MEG interface on http://127.0.0.1:8080, enter the admin username and password.
+
+
+<Step>
+
+### Connect MEG to the Minima node
+
+Set up the connection to the Minima node
+
+ MEG host: http://127.0.0.1:8080/
+
+ MINIMA host: http://127.0.0.1:9005/
+
+Click Update Node Details, then select TEST CONNECTION. If successful, you will see the status returned from the Minima node.
+
+**Example:**
+
+```
+ {"command":"block","status":true,"pending":false,"response":{"block":"932067","hash":"0x00000013436070C3B661CAD39A52FA0F775C6DB82FE849005ACB7BFBAEBD9577","timemilli":"1720193086809","date":"Fri Jul 05 16:24:46 BST 2024"}}
+```
+<ImageZoom
+src="/img/meg/meg_connect.png"
+alt="meg to minima"
+width={500}
+height={500}
+/>
+
+
+Verify the connection between MEG and Minima by running the webhooks command from the Minima terminal, you should see the output:
+webhooks
+
+```
+  "command" : "webhooks",
+  "status":true,
+  "pending":false,
+  "response":{
+    "webhooks":["#<http://127.0.0.1:8080/webhook>"]}
+```
+</Step>
+
+<Step>
+
+### Create users
+
+The following types of users are available:
+
+- **Admin** - creates and removes users, adds and removes triggers and endpoints, sets the connection to the Minima node.
+- **Basic** - view only user to the console.
+- **API Caller** - Endpoints can only be called by ‘apicaller’ users - using Basic Authorization Header. Does not grant login access to the console.
+
+For testing, Create an API caller user from the admin page.
+
+</Step>
+</Steps>
+
+## Testing the setup
+
+### Testing Triggers
+
+Triggers allow you to listen to events on the chain and set up alerts for when something specific happens on Minima e.g. when an address sends or receives coins.
+
+Setup a trigger for the `NEWTXPOW` event. This means that whenever a new transaction occurs on chain, the event will trigger a POST request to the specified URL with the relevant JSON response. 
+For the test, we will use the test URL as shown below.
+
+Select Add New Trigger
+
+
+
+If successful, in the MEG CLI window, you should see the output similar to the following:
+```
+TESTPOST RECEIVED : {"minima":{"data":{"relevant":false,"txpow":{"isblock":true,"burn":0,"size":884,"txpowid":"0x000000F332044AD24EF0EAB325A5BC1CE1F4A09A99BF1951199E4F329A8F03E3","header":{"magic":{"currentmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","currentmaxkissvmops":"1024","currentmaxtxn":"256","desiredmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","desiredmaxtxpowsize":"65536","currentmaxtxpowsize":"65536","desiredmaxkissvmops":"1024","desiredmaxtxn":"256"},"date":"Fri Jul 05 17:19:50 BST 2024","blkdiff":"0x010A7EA0176FD8CCB451F7830362F8007344047301152B4DC5CC79A6BC75","cascadelevels":32,"nonce":"99798592797762047.99828701931909910138311404738574454620161","timemilli":"1720196390951","total":"999994932.79702442062990000000000000099999999999784698","mmr":"0x2CA5409C6E51CD702EDE72FC9A5C03D52F36B0D0B93AD48351438EC63B7BA510","txbodyhash":"0xFD29478185F192E84CA8860FD770A910352A28CF46C3E66FB3F40629B12725F1","chainid":"0x00","block":"931293","customhash":"0x00","superparents":[{"difficulty":0,"parent":"0x000000F3E54954FEAC8183457E70B791DB544A80264034F5D72477E62F2DE97B","count":1},{"difficulty":2,"parent":"0x0000002FD4B4220324A6C70BC866FB79F43AD4C4AC64F919835ED16508BD51F5","count":2},{"difficulty":5,"parent":"0x00000007224C8B0F64581B85AC28855322716B3D587F863E72A54B5296ED0FBE","count":3},{"difficulty":6,"parent":"0x0000000386DFB9EF42D1882F749F44DBA873850C2D106D6E5A6786931CD4E233","count":1},{"difficulty":7,"parent":"0x000000012F2104DBE1643473E81314F76BBF88014B037068D0D5B85E805648C8","count":1},{"difficulty":8,"parent":"0x00000000D8FE3A33BEC316EF113C82ABDB90D19067801433DCC1374F3C994562","count":1},{"difficulty":9,"parent":"0x000000005097F0D3CACD78B92C7FDE069C7CC1BA06141B729330DE3E6DD25D2F","count":1},{"difficulty":10,"parent":"0x000000002918D212D5B4B8B37F5D86F2E8A3AF461565826329E599ED2A7DEFAA","count":1},{"difficulty":12,"parent":"0x000000000B000FFB75C23D99C81C45692328F54CA0DE0B75ED10CA01EB54D101","count":2},{"difficulty":13,"parent":"0x00000000062FFA8AD59159A86C8DB38F29EEB638BB45286A2D959B8CABC82E75","count":1},{"difficulty":16,"parent":"0x0000000000B4CB70648FEA38BFBB4770333D062C088C1E3E9C28CAA52FD6FBE0","count":3},{"difficulty":17,"parent":"0x0000000000027AC01DDD0C66C98047A73F703F3D5200E33E742A2838D4F727E9","count":1},{"difficulty":19,"parent":"0x0000000000002B67F865461B9F2DAC7A14D0C7A070F46DAE04E8C5FE6ABF0F98","count":2},{"difficulty":31,"parent":"0x00","count":12}]},"hasbody":true,"body":{"witness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txnlist":[],"burntxn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"txndiff":"0x5BCE215703AB919D36898FE644FA27DCB8A9F02FF6F1EB362AE353E33E5E","burnwitness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"prng":"0xE49F5E62204186DCF62217C46277E737D31557B0A4D365D48B47B64682437669"},"istransaction":false,"superblock":0}},"event":"NEWTXPOW"},"meg":{"extradata":"","trigger":"NEWTXPOW","url":"<http://127.0.0.1:8001/testpost>"}}
+```
+
+### Testing Endpoints
+
+Endpoints enable you to automatically perform actions on Minima from external apps/systems e.g. creating and posting transactions
+Create a new endpoint that will run the status command on the Minima node.
+Endpoint: nodestatus
+Command: status
+Select Add New Endpoint
+
+From a new Command line window, run
+```
+curl <http://127.0.0.1:8080/api/nodestatus> -X POST --user api:123
+```
+
+### Testing the Wallet API
+
+The Wallet API is available out of the box and allows you to perform simple Wallet functionality for any number of Users.
+
+From a new Command line window, run
+
+```
+curl <http://127.0.0.1:8001/wallet/create> -X POST --user api:123
+```
+
+A new wallet will be generated with a random seed phrase
+Example response:
+```
+{"command":"keys","params":{"action":"genkey"},"status":true,"pending":false,"response":{"phrase":"COMFORT THOUGHT TRIGGER JEWEL DRAGON SOUP GALAXY CRUISE POTTERY SCRUB SEED POWDER AROUND FACULTY HOBBY SORT LIQUID PHYSICAL OUTSIDE ODOR ARGUE CORRECT TYPICAL EXHIBIT","privatekey":"0xF21AB974CCE540C6317A1C798468B8B6C62DFC683E16AF21F5F6B0F5CCFA9C1C","modifier":0,"publickey":"0x748AD2A44CAC51150DFABBEBDD1809CA5D072B467B4D24A5193791D9F9703369","script":"RETURN SIGNEDBY(0x748AD2A44CAC51150DFABBEBDD1809CA5D072B467B4D24A5193791D9F9703369)","address":"0x604FDC92467EAF7C7890BE5E85BF0022E61EDB92E2BE8D93CB7FFE3D008B023D","miniaddress":"MxG08309VE94HJUYTU7H45UBQ2RU012SZFDN4N2NQ6P7WRVVZUG12Z27MZ163GR"}}
+```
+
+You will need to securely store these details for your users. This information will not be stored on the node and will not be shown again.
+
+
+## MEG User Guides
+
+ <Cards>
+  <Card
+    title="Wallet API"
+    description="How to use the Wallet API"
+    href="/docs/user-guides/meg-wallet-api"
+/>
+
+  <Card
+    title="MySQL Exports"
+    description="How to export block, coin or transaction data to MySQL"
+    href="/docs/user-guides/mysql-setup"
+/>
+ </Cards>
+
+{/* 
+### Export chain history to MySQL
+
+We recommend setting up a connection from your Minima node to a MySQL database for the purpose of recording and storing full block history that is automatically pruned from the node after 12 hours. 
+This way you can always query your SQL database for transactions. 
+Download and install MySQL
+Create a database called archivedb on a port of your choice
+Create a user archiveuser with full access to archivedb
+Check the connection from the Minima node to the database using the following command into the Minima terminal 
+
+mysql host:127.0.0.1:3306 user:archiveuser password:archiveuserpassword database:archivedb action:info
+
+You should see an output similar to the following:
+```
+{
+  "command":"mysql",
+  "params":{
+    "host":"127.0.0.1:3306",
+    "user":"archiveuser",
+    "password":"archiveuserpassword",
+    "database":"archivedb",
+    "action":"info"
+  },
+  "status":true,
+  "pending":false,
+  "response":{
+    "archive":{
+      "archivestart":860695,
+      "archiveend":960695,
+      "archivetotal":100000
+    },
+    "mysql":{
+      "mysqlstart":-1,
+      "mysqlend":-1,
+      "mysqltotal":0
+    },
+    "autobackup":false
+  }
+}
+```
+
+Set autobackups on, this will periodically sync blocks and txpow data from the node to the SQL database.
+
+```
+mysql host:127.0.0.1:3306 user:archiveuser password:archiveuserpassword database:archivedb action:autobackup enable:true
+```
+
+You should see an output similar to the following, with autobackup set to true.
+```
+{
+  "command":"mysql",
+  "params":{
+    "host":"127.0.0.1:3306",
+    "user":"archiveuser",
+    "password":"archiveuserpassword",
+    "database":"archivedb",
+    "action":"autobackup",
+    "enable":"true"
+  },
+  "status":true,
+  "pending":false,
+  "response":{
+    "autobackup":true
+  }
+}
+```
+The first backup will take place within 24 hours.
+Then to query for a specific txpow (block), you can use
+mysql ..LOGIN_DETAILS.. action:findtxpow txpowid:0x00FFEEDD.. */}

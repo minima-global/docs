@@ -18,13 +18,13 @@ export const modes: Mode[] = [
   {
     param: "core",
     name: "Introduction",
-    description: "Introduction to Minima",
+    description: "Welcome to Minima",
     icon: CpuIcon,
   },
   {
     param: "run-a-node",
     name: "Run a Node",
-    description: "Run a Minima Node",
+    description: "Join the Minima network",
     icon: Blocks,
   },
   {
