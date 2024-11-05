@@ -21,12 +21,6 @@ This is intended as a guide for setting up a proof-of-concept environment. In Pr
 You will need to download the latest [minima.jar](https://github.com/minima-global/Minima/releases) and [meg.jar](https://github.com/minima-global/MEG/releases) from GitHub.
 
 {/* 
-Minima nodes setup
-This guide will assume a dual-node setup, one online mega mmr node and one offline node for signing. 
-Offline node: No internet connection/bluetooth/nearby sharing should be enabled. This device will be used to sign transactions offline.
-Online node: Connected to the internet, this node will not hold any private keys and will only be able to create transactions and post transactions that have been signed by the offline device. 
-You will also need a USB or other method to transfer the unsigned/signed transaction files between devices.
-We assume that no keys will be stored on either the online node or the offline node. Accounts (wallets) can be generated from the offline Minima node and keys stored securely elsewhere.
 
 
 The online Minima node will run on ports 9001-9005.
@@ -44,6 +38,7 @@ Then in the window where the Minima logs are, enter the command:
 megammr action:import file:[PathToFile]/megammr.mmr
 The MegaMMR will be loaded and the node will shutdown automatically.
 Restart the node as before using java -jar.... ensuring you do not use -clean.
+
 Online Node Maintenance & Recovery
 Add a Maxima contact 
 By adding a contact to your node, you can ensure that you are on the same block number as your contact. 
@@ -54,11 +49,13 @@ maxima
 And copy the full contact address from the response. This changes at random intervals so if sharing your contact address, your contact must add it as soon as possible whilst it is still valid.
 To add a contact, ask them for their contact address and run the following command, inserting their contact address.
 maxcontacts action:add contact:
+
 Export the Mega MMR data
 You should export your Mega MMR data weekly and store the file in a different location to the node. This will contain a complete record of the UTxO (coin) set that is required to create transactions, and can be restored to a new node if the online node becomes corrupted somehow. 
 To export the complete set of coins, use the command:
 megammr action:export file:[PathToFile]/megammrexport-datetime.mmr
 This can be imported to another node by using the Mega MMR import command shown in the section above.
+
 Import the Mega MMR data
 If you need to recreate your Mega MMR node with the coin history, you can simply import a megammr file you previously created. See Mega MMR Import section above
 Importing a seed phrase
@@ -74,10 +71,12 @@ megammrsync action:resync host:xx.xx.xxx.xxx:9001 phrase:"YOUR 24 WORD SEED PHRA
 Where the host is the ip:port of the megammr node to restore from. 
 This will NOT share the seed phrase with the Mega MMR node.
 If this node should be a mega mmr node, you will then need to re-import the megammr file.
+
 Resyncing to the chain tip
 If your node has fallen behind the chain tip, you can resync from another megammr node, using:
 megammrsync action:resync host:xx.xx.xxx.xxx:9001 
 If this node should be a mega mmr node, you will then need to re-import the megammr file.
+
 Backup/Restore
 You can backup the node using the backup command.
 The backup file will contain:
@@ -275,51 +274,97 @@ For testing, Create an API caller user from the admin page.
 
 Triggers allow you to listen to events on the chain and set up alerts for when something specific happens on Minima e.g. when an address sends or receives coins.
 
-Setup a trigger for the `NEWTXPOW` event. This means that whenever a new transaction occurs on chain, the event will trigger a POST request to the specified URL with the relevant JSON response. 
-For the test, we will use the test URL as shown below.
+<Steps>
+<Step>
 
-Select Add New Trigger
+Setup a trigger for the `NEWTXPOW` event. 
 
+Whenever a new transaction occurs on chain, the event will trigger a POST request to the specified URL with the relevant JSON response. 
+For the test, we will use the test URL `http://127.0.0.1:8080/testpost`.
 
+No Extra Data is required.
+
+</Step>
+
+<Step>
+
+Select **Add New Trigger**
 
 If successful, in the MEG CLI window, you should see the output similar to the following:
+
 ```
 TESTPOST RECEIVED : {"minima":{"data":{"relevant":false,"txpow":{"isblock":true,"burn":0,"size":884,"txpowid":"0x000000F332044AD24EF0EAB325A5BC1CE1F4A09A99BF1951199E4F329A8F03E3","header":{"magic":{"currentmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","currentmaxkissvmops":"1024","currentmaxtxn":"256","desiredmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","desiredmaxtxpowsize":"65536","currentmaxtxpowsize":"65536","desiredmaxkissvmops":"1024","desiredmaxtxn":"256"},"date":"Fri Jul 05 17:19:50 BST 2024","blkdiff":"0x010A7EA0176FD8CCB451F7830362F8007344047301152B4DC5CC79A6BC75","cascadelevels":32,"nonce":"99798592797762047.99828701931909910138311404738574454620161","timemilli":"1720196390951","total":"999994932.79702442062990000000000000099999999999784698","mmr":"0x2CA5409C6E51CD702EDE72FC9A5C03D52F36B0D0B93AD48351438EC63B7BA510","txbodyhash":"0xFD29478185F192E84CA8860FD770A910352A28CF46C3E66FB3F40629B12725F1","chainid":"0x00","block":"931293","customhash":"0x00","superparents":[{"difficulty":0,"parent":"0x000000F3E54954FEAC8183457E70B791DB544A80264034F5D72477E62F2DE97B","count":1},{"difficulty":2,"parent":"0x0000002FD4B4220324A6C70BC866FB79F43AD4C4AC64F919835ED16508BD51F5","count":2},{"difficulty":5,"parent":"0x00000007224C8B0F64581B85AC28855322716B3D587F863E72A54B5296ED0FBE","count":3},{"difficulty":6,"parent":"0x0000000386DFB9EF42D1882F749F44DBA873850C2D106D6E5A6786931CD4E233","count":1},{"difficulty":7,"parent":"0x000000012F2104DBE1643473E81314F76BBF88014B037068D0D5B85E805648C8","count":1},{"difficulty":8,"parent":"0x00000000D8FE3A33BEC316EF113C82ABDB90D19067801433DCC1374F3C994562","count":1},{"difficulty":9,"parent":"0x000000005097F0D3CACD78B92C7FDE069C7CC1BA06141B729330DE3E6DD25D2F","count":1},{"difficulty":10,"parent":"0x000000002918D212D5B4B8B37F5D86F2E8A3AF461565826329E599ED2A7DEFAA","count":1},{"difficulty":12,"parent":"0x000000000B000FFB75C23D99C81C45692328F54CA0DE0B75ED10CA01EB54D101","count":2},{"difficulty":13,"parent":"0x00000000062FFA8AD59159A86C8DB38F29EEB638BB45286A2D959B8CABC82E75","count":1},{"difficulty":16,"parent":"0x0000000000B4CB70648FEA38BFBB4770333D062C088C1E3E9C28CAA52FD6FBE0","count":3},{"difficulty":17,"parent":"0x0000000000027AC01DDD0C66C98047A73F703F3D5200E33E742A2838D4F727E9","count":1},{"difficulty":19,"parent":"0x0000000000002B67F865461B9F2DAC7A14D0C7A070F46DAE04E8C5FE6ABF0F98","count":2},{"difficulty":31,"parent":"0x00","count":12}]},"hasbody":true,"body":{"witness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txnlist":[],"burntxn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"txndiff":"0x5BCE215703AB919D36898FE644FA27DCB8A9F02FF6F1EB362AE353E33E5E","burnwitness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"prng":"0xE49F5E62204186DCF62217C46277E737D31557B0A4D365D48B47B64682437669"},"istransaction":false,"superblock":0}},"event":"NEWTXPOW"},"meg":{"extradata":"","trigger":"NEWTXPOW","url":"<http://127.0.0.1:8001/testpost>"}}
 ```
 
+</Step>
+</Steps>
+
+{/* <ImageZoom
+src="/img/meg/meg_sysoverview.png"
+alt="meg system overview"
+width={700}
+height={700}
+/> */}
+
 ### Testing Endpoints
 
 Endpoints enable you to automatically perform actions on Minima from external apps/systems e.g. creating and posting transactions
+
+<Steps>
+<Step>
+
 Create a new endpoint that will run the status command on the Minima node.
-Endpoint: nodestatus
-Command: status
-Select Add New Endpoint
+
+**Endpoint:** Enter a name of your choice for the endpoint e.g. `nodestatus`<br></br>
+**Command:** Enter a Minima command e.g. `status`
+
+</Step>
+<Step>
+
+Select **Add New Endpoint**
+
+</Step>
+
+<Step>
 
 From a new Command line window, run
+
 ```
-curl <http://127.0.0.1:8080/api/nodestatus> -X POST --user api:123
+curl http://127.0.0.1:8080/api/nodestatus -X POST --user api:123
 ```
+
+The status response from the node should be returned.
+
+</Step>
+</Steps>
 
 ### Testing the Wallet API
 
 The Wallet API is available out of the box and allows you to perform simple Wallet functionality for any number of Users.
 
+You will need to securely store these details for your users. This information will not be stored on the node and will not be shown again.
+
+<Steps>
+<Step>
+
 From a new Command line window, run
 
 ```
-curl <http://127.0.0.1:8001/wallet/create> -X POST --user api:123
+curl http://127.0.0.1:8080/wallet/create -X POST --user api:123
 ```
 
 A new wallet will be generated with a random seed phrase
+
 Example response:
 ```
 {"command":"keys","params":{"action":"genkey"},"status":true,"pending":false,"response":{"phrase":"COMFORT THOUGHT TRIGGER JEWEL DRAGON SOUP GALAXY CRUISE POTTERY SCRUB SEED POWDER AROUND FACULTY HOBBY SORT LIQUID PHYSICAL OUTSIDE ODOR ARGUE CORRECT TYPICAL EXHIBIT","privatekey":"0xF21AB974CCE540C6317A1C798468B8B6C62DFC683E16AF21F5F6B0F5CCFA9C1C","modifier":0,"publickey":"0x748AD2A44CAC51150DFABBEBDD1809CA5D072B467B4D24A5193791D9F9703369","script":"RETURN SIGNEDBY(0x748AD2A44CAC51150DFABBEBDD1809CA5D072B467B4D24A5193791D9F9703369)","address":"0x604FDC92467EAF7C7890BE5E85BF0022E61EDB92E2BE8D93CB7FFE3D008B023D","miniaddress":"MxG08309VE94HJUYTU7H45UBQ2RU012SZFDN4N2NQ6P7WRVVZUG12Z27MZ163GR"}}
 ```
 
-You will need to securely store these details for your users. This information will not be stored on the node and will not be shown again.
+</Step>
+</Steps>
 
 
-## MEG User Guides
+## Relevant User Guides
 
  <Cards>
   <Card

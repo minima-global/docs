@@ -1,9 +1,11 @@
 ---
-title: Multiple Node Testnet
-description: Learn how to start a multiple node testnet
+title: Single Node Testnet
+description: Learn how to start a single node testnet
 tag: development
-icon: Network
+icon: Component
 ---
+
+## Start a Testnet node
 
 At its core, Minima is a Java application, so first make sure you have Java installed. Download from [here](https://www.java.com/en/download/).
 
@@ -11,55 +13,27 @@ You will need the latest release of the minima.jar file which can be downloaded 
 
 We will be using a server or desktop command line interface (CLI) to start Minima.
 
-## 1. Start the genesis node
+Starting the node with `-genesis`, you will have your own private chain, you will be sent the genesis Minima with 1 billion coins to spend, and you can enter commands directly into the console.
 
 1. Create a new folder and copy the minima.jar into that folder. We will run everything from there.
 2. Copy the path to the file and from the command line, `cd` into that folder
 3. Enter the following command
 
-**Node 1:**
-
 ```bash title="Terminal"
-java -jar minima.jar -data minidata1 -basefolder minidata1 -genesis -test -nop2p -mdsenable -mdspassword [INSERT NODE1 PASSWORD]
+java -jar minima.jar -data minidata -basefolder minidata -genesis -test -nop2p -mdsenable -mdspassword [INSERT PASSWORD]
 ```
 
-- Replace placeholder `[INSERT NODE1 PASSWORD]` with a custom password for your node 1
+- Replace placeholder `[INSERT PASSWORD]` with a custom password for your node
 
 This will start a node on the default ports of 9001-5.
 
-Check your balance with `balance`.
+You should see the node starting as below, if you type `help` then press enter, you should see the full list of Minima commands. Check your balance with `balance`.
 
-## 2. Start the second node
+![MDS](/img/buildonminima/TestTerminalstartup.png)
 
-We create a second node to test transactions between two nodes, note that we will need to:
+To **login to your MiniDapp hub**, open up your web browser and navigate to the MiniDapp Hub via https://127.0.0.1:9003. Login with the password you set.
 
-- remove the `-genesis` parameter,
-- change the data and base folders,
-- add the `-port` parameter to start it on a different port,
-- add the `-connect 127.0.0.1:9001` parameter to connect this node to the genesis node.
-
-**Node 2:**
-
-1. Open a new command line window and enter the following command
-
-```bash title="Terminal"
-java -jar minima.jar -data minidata2 -basefolder minidata2 -test -nop2p -mdsenable -mdspassword [INSERT NODE2 PASSWORD] -port 10001 -connect 127.0.0.1:9001
-```
-
-- Replace placeholder `[INSERT NODE2 PASSWORD]` with a custom password for your node 2
-- Optionally set a port of your choice, we use 10001 here
-
-**You should now have two nodes up and running that are connected to eachother! **
-
-## Restarting the nodes
-
-You can shutdown the nodes by running `quit` from the command line window.
-
-To **restart** the same node from where you left off, re run the command for either node above **removing the `-genesis` parameter for node 1.**
-
-To **delete** the data and start a new clean nodes, re run the command for each node adding the `-clean` parameter.
-
-**ALL DATA WILL BE LOST AND A NEW SEED PHRASE WILL BE GENERATED.**
+_Minima uses self-signed certificates. For this reason you may be shown a security certificate warning when accessing Minima, to which you can click on **Advanced**, then **Proceed**. This may be different depending on the browser and OS you are using._
 
 ## Restarting the node
 

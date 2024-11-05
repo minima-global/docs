@@ -1,5 +1,5 @@
 ---
-title: MySQL Storage
+title: Export data to MySQL
 description: Learn how to integration Minima with MySQL
 tag: user-guides
 ---
@@ -8,10 +8,12 @@ Minima data can be exported to an external MySQL database for storage and effici
 
 The following data can be exported to a table in a SQL database:
 
-1. cascadedata - if the node does not start at the genesis block, there will be compact block data for the cascade
-2. syncblocks - historical compact blocks (excludes transaction details)
-3. coins (from v1.0.39) - a coins table of all coins in the syncblocks
-4. txpows (from v1.0.41) - full txpow data, including full transaction and block details
+| Table               | Description                                                              |
+|--------------------|--------------------------------------------------------------------------|
+| `cascadedata`      | if the node does not start at the genesis block, there will be compact block data for the cascade |
+| `syncblocks`       | historical compact blocks (excludes transaction details)                 |
+| `coins`            | (from v1.0.39) a coins table of all coins in the syncblocks            |
+| `txpow`       | (from v1.0.41) full txpow data, including all transaction and block details |
 
 {/* Exporting your node's chain data to MySQL means you can:
 
@@ -24,21 +26,70 @@ The following data can be exported to a table in a SQL database:
 
 ## MySQL Setup
 
+
 <Tabs items={["MySQL Server","Docker"]}>
 <Tab value="MySQL Server">
 
-1. Install MySQL Workbench and MySQL Server from the [official website](https://dev.mysql.com/downloads/installer/), selecting the Operating System relevant to you
+{/* <Steps>
+<Step> */}
+
+**1. Install MySQL Workbench and MySQL Server**
+
+- Download the [MySQL Installer](https://dev.mysql.com/downloads/installer/) and select the appropriate version for your operating system.
+- During the installation process, you can choose **Custom Installation** if you only need **MySQL Workbench** and **MySQL Server**.
+- **Set a password for the root user** when prompted
+
+
+<Callout type="tip" title="Windows Installation">
+For Windows installations:
+- If you don’t want to open firewall ports, **uncheck** the option to **"Open Windows Firewall ports for network access"**.
+- To ensure MySQL Server starts with Windows, **check** the option to **"Start the MySQL Server at System Startup"**.
+</Callout>
+
+**2. Open MySQL Workbench and Create a Connection to Your MySQL Server**
+
+- Open **MySQL Workbench**.
+- In the **MySQL Connections** section, click **+** to create a new connection if one doesn’t already exist.
+
+| Field             | Description                                                                                |
+|------------------|--------------------------------------------------------------------------------------------|
+| Connection name  | Enter a name (e.g., **Local Server**).                                                     |
+| Hostname         | Use **127.0.0.1** if MySQL Server is on your local machine, or enter the server’s IP address if remote. |
+| Port             | **3306** (unless configured otherwise during installation).                                |
+| Username         | **root**                                                                                   |
+| Password         | Click on **Store in Vault** and enter the root password set during installation.            |
+
+- Click **Test Connection** to confirm the connection settings, then click **OK** to save the connection.
+
+
+**3. Create a New Database**
+
+- In **MySQL Workbench**, select your connection to open it.
+- In the **Query** window, run the following command to create a new database named `minimaarchive`:
+   ```sql
+    CREATE DATABASE minimaarchive;
+   ```
+
+
+**4. Create users**
+
+- Create another user e.g. archiveuser with all privileges 
+- Optionally create additional users e.g. a read-only user if required.
+
+Your database `minimaarchive` is now created and ready for use!
 
 
 </Tab>
 <Tab value="Docker">
 
+**1. Install MySQL Workbench**
 
-1. Install MySQL Workbench from the [official website](https://dev.mysql.com/downloads/workbench/), selecting the Operating System relevant to you
+Install MySQL Workbench from the [official website](https://dev.mysql.com/downloads/workbench/) and select the appropriate version for your operating system.
 
-2. Open your Terminal/Command Line interface
+**2. Setup a Docker network**
 
-3. Setup a Docker network, this will allow you to connect your node to your MySQL database that we will create in the next step
+- Open your Terminal/Command Line interface
+- Setup a Docker network, this will allow you to connect your node to your MySQL database that we will create in the next step
 
 ```bash title="Terminal"
 docker network create -d bridge minimanetwork
@@ -50,30 +101,34 @@ Now you should see **minimanetwork** listed if you run
 docker network ls
 ```
 
-4. Start a MySQL database as a Docker container
+**3. Start a MySQL database as a Docker container**
 
 You will need to set your own values for the following parameters:
 
-- MYSQL_ROOT_PASSWORD : create a root password
-- MYSQL_DATABASE : create a name for the archive database
-- MYSQL_USER : create a user for the archive database
-- MYSQL_PASSWORD : create a password for the MYSQL_USER
+| Term                  | Description                                 |
+|-----------------------|---------------------------------------------|
+| `MYSQL_ROOT_PASSWORD` | create a root password                      |
+| `MYSQL_DATABASE`      | create a name for the archive database      |
+| `MYSQL_USER`          | create a user for the archive database      |
+| `MYSQL_PASSWORD`      | create a password for the `MYSQL_USER`      |
+
 
 ```bash title="Terminal"
 docker run -d -p 3307:3306  -e MYSQL_ROOT_PASSWORD=yourrootpassword -e MYSQL_DATABASE=archivedb -e MYSQL_USER=archiveuser -e MYSQL_PASSWORD=youruserpassword --restart unless-stopped --network=minimanetwork --label=com.centurylinklabs.watchtower.enable=false --name minimysql mysql:8.0
 ```
 
-This will create a Docker container called **minimySQL** which runs your MySQL database called **archivedb**.
+This will:
+- create a Docker container called **minimySQL** which runs your MySQL database called **archivedb**
+- run on your port 3307 (mapped to 3306 in Docker)
+- create the user specified and give them access to the database
+- connect the MySQL db to the **minimanetwork** Docker network
+- disable Watchtower updates for the container
 
-It will run on your port 3307 (mapped to 3306 in Docker); create the user specified and give them access to the database; connect the MySQL db to the **minimanetwork** Docker network; and disable Watchtower updates for the container.
-
-5. Connect your Minima archive node container to the **minimanetwork** Docker network
+**4. Connect Minima to the minimanetwork**
 
 ```bash title="Terminal"
 docker network connect minimanetwork minimaarchive
 ```
-
-Example output:
 
 Example output:
 
@@ -94,23 +149,30 @@ Example output:
 ]
 ```
 
-    - `Connection name:` minimaarchive
-    - `**Hostname:` 127.0.0.1 (or your public IP if running on a server)
-    - `Port:` 3307
-    - `Username:` root
-    - `Password:` Click on “Store in Vault” and enter the root password you used in step 4 above
+**5. Create a connection to the server**
+
+In MySQL Workbench, create a connection to the server 
+
+| Field             | Description                                                                                |
+|------------------|--------------------------------------------------------------------------------------------|
+| Connection name  | minimaarchive                                                    |
+| Hostname         | Use **127.0.0.1** if Docker is on your local machine, or enter the server’s IP address if remote. |
+| Port             | **3307**                             |
+| Username         | **root**                                                                                   |
+| Password         | Click on **Store in Vault** and enter the root password set during installation.            |
+
 
 ![sql](/img/archivenode/A.AddConnection.png) 
 
-![sql](/img/archivenode/B.CreateConnection.png) 
+- Click Test Connection, then OK.
 
+Your database `minimaarchive` is now created and ready for use!
 
-7. Click Test Connection, then OK.
-
-This will setup a connection to the MySQL database running in Docker.
 
 </Tab>
 </Tabs>
+
+
 
 ## Update MySQL
 
@@ -212,3 +274,78 @@ To check that there are no missing blocks in the MySQL database, you can run:
 ```bash title="Terminal"
 mysql action:integrity host:minimysql database:archivedb user:archiveuser password:youruserpassword
 ```
+
+
+## Create a coins table
+
+To create a table in your MySQL archive database for all spent and unspent coins, you can use the `mysqlcoins` command. 
+
+The coins table will be populated from the syncblock table, so this must be populated first. You can then run any SQL command against it to query the coins. 
+
+<Callout title="Info">
+The coins database is large and will take a while to populate, optionally you can create a second database in mysql workbench to keep the coinsdb separate to your existing archivedb.
+</Callout>
+
+To populate the coins table, you can choose to specify the number of coins to update in one go by using the `maxcoins` parameter. To update the table will all the coins, remove the `maxcoins` parameter.
+
+The example below adds the first 100 coins to the database. Next time, it will start from where it left off. 
+
+**From any node**
+```bash title="Terminal"
+mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:archivedb user:archiveuser password:youruserpassword 
+```
+
+**From docker**
+```bash title="Terminal"
+mysqlcoins action:update maxcoins:100 host:minimysql database:archivedb user:archiveuser password:youruserpassword 
+```
+
+## Query the coins table
+
+To search for all coins at an address or with the address in a state variable:
+
+```bash title="Terminal"
+mysqlcoins action:search address: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
+```
+
+To run a WHERE query on the coins table, string data MUST be in single quotes and you can use multiple parameters.
+
+```bash title="Terminal"
+mysqlcoins action:search where: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
+```
+
+To run a full SQL query on the coins table:
+
+```bash title="Terminal"
+mysqlcoins action:search query: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
+```
+
+For full help, use `help command:mysqlcoins` or see [here](/docs/userguides/usingyournode/terminal_commands).
+
+## Export the tables from MySQL
+
+To Export the archive data from MySQL to a file:
+
+1. Open MySQL workbench
+
+2. Double click on **minimaarchive** to open the database
+
+3. From the **Administration** tab, select **Data Export** (also available from the Server dropdown menu)
+
+![sql](/img/archivenode/F.AdminExportData.png) 
+
+4. Check the box for **archivedb** and check the boxes for **cascadedata** and **syncblock** 
+
+<Callout type="warn">
+We do not recommend exporting the coins table as this will be very large.
+</Callout>
+
+5. Under Export Options, select **Export to self-contained file** and **Include Create Schema**. Optionally change the file path.
+
+![sql](/img/archivenode/G.DataExportSelection.png) 
+
+6. Click **Start Export**
+
+The exported file will be unzipped, you should zip the exported file to reduce your storage requirement. 
+
+This file can be imported to MySQL if required.

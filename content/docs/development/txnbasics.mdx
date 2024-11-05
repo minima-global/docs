@@ -1,6 +1,6 @@
 ---
 title: Transaction Basics
-description: Transaction Basics
+description: Learn how to construct a simple transaction
 tag: development
 ---
 
@@ -32,11 +32,13 @@ A transaction in Minima is a set of **input coins**, a set of **output coins** a
 A transaction can be **signed** by 1 or more **public keys** (signatures can even be added as state variables if you want oracle style contracts).
 
 
-## State
+## State Variables
 
-Each coin can store the transaction state variables along with its details in an MMR database. These can be referenced in scripts using the PREVSTATE command allowing for a basic memory mechanic. 
+A set of 0-255 state variables can be provided with a transaction which can optionally be stored in the output coins of the transaction in an MMR database. 
 
-A coin remembers the state of the previous transaction it was in. This way, sequences, counters and far more interesting scripts can be achieved.
+This means a coin can remember the state of the previous transaction it was in. This way, sequences, counters and far more interesting scripts can be achieved.
+
+These can be referenced in scripts using the PREVSTATE command allowing for a basic memory mechanic. 
 
 ## Burning Minima
 

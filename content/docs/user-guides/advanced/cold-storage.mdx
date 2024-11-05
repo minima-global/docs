@@ -28,13 +28,11 @@ To transact:
 4. Export the signed transaction and transfer it to the online device
 5. Post your transaction on your online device
 
-### Setup
+## Setup
 
 You will need a USB key and 2 devices:
 
-<Steps>
-  <Step>
-<Heading as="h3">Offline Node </Heading>
+### Offline Node (device 1)
 
 No internet connection/bluetooth/nearby sharing should be enabled. This device will hold your private keys and will be used to sign your transactions offline.
 
@@ -43,6 +41,7 @@ No internet connection/bluetooth/nearby sharing should be enabled. This device w
 - `Android:` download the latest app
 - `Docker:` ensure you have docker installed
 - `Manual on desktop:` ensure you have java installed and the minima.jar downloaded
+
 
 2. Turn off the internet connection/bluetooth/nearby sharing and disable the WiFi, this device should never be connected to the internet again.
 
@@ -74,8 +73,7 @@ You can recover your node with just those words. Anyone with access to your word
 
 </Callout>
 
-  </Step>
-</Steps>
+
 
 5. Write down the 24 word seed phrase and store it somewhere secure. You do not need to write down the 0x seed but you will need this in the next step.
 
@@ -136,7 +134,9 @@ vault action:restorekeys phrase:"YOUR 24 WORDS HERE"
 vault action:passwordlock password:setvaultpassword confirm:setvaultpassword
 ```
 
-<Heading as="h3">On Device 2 - The online node</Heading>
+----------
+
+### Online node (device 2)
 
 1. Start a new node on an online device - your device 2
 
@@ -153,6 +153,8 @@ This online node is now the same node as the one on the offline device, however 
 The online node can be used as normal to receive funds but cannot send any funds, it is essentially read only.
 
 To send funds from your wallet, you will need to use both devices.
+
+----------
 
 ### Transacting
 

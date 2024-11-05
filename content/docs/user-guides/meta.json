@@ -4,7 +4,7 @@
   "pages": [
     "---Essentials---",
     "index",
-    "jointhenetwork",
+    "join-the-network",
     "secure-your-seedphrase",
     "---General---",
     "check-node-status",
@@ -21,7 +21,7 @@
      "maxima-contacts", 
     "advanced-maxima-options",
     "---Node Recovery---",
-    "node-recovery/recover-options",
+    "node-recovery/recovery-options",
     "node-recovery/chain-resync",
     "node-recovery/restore-backup",
     "node-recovery/import-seed-phrase",

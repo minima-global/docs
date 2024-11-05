@@ -4,11 +4,34 @@ description: MEG user guides
 tag: user-guides
 ---
 
+The Wallet API allows you to perform simple Wallet functionality for any number of users.
+
+This does NOT access the main wallet of the Minima node and does not save any of the private keys or data.
+
+Each API Endpoint requires certain parameters and can be sent as a POST or GET request.
+
+## Recommended setup
+
+When providing custodial wallet solutions for users, we highly recommend a dual-node setup, using an offline node for signing transactions and an online Mega MMR node for constructing and posting transactions, and any other actions that require on-chain information. 
+
+You will also need a USB or other method to transfer the unsigned/signed transaction files between devices.
+
+We assume that no keys will be stored on either the online node or the offline node. Accounts (wallets) can be generated from the offline Minima node and keys stored securely elsewhere.
+
 ## Pre-requisites
+
+For the following tutorials, you will need:
 
 1. An online [Mega MMR Minima node](/docs/run-a-node/mega-node) - this ensures the node is recording all coin proofs required for transactions.
 
-2. An API user created in MEG
+2. An online instance of [MEG](/docs/run-a-node/meg-setup) running
+
+3. An API user created in MEG 
+
+4. (Optional) An offline Minima node with RPC enabled
+
+5. (Optional) An offline instance of MEG running
+
 
 ## How to create a new wallet
 
@@ -122,22 +145,24 @@ You should ignore the `block` number in the response from the send command, this
 
 ### How to set the Key Uses
 
-When sending/signing with the Wallet API a keyuses(nonce) value is required. It must be increased each time the same private key is used. It must be a number between 1- 262,144.
+When sending or signing with the Wallet API a keyuses(nonce) value is required. It must be increased each time the same private key is used. It must be a number between 1- 262,144.
 
-You can specify your own value or use the value stored by MEG
+For functions where `keyuses` is a parameter, you can specify your own value by providing the `keyuses` parameter or use the value stored by MEG by providing the `publickey` parameter.
 
-The actual database file can be found in the data folder `nonce.mv.db`. You can backup and reuse this file if you install MEG on another server
+To store the latest `keyuses` in the database, you must provide both the `keyuses` and `publickey` parameters. 
+
+The actual keyuses database file can be found in the data folder `nonce.mv.db`. You can backup and reuse this file if you install MEG on another server.
 
 OR - you can set the MINIMUM nonce value to a high enough value without copying the database by using the `-minkeyuses` param when starting MEG.
 
 The current MAX value for all keyuses is displayed on the Admin page.
 
 
-## How to check a transaction on-chain (online)
+## How to check an on-chain transaction (online)
 
-Once a transaction has been posted, you can check the number of block confirmations it has on-chain. This can only be done within the first 24 hours from the transaction being posted. 
+Once a transaction has been posted, you can check the block number it is in and number of block confirmations it has on-chain. This can only be done within the first 24 hours from the transaction being posted. 
 
-To get the transaction (txpow) details, the use following Wallet API endpoint, providing the `txpowid` of the transaction (provided in the response from send) as a parameter
+Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
 
 ```
 /wallet/checktxpow
@@ -159,9 +184,10 @@ The response contains
 
 
 ## How to get a transaction (txpow) details (online)
+
 Once a transaction has been posted, you can retrieve the details of the transaction from the node using the txpowid. This can only be done within the first 48 hours from the transaction being posted, then it is pruned.
 
-To get the transaction (txpow) details, the use following Wallet API endpoint providing the `txpowid` of the transaction (provided in the response from send) as a parameter
+To get the transaction details, use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
 
 ```
 /wallet/gettxpow
@@ -174,6 +200,10 @@ curl http://127.0.0.1:8080/wallet/gettxpow -d "txpowid=0x0000170771B9339A3A80DD1
 
 The response contains the full txpow unit details.
 
+## How to estimate the burn
+
+To find out recent on-chain burn metrics, you can create an endpoint for the burn function which displays min, max, avg and median burn for the last 1, 10 and 50 blocks. 
+
 ## Example transactions
 
 The most secure method for creating & signing transactions is to create the transaction from an online node, transfer the transaction data (via USB for example) to an offline node for signing and then post the transaction from an online node. 
@@ -181,19 +211,39 @@ The most secure method for creating & signing transactions is to create the tran
 ### Example 1 : Automatic coin selection
 
 The following example explains how to construct, sign and post a transaction where the coin inputs are automatically selected. 
+
 This only uses endpoints provided by the wallet API.
 
 The required endpoints are as follows:
 
-`/wallet/lockcoins`  - ONLINE NODE (optional)
+<Steps>
+<Step>
+
+**(Optional) Lock coins**
+
+Node status: Online
 
 If you intend to create multiple transactions from the same address without posting them, you can lock the coins  - this prevents the same coins being used in more than one unposted transaction. Once you have finished creating unsigned transactions, you can unlock the coins. 
 
-`/wallet/unsignedtxn` - ONLINE NODE 
+```
+/wallet/lockcoins
+```
+
+</Step>
+<Step>
+
+**Create unsigned transaction**
+
+Node status: Online
+
+This endpoint creates an unsigned transaction with automatic coin selection based on the amount and burn. The coin proofs are added to the transaction at this stage. 
+
+```
+/wallet/unsignedtxn
+```
 
 Please refer to the Wallet API page in MEG for the relevant parameters. 
 
-This creates an unsigned transaction with automatic coin selection based on the amount and burn. The Minima node must be online and running with the `-megammr` startup parameter as the coin proofs are added to the transaction at this stage. 
 
 <Callout title="Conditions for posting the transaction">
 This transaction must be posted within 24 hours to ensure the coinproofs are valid.
@@ -201,92 +251,251 @@ This transaction must be posted within 24 hours to ensure the coinproofs are val
 
 The response provides the data that must be signed with an online or offline node. 
 
-`/wallet/signtxn` - OFFLINE NODE
+</Step>
+<Step>
 
-Using the data provided from the unsignedtxn response, you must sign the transaction, providing the private key associated with the fromaddress.
-Note that keyuses should be incremented each time the same private key is used to sign a transaction. It must be a number between 1- 262,144. 
+**Sign the transaction**
+
+Using the data provided from the `unsignedtxn` response, you must sign the transaction, providing the private key associated with the `fromaddress`.
+
+<Callout title="Key Uses">
+Note that keyuses should be incremented each time the same private key is used to sign a transaction. See [How to set key uses](/docs/user-guides/meg-wallet-api#how-to-set-the-key-uses)
+</Callout>
+
+Node status: Online/Offline
+
+```
+/wallet/signtxn
+```
 
 Example
-```
+
+```bash title="Terminal"
 curl http://127.0.0.1:8080/wallet/signtxn -d "data=0x0000004230783735334136343137344146393930434136443241373142373142454430443737423035353033423137344533453135363537443738343339423041303830314600010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000010200000020B2BBEC3A60E0B30271A4745D41A86317527F9BFF5ED70A36B2ABFBB9D189AA1100000020162E6AA063502A6B04C820371CB6A1F95495D7F6E8586F7919D245275631CD68020101000000010001000100000000010000000100000100000000002035BB59FF84D3A2269207537EE15CA3ADF2874C36945E86C384477E14ACDECC0F00000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A02010600000001000000010000000001000000010000010000000100000000010000010000010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000031007AA00010900000000209D0387DD114382ABDB3EB1393B15B05F503BAD844EA38D41827C0EFC7D80770A0A0101000000002088DF4FFDEA4D537FDC89EF26F78D47CFA11E196CC7CD8AB3A1F9CE2ED8A3F871000100010000002088B515C841EF0CF8B2D262BB1058ED74CA2921FE105948A6AA8423C8CF7820580A0405F5E10100000000207073121CC6FB5956AD653699B2FAB27E9B8DA56C9C3BBF45A7467A911DB736FE0A01010000000020A33D04EDEEA5083A571ED162EFF6B3C02B206924B6647009E057333497A193B10A0405F5E1040000000020D448043506006022CC5B4189A9A5A55871B2F4A77FD040E9DF4F53EA2195EA5C0A0603D85C8466040100000020253B002D2F83C1C98EEBF4809B4B42A8A24699996F81D31BB68A0D8139B6650E0A062910776F53100000000020A3A3B04BDF61D95FE0907D1B68D82416A7BDDC7C34094E9A249DA7646EFFB3A70B080494C5FE246E5C3C0100000020D4F06AD3B17F187B4172BF1809AFD716A396E02D5B608CB4C346554A941087022C16018E4EEF5C922F5D746BD56F635E8F3B20CC1456BBEB0001010000005352455455524E205349474E454442592830784337394141324539443046463231444432374132383731374333454236333733374445393839333145343631373342393232374541413741314132463836373729000100000100&privatekey=0xAA49...&keyuses=2" -X POST --user api:123
 ```
 
 The response will provide the data that is required for mining and posting the transaction.
 
-Next, you can either post and mine the transaction simultaneously using:
+</Step>
+<Step>
 
-`/wallet/posttxn` - ONLINE / OFFLINE NODE (optional)
+**Mine and Post the transaction**
 
-Providing the data from the `signtxn` response. 
+**Option 1: Mine and Post the transaction simultaneously**
 
-The response will provide the txpowid that you can subsequently use to track the transaction. 
+Node status: Online
 
-ALTERNATIVELY, you can mine the transaction first to get the correct txpowid without posting the transaction to the network: 
+Post and mine the transaction simultaneously, providing the data from the `signtxn` response as a parameter. 
 
-4a. `/wallet/minetxn` - ONLINE / OFFLINE NODE (optional)
-To get the correct txpowid for the transaction, it must first be mined from an online or offline device.
-You must provide the data from the signtxn response. 
+`/wallet/posttxn`
 
-4b. `/wallet/postminedtxn` - ONLINE NODE 
-To post a pre-mined transaction to the network, use this endpoint, providing the data from the minetxn response. 
+The response will provide the `txpowid` that you can subsequently use to track the transaction. 
 
 
-`/wallet/unlockcoins` - ONLINE NODE
+**Option 2: Mine and Post the transaction separately**
+
+1. ALTERNATIVELY, you can mine the transaction first to get the correct txpowid without posting the transaction to the network, providing the data from the `signtxn` response as a parameter. 
+
+Node status: Online/Offline
+
+```
+/wallet/minetxn
+```
+
+2. To then post a pre-mined transaction to the network, use the following endpoint, providing the data from the `minetxn` response. 
+
+Node status: Online
+
+```
+/wallet/postminedtxn
+```
+
+</Step>
+<Step>
+
+
+**Unlock the coins**
+
+You can repeat step 2 to create as many unsigned transactions from the same address as required, without posting them.
 
 Once you have finished creating unsigned transactions, you can unlock the coins. 
 
+Node status: Online
+
+`/wallet/unlockcoins`
+
+</Step>
+<Step>
+
+**Check the transaction is on-chain**
+
+Within 24 hours of the transaction being posted, you can check the block number it is in and number of block confirmations it has on-chain.
+
+Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+
+Node status: Online
+
+```
+/wallet/checktxpow
+```
+
+</Step>
+</Steps>
+
+
 ### Example 2 : Custom coin selection
+
 The following example explains how to construct, sign and post a transaction with coin inputs of your choice.
+
 This only uses endpoints provided by the Wallet API.
-The required endpoints are as follows:
- /wallet/listcoins - ONLINE NODE 
-This provides a list of coins at the given address. 
+
+The required steps are as follows:
+
+<Steps>
+<Step>
+
+**Get a list of coins**
+
+To spend from a specific address, search for the list of coins relevant to the address.
+
+Node status: Online
+
+```
+ /wallet/listcoins
+```
+
+
 Example:
+```bash title="Terminal"
 curl http://127.0.0.1:8080/wallet/listcoins -d "address=MxG086U24F17MT50Y6VUPBPD6VJKTYVMR71WRSYURYUVZDN1VMG25FF39M0458A" -X POST --user api:123
+```
+
 The response contains a list of coins with:
-coinid: the unique id of the coin
-amount: the value of the coin
-address: the 0x address of the coin
-miniaddress: the Mx address of the coin
-token: the token name (if not Minima)
-tokenid: the tokenid of the coin (0x00 is Minima)
-storestate: true if the coin is storing the state
-state: the state variables stored in the coin
-spent: is the coin spent?
-mmrentry: the entry number of the coin in the mmr
-created: blocktime that the coin was created in
-age: how many blocks deep the coin is in the chain
 
+| Response           | Description                                               |
+|----------------|-----------------------------------------------------------|
+| `coinid`       | the unique id of the coin                                 |
+| `amount`       | the value of the coin                                     |
+| `address`      | the 0x address of the coin                                |
+| `miniaddress`  | the Mx address of the coin                                |
+| `token`        | the token name (if not Minima)                            |
+| `tokenid`      | the tokenid of the coin (0x00 is Minima)                  |
+| `storestate`   | true if the coin is storing the state                     |
+| `state`        | the state variables stored in the coin                    |
+| `spent`        | is the coin spent?                                        |
+| `mmrentry`     | the entry number of the coin in the mmr                   |
+| `created`      | blocktime that the coin was created in                    |
+| `age`          | how many blocks deep the coin is in the chain             |
 
-/wallet/constructtxn - ONLINE NODE 
-You can manually construct a transaction, providing a comma separated list of input coins. 
-You will have to calculate how much to send (toamount) and how much change to return to the fromaddress. 
-If the toamount + changeamount < coin amount , the remaining amount will be burnt. 
+</Step>
+<Step>
+
+**Construct a transaction**
+
+You can manually construct a transaction, providing a comma separated list of input coins. You will have to calculate how much to send (toamount) and how much change to return to the fromaddress. 
+
+<Callout title="Inputs/Outputs" Type="warn">
+If the toamount + changeamount < coin amount , the remaining amount will be burned. 
+</Callout>
+
+Node status: Online
+
+```
+/wallet/constructtxn
+```
+
 Example:
 Note: This coin has a balance of 0.08, the toamount is 0.05 and the changeamount is 0.02, therefore 0.01 will be set as the burn amount.
-curl http://127.0.0.1:8080/wallet/constructtxn -d "tokenid=0x00&coinlist=0xF57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E543&toamount=0.05&toaddress=MxG080M5PYA0ZQG59YG9W106SEBD8FPAWATFTN8B1NNW6EW8KJYCCEDD2RP4G1A&fromaddress=MxG086U24F17MT50Y6VUPBPD6VJKTYVMR71WRSYURYUVZDN1VMG25FF39M0458A&changeaddress=MxG086U24F17MT50Y6VUPBPD6VJKTYVMR71WRSYURYUVZDN1VMG25FF39M0458A&changeamount=0.02&script=RETURN SIGNEDBY(0xC79AA2E9D0FF21DD27A28717C3EB63737DE98931E46173B9227EAA7A1A2F8677)" -X POST --user api:123
-This transaction must be posted within 24 hours to ensure the coin proofs are  valid.
-The response provides the data that must be signed with an online or offline node. 
-/wallet/signtxn - ONLINE or OFFLINE NODE
-Using the data provided from the unsignedtxn response, you must sign the transaction, providing the private key associated with the fromaddress.
-Note that keyuses should be incremented each time the same private key is used to sign a transaction. It must be a number between 1- 262,144. 
-Example
-curl http://127.0.0.1:8080/wallet/signtxn -d "data=0x0000004230783344413937354436384232314434413837443343383036373041414239464332394545303035424143394345443638413236433438423837383432423733343400010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000010200000020B2BBEC3A60E0B30271A4745D41A86317527F9BFF5ED70A36B2ABFBB9D189AA1100000020162E6AA063502A6B04C820371CB6A1F95495D7F6E8586F7919D245275631CD68020105000000010001000100000000010000000100000100000000002035BB59FF84D3A2269207537EE15CA3ADF2874C36945E86C384477E14ACDECC0F00000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A02010200000001000100010000000001000000010000010000000100000000010000010000010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000031007E000010900000000209D0387DD114382ABDB3EB1393B15B05F503BAD844EA38D41827C0EFC7D80770A0A0101000000002088DF4FFDEA4D537FDC89EF26F78D47CFA11E196CC7CD8AB3A1F9CE2ED8A3F871000100010000002088B515C841EF0CF8B2D262BB1058ED74CA2921FE105948A6AA8423C8CF7820580A0405F5E10100000000207073121CC6FB5956AD653699B2FAB27E9B8DA56C9C3BBF45A7467A911DB736FE0A01010000000020A33D04EDEEA5083A571ED162EFF6B3C02B206924B6647009E057333497A193B10A0405F5E1040000000020D448043506006022CC5B4189A9A5A55871B2F4A77FD040E9DF4F53EA2195EA5C0A0603D85C8466040100000020253B002D2F83C1C98EEBF4809B4B42A8A24699996F81D31BB68A0D8139B6650E0A062910776F53100000000020A3A3B04BDF61D95FE0907D1B68D82416A7BDDC7C34094E9A249DA7646EFFB3A70B080494C5FE246E5C3C0100000020D4F06AD3B17F187B4172BF1809AFD716A396E02D5B608CB4C346554A941087022C16018E4EEF5C922F5D746BD56F635E8F3B20CC1456BBEB0001010000005352455455524E205349474E454442592830784337394141324539443046463231444432374132383731374333454236333733374445393839333145343631373342393232374541413741314132463836373729000100000100&privatekey=0xAA49...&keyuses=2" -X POST --user api:123
-The response will provide the data that is required for mining and posting the transaction.
-Next, you can either post and mine the transaction simultaneously using:
- /wallet/posttxn - ONLINE / OFFLINE NODE (optional)
-Providing the data from the signtxn response. 
-The response will provide the txpowid that you can subsequently use to track the transaction. 
-ALTERNATIVELY, you can mine the transaction first to get the correct txpowid without posting the transaction to the network: 
-7a. /wallet/minetxn - ONLINE / OFFLINE NODE (optional)
-To get the correct txpowid for the transaction, it must first be mined from an online or offline device.
-You must provide the data from the signtxn response. 
-7b. /wallet/postminedtxn - ONLINE NODE 
-To post a pre-mined transaction to the network, use this endpoint, providing the data from the minetxn response. 
-This ends the process and the transaction has been posted to the network
 
-## How to estimate the burn
-To find out recent on-chain burn metrics, you can create an endpoint for the burn function which displays min, max, avg and median burn for the last 1, 10 and 50 blocks. 
+```bash title="Terminal"
+curl http://127.0.0.1:8080/wallet/constructtxn -d "tokenid=0x00&coinlist=0xF57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E543&toamount=0.05&toaddress=MxG080M5PYA0ZQG59YG9W106SEBD8FPAWATFTN8B1NNW6EW8KJYCCEDD2RP4G1A&fromaddress=MxG086U24F17MT50Y6VUPBPD6VJKTYVMR71WRSYURYUVZDN1VMG25FF39M0458A&changeaddress=MxG086U24F17MT50Y6VUPBPD6VJKTYVMR71WRSYURYUVZDN1VMG25FF39M0458A&changeamount=0.02&script=RETURN SIGNEDBY(0xC79AA2E9D0FF21DD27A28717C3EB63737DE98931E46173B9227EAA7A1A2F8677)" -X POST --user api:123
+```
+
+This transaction must be posted within 24 hours to ensure the coin proofs are valid.
+The response provides the data that must be signed with an online or offline node. 
+
+</Step>
+<Step>
+
+**Sign the transaction**
+
+Node status: Online/Offline
+
+```
+/wallet/signtxn
+```
+
+Using the data provided from the `unsignedtxn` response, you must sign the transaction, providing the private key associated with the `fromaddress`.
+
+<Callout title="Key Uses">
+Note that keyuses should be incremented each time the same private key is used to sign a transaction. See [How to set key uses](/docs/user-guides/meg-wallet-api#how-to-set-the-key-uses)
+</Callout>
+
+Example
+
+```
+curl http://127.0.0.1:8080/wallet/signtxn -d "data=0x0000004230783344413937354436384232314434413837443343383036373041414239464332394545303035424143394345443638413236433438423837383432423733343400010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000010200000020B2BBEC3A60E0B30271A4745D41A86317527F9BFF5ED70A36B2ABFBB9D189AA1100000020162E6AA063502A6B04C820371CB6A1F95495D7F6E8586F7919D245275631CD68020105000000010001000100000000010000000100000100000000002035BB59FF84D3A2269207537EE15CA3ADF2874C36945E86C384477E14ACDECC0F00000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A02010200000001000100010000000001000000010000010000000100000000010000010000010100000020F57C0E43B92B6E3E416B7FC55DC4681A1E56A4771C7918D2F3A6C1A858F9E54300000020DE111E13DBA5054DFF657969BF3A76BFB6CE196F95F6EBEFE1B70FED0115EF1A0201080000000100000001000000000309C94400000310036A0001000000031007E000010900000000209D0387DD114382ABDB3EB1393B15B05F503BAD844EA38D41827C0EFC7D80770A0A0101000000002088DF4FFDEA4D537FDC89EF26F78D47CFA11E196CC7CD8AB3A1F9CE2ED8A3F871000100010000002088B515C841EF0CF8B2D262BB1058ED74CA2921FE105948A6AA8423C8CF7820580A0405F5E10100000000207073121CC6FB5956AD653699B2FAB27E9B8DA56C9C3BBF45A7467A911DB736FE0A01010000000020A33D04EDEEA5083A571ED162EFF6B3C02B206924B6647009E057333497A193B10A0405F5E1040000000020D448043506006022CC5B4189A9A5A55871B2F4A77FD040E9DF4F53EA2195EA5C0A0603D85C8466040100000020253B002D2F83C1C98EEBF4809B4B42A8A24699996F81D31BB68A0D8139B6650E0A062910776F53100000000020A3A3B04BDF61D95FE0907D1B68D82416A7BDDC7C34094E9A249DA7646EFFB3A70B080494C5FE246E5C3C0100000020D4F06AD3B17F187B4172BF1809AFD716A396E02D5B608CB4C346554A941087022C16018E4EEF5C922F5D746BD56F635E8F3B20CC1456BBEB0001010000005352455455524E205349474E454442592830784337394141324539443046463231444432374132383731374333454236333733374445393839333145343631373342393232374541413741314132463836373729000100000100&privatekey=0xAA49...&keyuses=2" -X POST --user api:123
+```
+
+The response will provide the data that is required for mining and posting the transaction.
+
+</Step>
+<Step>
+
+**Mine and Post the transaction**
+
+**Option 1: Mine and Post the transaction simultaneously**
+
+Node status: Online
+
+Post and mine the transaction simultaneously, providing the data from the `signtxn` response as a parameter. 
+
+`/wallet/posttxn`
+
+The response will provide the `txpowid` that you can subsequently use to track the transaction. 
+
+
+**Option 2: Mine and Post the transaction separately**
+
+1. ALTERNATIVELY, you can mine the transaction first to get the correct txpowid without posting the transaction to the network, providing the data from the `signtxn` response as a parameter. 
+
+Node status: Online/Offline
+
+```
+/wallet/minetxn
+```
+
+2. To then post a pre-mined transaction to the network, use the following endpoint, providing the data from the `minetxn` response. 
+
+Node status: Online
+
+```
+/wallet/postminedtxn
+```
+
+The transaction will be posted to the network.
+
+</Step>
+<Step>
+
+**Check the transaction is on-chain**
+
+Within 24 hours of the transaction being posted, you can check the block number it is in and number of block confirmations it has on-chain.
+
+Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+
+Node status: Online
+
+```
+/wallet/checktxpow
+```
+
+
+</Step>
+</Steps>
+
+
+
 
 {/* 
 ## MySQL setup (Optional)

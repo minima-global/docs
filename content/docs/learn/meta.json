@@ -3,27 +3,26 @@
   "root": true,
   "pages": [
     "index",
-    "network",
+    "network-overview",
     "glossary",
     "---Minima---",
     "transactions",
     "mmr-database",
     "txpow",
     "the-blockchain",
-    "miningandconsensus",
+    "mining-consensus",
     "coloured-coins",
-    "keysandsignatures",
-    "quantumsecurity",
-    "archivenodes",
+    "keys-signatures",
+    "quantum-security",
     "---Smart Contracts---",
     "scripting",
     "---Maxima---",
-    "about-maxima",
+    "maxima-about",
     "maxima-contacts",
     "maxima-messaging",
     "maxima-mls",
     "maxima-faq",
     "---MiniDapps---",
-    "about-minidapps"
+    "minidapps-about"
   ]
 }
