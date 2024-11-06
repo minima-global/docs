@@ -2,7 +2,7 @@
   "title": "Node Recovery",
   "root": false,
   "pages": [
-    "recover-options",
+    "recovery-options",
     "chain-resync",
     "restore-backup",
     "import-seed-phrase"

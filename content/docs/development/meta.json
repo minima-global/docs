@@ -14,7 +14,7 @@
     "---MiniDapps---",
     "minidapp-structure",
     "minidapp-configfile",
-    "minidapp-mds",
+    "minidapp-mdsjs",
     "minidapp-events",
     "mini-browser",
     "minidapp-service-js",

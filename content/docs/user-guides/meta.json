@@ -2,8 +2,8 @@
   "title": "User Guides",
   "root": true,
   "pages": [
-    "---Essentials---",
     "index",
+    "login",
     "join-the-network",
     "secure-your-seedphrase",
     "---General---",
