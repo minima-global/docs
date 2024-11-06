@@ -18,8 +18,6 @@ const config = {
         destination: 'docs/development/:path*',
         permanent: true,
       },
-      /docs/buildonminima/dapps/mdsjs
-
     ]
   },
 
