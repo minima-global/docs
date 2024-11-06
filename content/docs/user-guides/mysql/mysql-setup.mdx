@@ -1,6 +1,6 @@
 ---
-title: Export data to MySQL
-description: Learn how to integration Minima with MySQL
+title: MySQL Setup
+description: Learn how to integrate Minima with MySQL
 tag: user-guides
 ---
 
@@ -172,18 +172,12 @@ Your database `minimaarchive` is now created and ready for use!
 </Tab>
 </Tabs>
 
+## Check the connection
 
-
-## Update MySQL
-
-To update the MySQL tables with the archive blocks from your node:
-
-1. Open Minima Docker CLI or Minima Terminal MiniDapp
-
-2. Optional - run the command `mysql action:info` with your login details to check the current status 
+From the Minima Docker CLI or Minima Terminal, run the command `mysql action:info` with your login details to check the current status 
 
 ```bash title="Terminal"
-mysql host:minimysql database:archivedb user:archiveuser password:youruserpassword action:info
+mysql action:info host:127.0.0.1:3306 database:archivedb user:archiveuser password:youruserpassword 
 ```
 
 Example output:
@@ -192,7 +186,7 @@ Example output:
 {
   "command":"mysql",
   "params":{
-    "host":"minimysql",
+    "host":"127.0.0.1:3306",
     "database":"archivedb",
     "user":"archiveuser",
     "password":"youruserpassword",
@@ -221,131 +215,31 @@ In the above example, the Minima archive db contains 72105 blocks and the mysql 
 Before running an update, you must check your node is on the correct tip block. Run the `status` command to check your tip block is up to date.
 </Callout>
 
-3. Update the MySQL database with the Minima archive data and wait for it to finish
 
-```bash title="Terminal"
-mysql host:minimysql database:archivedb user:archiveuser password:youruserpassword action:update
+## How to set your login details
+
+Set the MySQL login details so you don't need to type them in every time.
+
+```
+mysql action:setlogin ..LOGIN_DETAILS.. 
 ```
 
+Example
 
-Example output:
-
-```json title="Output"
-{
-  "command":"mysql",
-  "params":{
-    "host":"minimysql",
-    "database":"archivedb",
-    "user":"archiveuser",
-    "password":"youruserpassword",
-    "action":"update"
-  },
-  "status":true,
-  "pending":false,
-  "response":{
-    "archive":{
-      "archivestart":1,
-      "archiveend":72206,
-      "archivetotal":72205
-    },
-    "mysql":{
-      "mysqlstart":1,
-      "mysqlend":72206,
-      "mysqltotal":72205
-    }
-  }
-}
+```
+mysql action:setlogin host:127.0.0.1:3306 database:archivedb user:archiveuser password:youruserpassword 
 ```
 
-Future updates will be incremental, only syncing the new blocks that are not already in the MySQL database.
+Subsequently, you can omit the host, database, user and password parameters.
 
-### Auto update
+## MySQL Functionality 
 
-To automatically update the MySQL database daily, run:
-
-```bash title="Terminal"
-mysql host:minimysql database:archivedb user:archiveuser password:youruserpassword action:autobackup enable:true
-```
-
-## Check the integrity
-
-To check that there are no missing blocks in the MySQL database, you can run:
-
-```bash title="Terminal"
-mysql action:integrity host:minimysql database:archivedb user:archiveuser password:youruserpassword
-```
+  <Cards>
+  <Card
+    href="/docs/development/terminal-commands#backup"
+    title="MySQL full help"
+    description="Read the full help for the MySQL command"
+/>
+</Cards>
 
 
-## Create a coins table
-
-To create a table in your MySQL archive database for all spent and unspent coins, you can use the `mysqlcoins` command. 
-
-The coins table will be populated from the syncblock table, so this must be populated first. You can then run any SQL command against it to query the coins. 
-
-<Callout title="Info">
-The coins database is large and will take a while to populate, optionally you can create a second database in mysql workbench to keep the coinsdb separate to your existing archivedb.
-</Callout>
-
-To populate the coins table, you can choose to specify the number of coins to update in one go by using the `maxcoins` parameter. To update the table will all the coins, remove the `maxcoins` parameter.
-
-The example below adds the first 100 coins to the database. Next time, it will start from where it left off. 
-
-**From any node**
-```bash title="Terminal"
-mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:archivedb user:archiveuser password:youruserpassword 
-```
-
-**From docker**
-```bash title="Terminal"
-mysqlcoins action:update maxcoins:100 host:minimysql database:archivedb user:archiveuser password:youruserpassword 
-```
-
-## Query the coins table
-
-To search for all coins at an address or with the address in a state variable:
-
-```bash title="Terminal"
-mysqlcoins action:search address: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
-```
-
-To run a WHERE query on the coins table, string data MUST be in single quotes and you can use multiple parameters.
-
-```bash title="Terminal"
-mysqlcoins action:search where: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
-```
-
-To run a full SQL query on the coins table:
-
-```bash title="Terminal"
-mysqlcoins action:search query: host:minimysql database:archivedb user:archiveuser password:youruserpassword 
-```
-
-For full help, use `help command:mysqlcoins` or see [here](/docs/userguides/usingyournode/terminal_commands).
-
-## Export the tables from MySQL
-
-To Export the archive data from MySQL to a file:
-
-1. Open MySQL workbench
-
-2. Double click on **minimaarchive** to open the database
-
-3. From the **Administration** tab, select **Data Export** (also available from the Server dropdown menu)
-
-![sql](/img/archivenode/F.AdminExportData.png) 
-
-4. Check the box for **archivedb** and check the boxes for **cascadedata** and **syncblock** 
-
-<Callout type="warn">
-We do not recommend exporting the coins table as this will be very large.
-</Callout>
-
-5. Under Export Options, select **Export to self-contained file** and **Include Create Schema**. Optionally change the file path.
-
-![sql](/img/archivenode/G.DataExportSelection.png) 
-
-6. Click **Start Export**
-
-The exported file will be unzipped, you should zip the exported file to reduce your storage requirement. 
-
-This file can be imported to MySQL if required.

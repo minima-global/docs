@@ -1,0 +1,10 @@
+{
+  "title": "MySQL",
+  "root": false,
+  "pages": [
+    "mysql-setup",
+    "mysql-exportto",
+    "mysql-exportfrom",
+    "restore-from-mysql"
+  ]
+}

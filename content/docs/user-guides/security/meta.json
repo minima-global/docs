@@ -1,0 +1,9 @@
+{
+  "title": "Security",
+  "root": false,
+  "pages": [
+    "lock-your-wallet",
+    "create-a-safe",
+    "backup-your-wallet"
+  ]
+}
