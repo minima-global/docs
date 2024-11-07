@@ -2,7 +2,7 @@
 import { cn } from "@/app/lib/utils"
 import Link from "next/link"
 import { SparklesCore } from "./sparkles"
-
+import { motion } from "framer-motion"
 export function DocsHomePage() {
   return (
     <div className="h-[calc(100vh-60px)] bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
@@ -20,14 +20,25 @@ export function DocsHomePage() {
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] "></div>
       <div className=" absolute inset-0 bg-background h-1/2 bottom-0"></div>
       <div className=" absolute bg-background right-0 bottom-[460px] left-0 h-[100px] blur-xl"></div>
-      <div className="flex flex-col  mx-auto  md:px-10 mt-20 relative  pb-12 xl:min-w-[1200px] ">
-        <main className=" relative  px-2 flex flex-col justify-center items-center">
-          <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-primary-foreground ">
+      <div className="flex flex-col  mx-auto  md:px-10 mt-10 relative  pb-12 xl:min-w-[1200px] ">
+        <main className="relative px-2 flex flex-col justify-center items-center">
+          <motion.h4
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-primary-foreground"
+          >
             Welcome to the Minima Docs
-          </h4>
-          <p className="text-lg lg:text-xl  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
+          </motion.h4>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-lg lg:text-xl  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300"
+          >
             Learn all there is to know about Minima
-          </p>
+          </motion.p>
 
           <Cards />
         </main>
@@ -94,11 +105,11 @@ const Cards = () => {
         </svg>
       ),
     },
-        {
+    {
       title: "Knowledge Base",
       description: "A deep dive into the Minima protocol and its architecture",
       link: "/docs/learn",
-      icon: ( 
+      icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -158,7 +169,12 @@ const Cards = () => {
     },
   ]
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-5  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full  ">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  relative pt-5  mx-auto  mt-10  rounded-xl bg-background box dark:box z-[9999] w-full"
+    >
       {features.map((feature, index) => (
         <FeatureCards
           key={feature.title}
@@ -167,7 +183,7 @@ const Cards = () => {
           link={feature.link}
         />
       ))}
-    </div>
+    </motion.div>
   )
 }
 
@@ -185,34 +201,41 @@ const FeatureCards = ({
   link: string
 }) => {
   return (
-    <Link
-      href={link}
-      className={cn(
-        "flex flex-col lg:border-r group  py-10 relative group/feature dark:border-neutral-800 cursor-pointer",
-        (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800 ",
-        index < 3 && "lg:border-b dark:border-neutral-800",
-        index === 3 && " rounded-bl-xl",
-        index === 5 && " rounded-br-xl"
-      )}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+      className="h-full"
     >
-      {index < 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent  " />
-      )}
-      {index >= 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
-      )}
-      <div className="mb-4 relative z-10 px-10 text-neutral-600 dark:text-neutral-400">
-        {icon}
-      </div>
-      <div className="text-lg font-bold mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-orange-500 transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-700 dark:text-neutral-100">
-          {title}
-        </span>
-      </div>
-      <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-xs relative z-10 px-10">
-        {description}
-      </p>
-    </Link>
+      <Link
+        href={link}
+        className={cn(
+          "flex flex-col lg:border-r group h-full py-16 px-8 relative group/feature dark:border-neutral-800 cursor-pointer",
+          (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
+          index < 3 && "lg:border-b dark:border-neutral-800",
+          index === 3 && "rounded-bl-xl",
+          index === 5 && "rounded-br-xl"
+        )}
+      >
+        {index < 4 && (
+          <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent  " />
+        )}
+        {index >= 4 && (
+          <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
+        )}
+        <div className="mb-4 relative z-10 px-10 text-neutral-600 dark:text-neutral-400">
+          {icon}
+        </div>
+        <div className="text-lg font-bold mb-2 relative z-10 px-10">
+          <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-orange-500 transition-all duration-200 origin-center" />
+          <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-700 dark:text-neutral-100">
+            {title}
+          </span>
+        </div>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-xs relative z-10 px-10">
+          {description}
+        </p>
+      </Link>
+    </motion.div>
   )
 }

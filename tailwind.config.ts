@@ -21,9 +21,7 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--background))",
-        
       },
-     
 
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",

@@ -1,18 +1,29 @@
 "use client"
 import { RootProvider } from "fumadocs-ui/provider"
-import dynamic from "next/dynamic"
-import { ReactNode } from "react"
-
+import Script from "next/script"
+import { ReactNode, useEffect, useState } from "react"
 
 export function Provider({
   children,
+  nonce,
 }: {
   children: ReactNode
-}): React.ReactElement {
+  nonce: string | undefined
+}) {
+  // prevent hydration error
+
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) return null
+
   return (
-    <RootProvider
-      
-    >
+    <RootProvider theme={{ nonce: nonce }}>
+      <Script nonce={nonce ?? undefined} />
+
       {children}
     </RootProvider>
   )
