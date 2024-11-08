@@ -11,7 +11,6 @@ export function Provider({
   nonce: string | undefined
 }) {
   // prevent hydration error
-
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -20,11 +19,5 @@ export function Provider({
 
   if (!isMounted) return null
 
-  return (
-    <RootProvider theme={{ nonce: nonce }}>
-      <Script nonce={nonce ?? undefined} />
-
-      {children}
-    </RootProvider>
-  )
+  return <RootProvider theme={{ nonce: nonce }}>{children}</RootProvider>
 }
