@@ -1,13 +1,14 @@
 "use client"
 import { cva } from "class-variance-authority"
 import Link from "next/link"
-import { useParams } from "next/navigation"
-import { ReactNode } from "react"
+import { useParams, usePathname } from "next/navigation"
+import { ReactNode, useEffect, useState } from "react"
 import { modes } from "./lib/modes"
 import { cn } from "./lib/utils"
+import Footer from "@/components/footer"
 
 const itemVariants = cva(
-  "rounded-md px-2 py-1 transition-colors hover:text-fd-accent-foreground",
+  "rounded-md px-3 py-1 transition-colors hover:text-fd-accent-foreground",
   {
     variants: {
       active: {
@@ -23,9 +24,20 @@ export function Body({
   children: ReactNode
 }): React.ReactElement {
   const mode = useMode()
+  const isHome = usePathname() === "/"
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
-    <body className={cn(mode, "flex min-h-screen flex-col")}>{children}</body>
+    <body
+      className={cn(mode, "flex min-h-screen flex-col pt-0", isHome && "pt-5")}
+    >
+      {children}
+      {mounted && <Footer />}
+    </body>
   )
 }
 
@@ -38,15 +50,15 @@ export function NavChildren(): React.ReactElement {
   const mode = useMode()
 
   return (
-    <div className="rounded-md border  p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block ">
+    <div className="rounded-md border  p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block  ">
       {modes.map((m) => (
-          <Link
-            key={m.param}
-            href={`/docs/${m.param}`}
-            className={cn(itemVariants({ active: mode === m.param }))}
-          >
-            {m.name}
-          </Link>
+        <Link
+          key={m.param}
+          href={`/docs/${m.param}`}
+          className={cn(itemVariants({ active: mode === m.param }))}
+        >
+          {m.name}
+        </Link>
       ))}
     </div>
   )

@@ -3,10 +3,6 @@ import { DocsBody, DocsPage } from "fumadocs-ui/page"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { getGithubLastEdit } from 'fumadocs-core/server';
- 
-
-
 export default async function Page({
   params,
 }: {
@@ -20,14 +16,13 @@ export default async function Page({
 
   const MDX = page.data.exports.default
 
-  const path = `/content/docs/${page.file.path}`;
+  const path = `/content/docs/${page.file.path}`
 
   /*const time = await getGithubLastEdit({
     owner: "minima-global",
     repo: "docs",
     path: path,
   });*/
-
 
   /*const lastUpdate = time?.toLocaleDateString("en-US", {
     month: "long",
@@ -36,11 +31,13 @@ export default async function Page({
   });*/
 
   return (
-    <DocsPage toc={page.data.exports.toc} full={page.data.full}
-    tableOfContent={{
-      style:'clerk',
-      single:false
-    }}
+    <DocsPage
+      toc={page.data.exports.toc}
+      full={page.data.full}
+      tableOfContent={{
+        style: "clerk",
+        single: false,
+      }}
       editOnGithub={{
         owner: "minima-global",
         repo: "docs",

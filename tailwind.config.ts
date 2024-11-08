@@ -21,6 +21,16 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--background))",
+        orange: "hsl(var(--orange))",
+        lightOrange: "hsl(var(--light-orange))",
+        lighterOrange: "hsl(var(--lighter-orange))",
+        grey: "hsl(var(--grey))",
+        grey10: "hsl(var(--grey-10))",
+        grey20: "hsl(var(--grey-20))",
+        grey40: "hsl(var(--grey-40))",
+        grey60: "hsl(var(--grey-60))",
+        grey80: "hsl(var(--grey-80))",
+        greyHighlight: "hsl(var(--grey-highlight))",
       },
 
       animation: {

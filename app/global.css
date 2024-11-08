@@ -31,6 +31,17 @@
   --learn-color: 161 40% 27%;
   --run-a-node-color: 215 100% 34%;
   --user-guides-color: 10 85% 55%;
+  --orange: 19, 100%, 51%;
+  --light-orange: 25, 100%, 59%;
+  --lighter-orange: 32, 100%, 64%;
+
+  --grey: 240, 6%, 59%;
+  --grey-10: 240, 5%, 96%;
+  --grey-20: 240, 5%, 92%;
+  --grey-40: 240, 6%, 84%;
+  --grey-60: 240, 4%, 48%;
+  --grey-80: 240, 5%, 67%;
+  --grey-highlight: 240, 12%, 22%;
 }
 
 .dark {
@@ -66,12 +77,14 @@
   border: 1px solid #615a5400;
   border-radius: 0.75rem;
   animation: 5s rotate linear infinite;
-  background: linear-gradient(#fbfbfb, #fbfbfb) padding-box,
+  background:
+    linear-gradient(#fbfbfb, #fbfbfb) padding-box,
     linear-gradient(var(--angle), #fbfbfb, #9d9898) border-box;
 }
 
 .dark\:box:is(.dark *) {
-  background: linear-gradient(#000000, #000000) padding-box,
+  background:
+    linear-gradient(#000000, #000000) padding-box,
     linear-gradient(var(--angle), #070707, #9d9898) border-box;
 }
 
@@ -85,4 +98,11 @@
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
+}
+
+[data-theme-toggle] {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
