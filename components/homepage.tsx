@@ -210,7 +210,7 @@ const FeatureCards = ({
       <Link
         href={link}
         className={cn(
-          "flex flex-col lg:border-r group h-full py-16 2xl:py-[70px]  2xl:px-12 px-8 relative group/feature dark:border-neutral-800 cursor-pointer",
+          "flex flex-col lg:border-r group h-full py-16 2xl:py-[70px]  px-8 relative group/feature dark:border-neutral-800 cursor-pointer",
           (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
           index < 3 && "lg:border-b dark:border-neutral-800",
           index === 3 && "rounded-bl-xl",
@@ -232,7 +232,7 @@ const FeatureCards = ({
             {title}
           </span>
         </div>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-xs relative z-10 px-10 2xl:text-base">
+        <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm relative z-10 px-10 2xl:text-base">
           {description}
         </p>
       </Link>

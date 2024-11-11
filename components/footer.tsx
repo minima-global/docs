@@ -117,8 +117,8 @@ const FOOTER_NAV = [
 ]
 
 const Footer: React.FC = () => (
-  <footer className="w-full mt-10">
-    <div className="bg-[hsl(0,0%,2%)] p-5 text-white lg:pt-20">
+  <footer className="w-full">
+    <div className="bg-[#090a0c] p-5 text-white lg:pt-20">
       <div className="container mx-auto w-full">
         <div className="relative grid grid-cols-12">
           <div className="relative col-span-12 lg:col-span-3 xl:col-span-2">
