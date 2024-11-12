@@ -33,7 +33,7 @@ export function Body({
 
   return (
     <body
-      className={cn(mode, "flex min-h-screen flex-col pt-0", isHome && "pt-5")}
+      className={cn(mode, "flex min-h-screen flex-col pt-0", isHome && "pt-3")}
     >
       {children}
       {mounted && <Footer />}

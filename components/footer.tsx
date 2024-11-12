@@ -117,7 +117,7 @@ const FOOTER_NAV = [
 ]
 
 const Footer: React.FC = () => (
-  <footer className="w-full">
+  <footer className="w-full ">
     <div className="bg-[#090a0c] p-5 text-white lg:pt-20">
       <div className="container mx-auto w-full">
         <div className="relative grid grid-cols-12">
@@ -203,7 +203,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer dark:fill-white transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
                   height="45"
                   viewBox="0 0 45 45"
                   fill="none"
