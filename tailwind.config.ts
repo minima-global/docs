@@ -21,7 +21,7 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--background))",
-        orange: "hsl(var(--orange))",
+        primaryOrange: "hsl(var(--orange))",
         lightOrange: "hsl(var(--light-orange))",
         lighterOrange: "hsl(var(--lighter-orange))",
         grey: "hsl(var(--grey))",
