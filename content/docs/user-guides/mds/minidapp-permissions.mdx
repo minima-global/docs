@@ -1,0 +1,23 @@
+---
+title: MiniDapp Permissions
+description: Learn how to set your MiniDapp permissions
+tag: user-guides
+---
+
+By default, all MiniDapps will be given **READ** permission. Any transactions or sensitive commands triggered from read apps must be [approved](/docs/user-guides/mds/approve-transactions) from the Pending MiniDapp.
+
+MiniDapps with **WRITE** permission can transact or run any command without asking for your approval.
+
+<Callout type="warn">
+  Before giving a MiniDapp WRITE permissions, ensure your [wallet is
+  locked](/docs/user-guides/lock-your-wallet) with a password. **You should only
+  give WRITE permission to MiniDapps that you trust.**
+</Callout>
+
+To change the permissions for a MiniDapp:
+
+1. Right click on a MiniDapp (or long press on mobile)
+2. Select **Write mode** (or Read mode)
+   ![MDS](/img/runanode/mds_updateperms.png)
+3. Click **Confirm**
+   ![MDS](/img/runanode/mds_writeaccess.png)

@@ -4,11 +4,116 @@ description: Learn how to run an Archive Node
 tag: run-a-node
 ---
 
-Archive nodes serve an important function of being able to recover any Minima user if they lose access to their node or require a re-sync to the chain.
+NOTES 
 
-A standard Minima node is constantly pruning the chain and only holds the latest 2 months of archive blocks for the purpose of sharing missing recent blocks with other nodes that are rejoining the network after some time offline.
+- MOVE ARCHIVE NODE STUFF FROM USER GUIDES TO RUN A NODE
+- MOVE MINIDAPPS STUFF FROM KNOWLEDGE BASE INTO DEVELOPERS SECTION 
+- overview page still missing? 
 
-An archive node does not prune blocks after 2 months and can therefore be used to re-sync another node from the genesis block.
+
+ Unlike a standard full node, an archive node does not prune older blocks, storing all block headers and coin proofs from the moment it was started. Full transaction details are still pruned after two months.
+
+ To learn more about the functionality of Archive nodes, see [Node Types.](/docs/run-a-node/node-types#archive-node)
+
+## System requirements
+
+Anyone can run an archive node from a desktop or server.
+
+The following assumes that only Minima is running on the server, you should consider increasing the RAM and storage depending on the requirements for other software you install e.g. virus protection etc
+
+- **Processing**: 2 CPU
+- **Memory**: 4GB RAM
+- **Storage**: 5GB storage
+
+## Ports
+
+If running an archive node on a desktop, no port forwarding is required.
+
+If running a public archive node on a server, open inbound connections on port 9001 (or the main custom Minima port you have chosen).
+
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs"
+
+
+## How to start an Archive node
+
+<Steps>
+<Step>
+
+###  Start an Archive node
+
+Choose your platform of choice and follow the guidance for starting a standard full node, adding the `-archive` parameter when starting the node.
+
+  <Callout title="Info">
+If you have an existing node that you wish to change to an archive node, ensure you have first written down your seed phrase. We also recommend taking a backup of your existing node. Then quit your node from the Terminal and restart the same node, adding in the -archive parameter on the start up line.
+  </Callout>
+
+Examples: 
+
+<Tabs items={["Windows/Mac (JNLP)","Command Line", "Docker"]}>
+  
+   <Tab value="Windows/Mac (JNLP)">
+
+  If using the Minima launcher (JNLP) on Windows or Mac, 
+  1. Go to the **Settings** tab and ensure the checkbox is ticked for "Use Custom Startup Params"
+  2. In the box below, enter `-archive` onto the end of any other custom parameters used, ensuring there is a space between them.
+  3. Close the dialog box to shut Minima down
+  4. Restart the Minima launcher
+
+   </Tab>
+  <Tab value="Command Line">
+
+1. Create a new folder and copy the minima.jar into that folder. We will run everything from there.
+2. Open your command line interface/Terminal 
+3. Copy the path to the folder and from the command line, `cd` into that folder
+
+```
+cd C:\Users\Bob\MyMinimaFolder\
+```
+
+<Callout title="Tip">
+  To avoid typing in the folder path, drag and drop the folder into the command line window.
+</Callout>
+
+4. Enter the following into the command line window to start Minima
+
+   ```bash 
+  java -jar minima.jar -archive -data .minima -mdsenable -mdspassword INSERTPASSWORD
+  ``` 
+
+  <Callout title="Info">
+  If you used the `-data` parameter to specify a data folder when starting your
+  existing node, you must make sure you start the archive node using the same
+  data folder you chose originally.
+  </Callout>
+
+   </Tab>
+
+  <Tab value="Docker">
+
+To start a Minima archive node container, add the `-e minima_archive=true` environment variable to the start up command.
+
+Desktop example: 
+
+```bash 
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e minima_archive=true -v ~/minimadockerarchive:/home/minima/data -p 7001-7003:9001-9003 --restart unless-stopped --name minimaarchive minimaglobal/minima:latest
+```
+
+  If you originally started your node without the `-e minima_archive=true` environment variable, you can either:
+
+  - start a new separate container for your archive node,
+  - backup your existing node, the restore it to a new archive container you create,
+  - backup your existing node, then stop and remove your existing Minima container and start a new Minima container including -e minima_archive=true, using the SAME data folder as your old node e.g. minimadocker9001 or minimadocker8001
+    
+   </Tab>
+</Tabs>
+
+</Step>
+<Step>
+
+### Optionally re-sync to the Genesis block
+
+When you start an archive node, you will start storing the archive data from that point onwards. To run an archive node that stores all blocks since the Genesis block by doing a chain re-sync from another archive node that already has all blocks.
 
 <Callout title="Info">
   An archive node can only be used to re-sync users who created their nodes
@@ -17,101 +122,10 @@ An archive node does not prune blocks after 2 months and can therefore be used t
   the entire blockchain since genesis.
 </Callout>
 
-## Use cases
+</Step>
+<Step>
 
-Archive nodes can be for personal use or public use.
-
-#### Personal Archive Node
-
-A user running a node on a mobile device may choose to run an Archive node locally on their laptop/desktop at home in case they lose their phone and do not have a valid backup of their node stored elsewhere. In this case, the user would always have the latest proofs for their coins on their own Archive node and they can recover their phone wallet to a new device without relying on any other Minima user.
-
-#### Public Archive Node
-
-A user can choose to run an archive node for the purpose of helping other Minima users recover their wallet. By exporting their archive data to a file, another user can import the archive file and recover their wallet. If the archive node is on a server with a static external IP address, other users can also use the ip:port of the archive node to recover their wallet by remotely connecting to the archive node.
-
-To learn more about archive nodes, please see the [archive nodes](/docs/learn/archivenodes) page.
-
-## System requirements
-
-Anyone can run an archive node from Android, desktop or server.
-
-The following assumes that only Minima is running on the server, you should consider increasing the RAM and storage depending on the requirements for other software you install e.g. virus protection etc
-
-**Processing**: 2 CPU
-**Memory**: 4GB RAM
-**Storage**: 5GB storage
-
-## Ports
-
-If running an archive node on a desktop, no port forwarding is required.
-
-If running a public archive node on a server, open inbound connections on port 9001 (or the main custom Minima port you have chosen).
-
-## Starting an archive node
-
-When you start an archive node, you will start storing the archive data from that point onwards, therefore you can only re-sync coins for users that are created after this point.
-
-It is possible to run an archive node that stores all blocks since the Genesis block by doing a chain re-sync from another archive node that already has all blocks.
-
-## Manual archive node (desktop)
-
-To start a Minima archive node manually, add the -archive parameter to the start up command.
-
-If you have an existing node that you wish to change to an archive node, first take a backup of your existing node, then quit your node from the Terminal and restart the same node, adding in the -archive parameter on the start up line.
-
-<Callout title="Info">
-  If you used the -data parameter to specify a data folder when starting your
-  existing node, you must make sure you start the archive node using the same
-  data folder you chose originally.
-</Callout>
-
-import { Tab, Tabs } from "fumadocs-ui/components/tabs"
-
-<Tabs items={["Mac/Linux", "Windows"]}>
-  <Tab value="Mac/Linux">
-  
-```bash 
-sudo java -jar /Users/INSERTUSERNAME/Downloads/minima.jar -mdsenable -archive
-```
-
-  </Tab>
-  <Tab value="Windows">
-  ```bash 
-java -jar C:\Users\INSERTUSERNAME\Downloads\minima.jar -mdsenable -archive
-  ```
-
-  </Tab>
-</Tabs>
-
-## Docker archive node
-
-To start a Minima archive node container, you need to add the `-e minima_archive=true` environment variable to the start up command.
-
-If you originally started your node without the `-e minima_archive=true` environment variable, you can either:
-
-- start a new separate container for your archive node,
-- backup your existing node, the restore it to a new archive container you create,
-- backup your existing node, then stop and remove your existing Minima container and start a new Minima container including -e minima_archive=true, using the SAME data folder as your old node e.g. minimadocker9001 or minimadocker8001
-
-<Tabs items={["Mac/Linux", "Windows",]}>
-  <Tab value="Mac/Linux">
-  
-```bash 
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e minima_archive=true -v ~/minimadockerarchive:/home/minima/data -p 7001-7003:9001-9003 --restart unless-stopped --name minimaarchive minimaglobal/minima:latest
-```
-
-  </Tab>
-
-<Tab value="Windows">
-  ```bash
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e minima_archive=true -v C:\Users\INSERTUSERNAME\minimadockerarchive:/home/minima/data -p 7001-7003:9001-9003 --restart unless-stopped --name minimaarchive minimaglobal/minima:latest
-```
-
-</Tab>
-
-</Tabs>
-
-## Check your archive data
+### Check your archive data
 
 From the Terminal MiniDapp or Docker CLI, you can check the integrity of your archive data by running the command:
 
@@ -141,3 +155,18 @@ Example output:
   }
 }
 ```
+</Step>
+</Steps>
+
+
+{/* ## Use cases
+
+Archive nodes can be for personal use or public use.
+
+#### Personal Archive Node
+
+A user running a node on a mobile device may choose to run an Archive node locally on their laptop/desktop at home in case they lose their phone and do not have a valid backup of their node stored elsewhere. In this case, the user would always have the latest proofs for their coins on their own Archive node and they can recover their phone wallet to a new device without relying on any other Minima user.
+
+#### Public Archive Node
+
+A user can choose to run an archive node for the purpose of helping other Minima users recover their wallet. By exporting their archive data to a file, another user can import the archive file and recover their wallet. If the archive node is on a server with a static external IP address, other users can also use the ip:port of the archive node to recover their wallet by remotely connecting to the archive node. */}

@@ -1,0 +1,65 @@
+---
+title: Restore a node from MySQL
+description: Learn how to restore a node from MySQL data
+tag: user-guides
+---
+
+
+## Resync from MySQL
+
+If a user has been offline for too long and cannot resync to the chain from the IBD alone, or has lost access to their node, they can connect to a MySQL database to perform a chain or seed resync, provided it is publicly accessible.
+
+This is an alternative option to re-syncing from an archive node.
+
+As with archive nodes, there are two options when using a MySQL database to re-sync your a node:
+
+- `Chain re-sync:` If a user has been offline for too long and their node is not on the correct tip block, they can re-sync to the latest block by performing a [chain re-sync](#to-perform-a-chain-re-sync) from a MySQL database. **The node will NOT be wiped during this process.**
+- `Seed re-sync:` If a user does not have a valid backup or has lost access to their node, they can restore access to their coins by performing a [seed re-sync](#to-perform-a-seed-re-sync) from a MySQL database using their 24 word seed phrase. **The node will first be wiped before the re-sync begins.**
+
+<Callout title="Info">
+To re-sync using credentials for a read-only user,  set the `user` and `password` parameters as the credentials for the read-only user you have set up in MySQL, and add `readonly:true` as a parameter in the following commands.
+</Callout>
+
+### To perform a chain re-sync
+
+1. On the node requiring a re-sync, check the connection to the MySQL database, changing the ip:port as required
+
+```bash title="Terminal"
+mysql host:127.0.0.1:3307 database:archivedb user:archiveuser password:youruserpassword action:info
+```
+
+2. To start the chain re-sync, run
+
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:youruserpassword action:resync
+```
+
+Your coins will remain safe throughout this process. Once complete, you will be on the correct tip block.
+
+### To perform a seed re-sync
+
+1. On the node requiring a re-sync, connect to check the MySQL archive database
+
+```bash title="Terminal"
+mysql host:127.0.0.1:3307 database:archivedb user:archiveuser password:youruserpassword action:info
+```
+
+2. To start the seed re-sync, run
+
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:youruserpassword action:resync phrase:\"24 WORDS HERE\"
+```
+
+Optionally set the number of keys and keyuses relevant to you. If not specified, the defaults are keys:80 and keyuses:1000
+
+```bash title="Terminal"
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:youruserpassword action:resync phrase:\"24 WORDS HERE\" keys:90 keyuses:2000
+```
+
+## Check an address history
+
+To check the unspent and spent coins for an address, run 
+
+```bash title="Terminal"
+mysql host:127.0.0.1:3307 database:archivedb user:archiveuser password:youruserpassword action:addresscheck address:0x79...
+```

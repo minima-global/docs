@@ -1,5 +1,0 @@
-{
-  "title": "Manage Archive Node",
-  "root": false,
-  "pages": ["archive-export", "archive-export-sql"]
-}

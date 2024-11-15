@@ -5,6 +5,7 @@ icon: Album
 tag: learn
 ---
 
+## UTxO Model 
 
 Minima uses the UTxO (Unspent Transaction Output) Model, like Bitcoin. A Transaction Output is a specific amount of Minima, identifiable through a unique ID called a Coin ID. Each Transaction Output can be considered analogous to a physical coin in that they can represent different amounts of currency and must be spent in whole.
 
@@ -12,11 +13,16 @@ The Minima blockchain keeps track of the UTxO set on the network and who can spe
 
 The example below shows a transaction of 30 Minima from Bob to Alice. A UTxO worth 50 Minima is used as an input and two new UTxOs are created as outputs - one worth 30 Minima which is sent to the recipient and one of 20 Minima which is returned to the sender as change. Just like change is received when physical coins are spent.
 
-** Insert image here **
+<ThemeAwareSVG
+  src="/img/learn/coreConceptsLm.svg"
+  width={500}
+  height={500}
+  alt="core concepts"
+/>
 
 ## Transaction Proof-of-Work (TxPoW)
 
-Minima requires users to provide work, in the form of hashing, to `mine` their own transactions, this is **TxPoW**.
+Minima requires users to provide work, in the form of hashing, to mine their own transactions, this is **TxPoW**.
 
 Once a user has contributed a small amount of work (~1 second of hashing) they have contributed enough for their transaction to be sent around the network.
 
@@ -26,9 +32,9 @@ Once a user has contributed a small amount of work (~1 second of hashing) they h
   transaction to the network.
 </Callout>
 
-Transactions are held in [TxPoW units](txpow), which are propagated around the network and may or may not become blocks. TxPoW units contain a user&apos;s transaction and the hashes of other unconfirmed transactions known to the user&apos;s node. TxPoW units become blocks if they, by chance, meet the level of difficulty required to become a block.
+Transactions are held in [TxPoW units](/docs/learn/txpow), which are propagated around the network and may or may not become blocks. TxPoW units contain a user&apos;s transaction and the hashes of other unconfirmed transactions known to the user&apos;s node. TxPoW units become blocks if they, by chance, meet the level of difficulty required to become a block.
 
-This ensures that all users can contribute to the construction of the chain and is in contrast to Bitcoin where users rely on other dedicated `miners` with specific hardware to provide PoW and propagate their transactions on their behalf.
+This ensures that all users can contribute to the construction of the chain and is in contrast to Bitcoin where users rely on other dedicated miners with specific hardware to provide PoW and propagate their transactions on their behalf.
 
 ## The Burn
 

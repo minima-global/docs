@@ -1,0 +1,105 @@
+---
+title: Startup Parameters
+description: Understand the different start up parameters
+icon: Settings
+tag: run-a-node
+---
+
+Below is a list of all start up parameters. 
+
+Please note that not all parameters will be applicable for all platforms. 
+
+For docker, these must be converted to environment variables, e.g. `-e minima_clean=true` please see the [Docker](/docs/run-a-node/docker-desktop) guide for details.
+
+## General
+
+| Parameter            | Description                                                                                       |
+|----------------------|---------------------------------------------------------------------------------------------------|
+| `-clean`            | CAREFUL! Clears existing data, starts a new fresh node. All coins will be lost.                   |
+| `-port [port]`      | Specify the initial port for Minima to use. Range used will be the specified port +4. Default is 9001-9005. |
+| `-host [ipaddress]` | Specify the host IP                                                                               |
+| `-dbpassword [yourdbpassword]` | Main Wallet / SQL AES password - MUST be specified on first launch. CANNOT be changed later. |
+| `-allowallip`       | Allow all IPs for Maxima / Networking. Local IPs won't be allowed otherwise.                      |
+| `-archive`          | Run an Archive node - store all archive data / the cascade to allow for resyncs from this node    |
+| `-daemon`           | Run in daemon mode with no stdin input (if running Minima as a background service)                |
+| `-isclient`         | Tells the P2P System that this node can't accept incoming connections                             |
+| `-server`           | Use Server settings - this node can accept incoming connections                                   |
+| `-desktop`          | Use Desktop settings - this node can't accept incoming connections                                |
+| `-rescuenode`       | If you connect to a heavier chain, use this MegaMMR node to resync                                |
+| `-seed`             | Use this seed phrase if starting a new node                                                        |
+
+## Config
+
+| Parameter         | Description                                                                                      |
+|-------------------|--------------------------------------------------------------------------------------------------|
+| `-data`           | Specifies the folder for config files, defaulting to a hidden `.minima` folder in the home directory. |
+| `-basefolder`     | Sets a default folder for file creation, backup, and restore. Default is the home directory.      |
+| `-conf`           | Specifies an absolute path to a configuration file.                                               |
+
+## Transaction (TxPoW) management
+
+| Parameter         | Description                                                                                                     |
+|-------------------|------------------------------------------------------------------------------------------------------------
+| `-txpowdbstore`     | How many days to store TxPoW in the internal H2 Database (default 3)                              |
+| `-notifyalltxpow`   | Creates a NEWTXPOW notification for all transactions/blocks                                               |  
+| `-mysqlalltxpow`    | Store all TxPoW in MySQL when mysql autobackup is enabled                                           |
+
+## MiniDapp System
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-mdsenable`        | Enable the MiniDapp System (default port 9003)                                                            |
+| `-mdspassword [yourmdspassword]` | Specify the MiniDapp System login password                                                   |
+| `-mdsinit [foldername/path]` | Specify a folder of MiniDAPPs                                                                     |
+| `-mdswrite [minidapp]` | Give an initial MiniDAPP WRITE access                                                                   |
+| `-nodefaultminidapps` | Do NOT install the default MiniDAPPs                                                                     |
+| `-publicmdsuid`     | Set your own Session ID for the Public MiniDAPP System  (Mega MMR nodes only)                                                  |
+| `-nosslmds`         | Disable the self signed SSL cert for MDS. Use STunnel or your own SSL proxy instead.                      |
+
+
+## RPC
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-rpcenable`        | Enable remote procedure call                                                                              |
+| `-rpcssl`           | Use Self Signed SSL cert to run RPC                                                                       |
+| `-rpcpassword [yourrpcpassword]` | Set Basic Auth password for RPC calls (Use with SSL / stunnel). Only secure if used with SSL. |
+| `-rpcclrf`          | Use CRLF at the end of the RPC headers (NodeJS)                                                           |
+
+## Test nodes
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-genesis`          | Start the node from the genesis block (automatically uses -clean)                                         |
+| `-test`             | Uses test parameters e.g. faster block times                                                              |
+| `-connect [ip:port,ip:port]` | Disable the automatic P2P system and create your own network by manually connecting to this list of host:port |
+| `-nop2p`            | Disable the automatic P2P system                                                                          |
+| `-noconnect`        | Stops the P2P system from connecting to other nodes until it has been connected to                        |
+| `-nosyncibd`        | Do not sync IBD (for testing)                                                                             |
+| `-solo`             | Run a solo/private network (-test -nop2p) and will run -genesis ONLY the first time                       |
+| `-testchainlength`  | Specify the length of the tree to keep in -test mode (default is 32)                                      |
+
+## Mobile
+
+| Parameter         | Description                                                                                                   |
+|-------------------|---------------------------------------------------------------------------------------------------------------|
+| `-mobile`         | Sets this device to a mobile device - used for metrics only                                                  |
+| `-limitbandwidth` | Limit the amount sent for archive sync                                                                        |
+| `-noshutdownhook` | Do not use the shutdown hook (Android)                                                                        |
+| `-slavenode`      | Connect to the node on the given ip:port only and only accept TxBlock messages                                                   |
+
+## Debuggings
+
+| Parameter             | Description                                                                                             |
+|-----------------------|---------------------------------------------------------------------------------------------------------|
+| `-p2p-log-level-info` | Set the P2P log level to info                                                                           |
+| `-p2p-log-level-debug` | Set the P2P log level to debug                                                                         |
+| `-syncibdlogs`        | Show detailed SYNC_IBD logs                                                                             |
+
+
+## Help
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-showparams`       | Show relevant startup params on launch                                                                    |
+| `-help`             | Print help for the startup parameters                                                                     |

@@ -1,0 +1,139 @@
+---
+title: Export Minima data to MySQL
+description: Learn how export data from Minima to MySQL
+tag: user-guides
+---
+
+Once your node is connected to a MySQL database, the following data can be exported from the node:
+
+| Table               | Description                                                              |
+|--------------------|--------------------------------------------------------------------------|
+| `cascadedata`      | if the node does not start at the genesis block, there will be compact block data for the cascade |
+| `syncblocks`       | historical compact blocks (excludes transaction details)                 |
+| `coins`            | (from v1.0.39) a coins table of all coins in the syncblocks            |
+| `txpow`       | (from v1.0.41) full txpow data, including all transaction and block details |
+
+## How to export archive blocks data
+
+To update the MySQL tables with the archive blocks (syncblocks) from your node, run the following command from the Minima Docker CLI or Minima Terminal MiniDapp:
+
+
+```bash title="Terminal"
+mysql action:update host:minimysql database:archivedb user:archiveuser password:youruserpassword
+```
+or if you have [set your login details](/docs/user-guides/mysql/mysql-setup#how-to-set-your-login-details), simply: 
+
+```bash title="Terminal"
+mysql action:update
+```
+
+
+The archive blocks will start being transferred, please be patient and wait for it to finish, it will take some time. 
+
+Example output:
+
+```json title="Output"
+{
+  "command":"mysql",
+  "params":{
+    "host":"minimysql",
+    "database":"archivedb",
+    "user":"archiveuser",
+    "password":"youruserpassword",
+    "action":"update"
+  },
+  "status":true,
+  "pending":false,
+  "response":{
+    "archive":{
+      "archivestart":1,
+      "archiveend":72206,
+      "archivetotal":72205
+    },
+    "mysql":{
+      "mysqlstart":1,
+      "mysqlend":72206,
+      "mysqltotal":72205
+    }
+  }
+}
+```
+
+Future updates will be incremental, only syncing the new blocks that are not already in the MySQL database.
+
+
+### Check the integrity
+
+To check that there are no missing blocks in the MySQL database, you can run:
+
+```bash title="Terminal"
+mysql action:integrity ...LOGIN DETAILS...
+```
+
+
+## How to export coins data
+
+To create a table in your MySQL archive database for all spent and unspent coins, you can use the `mysqlcoins` command. 
+
+The coins table will be populated from the syncblock table, so this must be populated first. You can then run any SQL command against it to query the coins. 
+
+<Callout title="Info">
+The coins database is large and will take a while to populate, optionally you can create a second database in mysql workbench to keep the coinsdb separate to your existing archivedb.
+</Callout>
+
+To populate the coins table, you can choose to specify the number of coins to update in one go by using the `maxcoins` parameter. To update the table will all the coins, remove the `maxcoins` parameter.
+
+The example below adds the first 100 coins to the database. Next time, it will start from where it left off. 
+
+**From any node**
+```bash title="Terminal"
+mysqlcoins action:update maxcoins:100 ...LOGIN DETAILS...
+```
+
+**From docker**
+```bash title="Terminal"
+mysqlcoins action:update maxcoins:100 ...LOGIN DETAILS... 
+```
+
+### How to query the coins
+
+To search for all coins at an address or with the address in a state variable:
+
+```bash title="Terminal"
+mysqlcoins action:search address: ...LOGIN DETAILS... 
+```
+
+To run a WHERE query on the coins table, string data MUST be in single quotes and you can use multiple parameters.
+
+```bash title="Terminal"
+mysqlcoins action:search where: ...LOGIN DETAILS... 
+```
+
+To run a full SQL query on the coins table:
+
+```bash title="Terminal"
+mysqlcoins action:search query: ...LOGIN DETAILS... 
+```
+
+For full help, use `help command:mysqlcoins` or see [here](/docs/development/terminal-commands).
+
+## How to export transaction data
+
+To export all full txpow data to MySQL, your node must be running with the following additional startup parameters.
+
+
+| Startup Parameter               | Description                                                              |
+|--------------------|--------------------------------------------------------------------------|
+| `-notifyalltxpow`                   | creates a NEWTXPOW notification for all transactions           |
+| `-mysqlalltxpow`                    | Store all TxPoW in MySQL when mysql autobackup is enabled                     
+
+Provided MySQL auto backups are enabled, all txpow data will be pushed to MySQL. TxPoW data is only transferred to MySQL once they are pruned from the chain. 
+This can take between 24-48 hours. 
+
+## How to enable auto updates to MySQL
+
+To automatically update the MySQL database daily, run:
+
+```bash title="Terminal"
+mysql action:autobackup enable:true ...LOGIN DETAILS...
+```

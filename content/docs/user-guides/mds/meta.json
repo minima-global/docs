@@ -1,0 +1,5 @@
+{
+  "title": "MiniDapps",
+  "root": false,
+  "pages": ["minidapp-permissions", "approve-transactions","manage-minidapps"]
+}

@@ -5,6 +5,48 @@ icon: Zap
 tag: run-a-node
 ---
 
+## Android
+
+The simplest way is to install and run the Android app.
+
+<a href="https://play.google.com/store/apps/details?id=com.minima.android">
+<GoogelPlayIcon />
+</a>
+
+<Callout title="Note" type="info">
+  If you cannot use the Google Playstore, you can download a signed APK from [Github](https://github.com/minima-global/Minima/tree/master/jar).
+</Callout>
+
+
+## Desktop 
+
+Desktop users can launch Minima from a JNLP file. The Java Network Launch Protocol.
+
+<Steps>
+
+<Step>
+
+<Heading as="h3">Install Open Web Start</Heading>
+
+First, download and install [Open Web Start](https://openwebstart.com/download/).
+
+</Step>
+
+<Step>
+
+<Heading as="h3">Download the Minima JNLP file</Heading>
+
+Download the [Minima JNLP](https://www.spartacusrex.com/javaws/minima.jnlp) file and open / double-click it to install Minima as an application. A desktop shortcut will be created for you and you will be shown a security warning, select Run.
+
+To ensure that Minima is always launched with Open Web Start, you may need to right-click > open with... and choose Open Web Start. If possible, choose "always".
+
+</Step>
+
+</Steps>
+
+### Mac & Windows
+Further guidance can be found [here](/docs/run-a-node/mac) for Mac and [here](/docs/run-a-node/windows) for Windows.
+
 ## CLI
 
 At it's core, Minima is a Java application. So on a server or CLI the easiest way to run Minima is to install Java and download the latest minima.jar.
@@ -12,8 +54,6 @@ At it's core, Minima is a Java application. So on a server or CLI the easiest wa
 <Callout title="Note" type="info">
   You can download the latest version of Minima from the [Minima GitHub releases
   page](https://github.com/minima-global/Minima/releases).
-
-The latest version is `v1.0.41`.
 
 </Callout>
 
@@ -32,7 +72,7 @@ java -version
 
 <Step>
 
-<Heading as="h3">Navigate to the directory where you downloaded the Minima jar</Heading>
+<Heading as="h3">Navigate to the directory where you saved the Minima jar</Heading>
 
 ```bash title="Terminal"
 cd /path/to/minima.jar
@@ -42,14 +82,23 @@ cd /path/to/minima.jar
 
   <Step>
 <Heading as="h3">Run Minima</Heading>
-  ```bash title="Terminal"
-    java -jar minima.jar
+
+Adding `-mdsenable -mdspassword INSERTPASSWORD` will enable the minidapp system.
+
+Adding `-p2p2nodes megammr.minima.global:9001` will automatically connect you to the peer-to-peer network.
+
+```bash title="Terminal"
+    java -jar minima.jar -data .minima -mdsenable -mdspassword INSERTPASSWORD
 ```
 
 <Callout title="Tip" type="info">
  When you first run Minima the first thing you need is to add some connections.
 
-You can get this list by asking any user on the network.
+You can get this list by asking any user on the network to share their connections or by running 
+
+```
+peers action:addpeers peerslist:megammr.minima.global:9001
+```
 
 Alternatively, copy this link directly into the app when prompted to join the network (also in Settings > 'Add connections')
 
@@ -59,44 +108,7 @@ Alternatively, copy this link directly into the app when prompted to join the ne
   </Step> 
 </Steps>
 
-## Android
 
-The next simplest way is to install and run the Android app.
-
-<a href="https://play.google.com/store/apps/details?id=com.minima.android">
-<GoogelPlayIcon />
-</a>
-
-<Callout title="Note" type="info">
-  If you cannot use the Google Playstore, you can download a signed APK from [Github](https://github.com/minima-global/Minima/tree/master/jar).
-</Callout>
-
-## Desktop 
-
-For Desktop users Minima can be launched from a JNLP file.. The Java Network Launch Protocol.
-
-<Steps>
-
-<Step>
-
-<Heading as="h3">Install Open Web Start</Heading>
-
-First install [Open Web Start](https://openwebstart.com/download/) - the new updated version of Java Web Start.
-
-</Step>
-
-<Step>
-
-<Heading as="h3">Download the Minima JNLP file</Heading>
-
-Download the [Minima JNLP](https://www.spartacusrex.com/javaws/minima.jnlp) file and open / double-click it to install Minima as an application. A desktop shortcut will be created for you and you will be shown a security warning, select Run.
-
-</Step>
-
-</Steps>
-
-### Mac & Windows
-Further guidance can be found [here](/docs/run-a-node/mac) for Mac and [here](/docs/run-a-node/windows) for Windows.
 
 ## Docker 
 
@@ -104,7 +116,7 @@ Further guidance can be found [here](/docs/run-a-node/mac) for Mac and [here](/d
 
 <Step>
 
-<Heading as="h3">Set a secure password</Heading>
+<Heading as="h3">Start a new docker container</Heading>
 
 There is also a nice docker image that you can use if you have Docker installed. Set a secure password below.
 
@@ -134,7 +146,7 @@ Further guidance on starting a node in Docker desktop can be found [here](/docs/
   <Card
     title="Join the network"
     description="Join the Minima network"
-    href="/docs/user-guides/jointhenetwork"
+    href="/docs/user-guides/join-the-network"
 
 />
 

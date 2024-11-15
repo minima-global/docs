@@ -1,0 +1,154 @@
+---
+title: Join the network
+description: Learn how to join the Minima network
+icon: Network
+tag: user-guides
+---
+
+To achieve Minima's vision of complete decentralisation, there are no centralised servers that control access to the network. Therefore, when running a node for the first time, you will need one or more connections to join the network.
+
+To get a list of connections, use one of the following methods:
+
+- ask another node runner to [share their connections](#sharing-connections) with you
+- enter `/minimapeers` into any channel in our [Discord server](https://discord.com/invite/minimaglobal)
+- Google search for **minimapeers.txt**
+- use a public URL that returns a list of Minima peers, for example https://www.spartacusrex.com/minimapeers.txt
+
+**This is a one off task, only required when starting a node for the first time.**
+
+<ImageZoom
+  alt="join-the-network"
+  src="/img/runanode/jointhenetwork.png"
+  width={500}
+  height={500}
+/>
+<Callout title="Restoring a backup" type="info">
+  If you are restoring a backup to a new node, select "I'll do this later" and
+  continue to restore your backup using the Security MiniDapp.
+</Callout>
+
+## Adding connections
+
+Connections (or 'peers') are simply other nodes that can share the blockchain with new users, enabling them to join the network.
+
+**To add connections for the first time:**
+
+<Steps> 
+<Step>
+<Heading as="h3">Settings</Heading>
+
+From the Home screen, go to **Settings**.
+
+![settings](/img/runanode/settingsicon.png)
+
+</Step>
+
+<Step>
+<Heading as="h3">Add connections</Heading>
+
+Select **Add connections**.
+
+<img
+  src="/img/runanode/addconnectionssetting.png"
+  alt="add connections"
+  width="500"
+  height="500"
+/>
+
+</Step>
+
+<Step>
+<Heading as="h3">Enter connections</Heading>
+
+Paste the list or URL into the box and select **Add connections**
+
+<img
+  src="/img/runanode/addconnections2.png"
+  alt="connections"
+  width="500"
+  height="500"
+/>
+
+</Step>
+
+<Step>
+
+<Heading as="h3"> Check your block number </Heading>
+
+Exit the Settings and wait a few minutes for the block number to appear in the top right
+
+<img
+  src="/img/runanode/blocknum.png"
+  alt="block number"
+  width="500"
+  height="500"
+/>
+
+</Step>
+
+</Steps>
+
+That's it! You are now connected to the network!
+
+Once you have joined the network, ensure you [write down your seed phrase](/docs/user-guides/secure-your-seedphrase).
+
+## Sharing connections
+
+To help a new user join the network, share your connection list with them.
+
+<Steps>
+<Step>
+<Heading as="h3">Settings</Heading>
+
+From the Home screen, go to **Settings**.
+
+![settings](/img/runanode/settingsicon.png)
+
+</Step>
+
+<Step>
+<Heading as="h3">Share Connections</Heading>
+
+From there select **Share connections**.
+
+<img
+  src="/img/runanode/connectionssetting.png"
+  alt="share connections"
+  width="500"
+  height="500"
+/>
+
+</Step>
+
+<Step>
+
+<Heading as="h3">Share the connections</Heading>
+
+Select **Copy** to copy the list of connections. You can then send the list to a new node runner.
+
+<img
+  src="/img/runanode/shareconnections.png"
+  alt="share connections"
+  width="500"
+  height="500"
+/>
+
+</Step>
+
+</Steps>
+
+## Add/Share via the Terminal
+
+Alternatively, you can add or share connections using the Terminal
+
+**To add connections:**
+
+```bash title="Terminal"
+   peers action:addpeers peerslist:[IP:PORT],[IP:PORT],[IP:PORT] ...
+```
+
+**To share connections:**
+
+```bash title="Terminal"
+   peers action:list max:10
+```

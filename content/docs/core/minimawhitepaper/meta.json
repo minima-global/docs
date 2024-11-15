@@ -1,0 +1,6 @@
+{
+  "title": "Minima Whitepaper",
+  "root": false,
+  "pages": ["introduction", "txpow","maxima","thepulsenetwork","powvsdistributedpow","hashcashandburn","energy","acascadingchain","storagelessmmrutxo","smartcontractstokensandtransactions","quantumsecure","blocksize","blockspeed","consensusforksandimmutableprotocols","conclusion","specialthanksto"],
+  "defaultOpen": true
+}

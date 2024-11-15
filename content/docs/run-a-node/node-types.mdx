@@ -1,0 +1,167 @@
+---
+title: Node Types
+description: Understand the different types of Minima node
+icon: Waypoints
+tag: run-a-node
+---
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Check } from "lucide-react"
+import { X } from "lucide-react"
+
+## Overview
+
+No matter which node type you choose, **all Minima nodes are full nodes** that contribute to finding new blocks, validate all transactions, and provide Proof of Work to secure the chain.
+
+Running a node means that you will run
+1. **The Minima Blockchain** - to make and receive transactions to other users
+2. **Maxima** - to send and receive off-chain messages and data to other users
+3. **The MiniDapp System (MDS)** - to use decentralised applications (if enabled)
+4. **Omnia (Coming soon)** - for fast, cheap transactions
+
+There is no minimum amount of Minima coins required to run a node.
+
+-------------
+
+## Node Options
+
+**The following node types are available:**
+
+1. **Full node** - The default and best option for Android users and small devices. Ideal for regular users who want to participate in the Minima network without worrying about significant storage or technical requirements.
+
+2. **Mega MMR node** - Ideal for those who have access to a server and wish to assist others in the recovery of their coins or host a Minima node for use by others.
+
+3. **Archive node** -  Ideal for those who wish to hold a record of all previous block headers (excludes transaction details)
+
+<Callout title="Relay nodes">All types of nodes can contribute further to the network's health and resilience by relaying transactions and blocks across the network. This requires the node to be hosted on a server that accepts both incoming and outgoing connections on the base port (default 9001).</Callout>
+
+-------------
+
+## Supported devices
+
+| Platform | Full Node | Archive Node | Mega (MMR) Node |
+|:------------|:------------------|:------------------|:------------------|
+|Android | <Check className="w-4 h-4 " />   | <X className="w-4 h-4 " />  | <X className="w-4 h-4 " /> |
+|Raspberry Pi |  <Check className="w-4 h-4 " />  | <Check className="w-4 h-4 " />  | <X className="w-4 h-4 " /> |
+|Desktop (Windows/Mac/Linux/Docker) |  <Check className="w-4 h-4 " />  | <Check className="w-4 h-4 " />  | <Check className="w-4 h-4 " />  |
+|Server (Windows/Linux/Docker) |  <Check className="w-4 h-4 " />  | <Check className="w-4 h-4 " />  | <Check className="w-4 h-4 " />  |
+
+## Minimum device specifications
+
+Device specifications are separate to any Operating System and other third party application requirements. 
+
+| Platform | Full Node (Docker) | Archive Node | Mega Node | 
+|:------------|:------------------|:------------------|:------------------|
+|Processing (CPU) | 2 (4) CPU | 2 CPU | 2 CPU |
+|Memory (RAM) |  2 (4) RAM | 4 RAM | 8 RAM|
+|Storage (GB)<sup>*</sup> |  2 (4) GB | 5 GB| 5 GB|
+
+<sup>*</sup>Note that storage requirements will depend on the level of MiniDapp usage.
+
+
+## Functionality
+
+|   | Full Node | Archive Node | Mega Node |
+|:------------|:------------------|:------------------|:------------------|
+|Ease of setup |  Basic | Advanced | Advanced |
+|**Basic functionality** |   |  | |
+|Receive Minima, custom tokens and NFTs |  Yes | Yes | Yes |
+|Send Minima, custom tokens and NFTs |  Yes | Yes | Yes |
+|Mint custom tokens and NFTs |  Yes | Yes | Yes |
+|Send data and messages over Maxima |  Yes | Yes | Yes |
+|**Blockchain functionality** |   |  | |
+|Creates blocks |  Yes | Yes | Yes |
+|Validates transactions |  Yes | Yes | Yes |
+|Can be synced back to Genesis block |  No | Yes | Yes |
+|Can store entire block history (excludes transaction details) |  No | Yes<sup>x</sup> | No |
+|Can store complete coin set (excludes transaction details) |  No | No | Yes<sup>x</sup> |
+|**Node recovery** |   |  | |
+|Recover wallets, backups and chain re-sync (for personal use) | No | Yes | Yes* |
+|Recover wallets, backups and chain re-sync (for other users) | No | Yes | Yes*<sup>+</sup> |
+|**Data Export functionality** |   |  | |
+|Export coins, transactions and block data to MySQL | Yes | Yes* | Yes |
+|Export block history to a file (.raw.dat) (excludes transaction details) | No | Yes | No |
+|Export coin history to a file (.mmr) (excludes transaction details) | No | No | Yes |
+|**Advanced functionality** |   |  | |
+|Create and/or post transactions on behalf of external users | No | No | Yes |
+|Minting tokens on behalf of external users | No | No | Yes |
+|Host public facing minidapps | No | No | Yes |
+
+<sup>x</sup> if node is re-synced to Genesis block<br></br>
+<sup>*</sup> recommended option<br></br>
+<sup>+</sup> requires server hosting
+
+
+
+Before taking a closer look at the differences between these node types it's useful to understand, via an analogy, how Minima stores coins:
+
+*If all the coins in the Minima blockchain were a page in a book, every user would only hold the pages that relate to them, as well as the spine. When spending their coins, the user shares their relevant pages (coin proofs) with the other users on the network, who can check that they fit with their own spine - confirming the user's coins are valid.*
+
+
+## Detailed specifications
+
+All Minima nodes have a **txpow (transaction) database** and an **archive database**.
+
+The **txpow database** contains transactions and full blocks. This is limited to the most recent blocks from the unpruned section of the chain - approximately the last 24 hours worth.
+
+The **archive database** contains the last 2 months of **sync blocks**, which do not include transaction details but do hold all the MMR proofs for coins spent or created in the block. Sync blocks older than 2 months are not stored unless the node is set up as an archive node.
+
+**Archive nodes** store **all** the **sync blocks** from after the archive node is started, no pruning is done after 2 months. 
+
+<Callout title="Important" type="warn">
+An archive node can only be used to recover users who created their nodes after your archive node was created. If you wish to be able to recover *any* Minima user, you must perform a chain re-sync from an archive node that holds the entire blockchain since genesis.
+</Callout>
+
+### Full node (default)
+
+A full node can run on almost any device — be it a mobile phone, desktop computer, raspberry pi, or a server.
+
+This is the default node type designed for efficiency. It is perfect for everyday users and small devices wishing to utilise the Minima network. It uses the least amount of memory as possible, making it ideal for devices with limited storage. 
+
+**Transaction history:** Full nodes store only the most recent transaction history in full, roughly the last 24 hours' worth. It prunes older blocks to keep the storage space minimal but keeps a compact record of the pruned history, called the Cascade, to ensure it can validate transactions and create new blocks. <br></br>
+Users keep a record of their own full transaction history which can be backed up or exported. 
+
+**Coin records:** Full nodes only hold the proofs for the coins that are relevant to the user (i.e. their own pages in the book), keeping storage and processing requirements minimal. 
+
+
+### Mega (MMR) Node
+
+A Mega node must be online constantly to remain in sync with the chain. Downtime of less than 24 hours is acceptable. It requires a server or other device with more considerable processing power and is not suitable for mobile devices.
+
+**Transaction history:** Same as a default full node.
+
+**Coin records:** While it does not permanently store full transaction details, it stores all the proofs needed to verify any coin on the network. This is the entire set of unspent coins for the whole blockchain. Known as the Mega MMR. 
+
+**Setup steps:**
+1. Start a node with Mega MMR enabled (-megammr), this will start storing all coins from this point onwards.
+2. Optionally import a Mega MMR file or Archive file from another user which contains the full history
+
+
+### Archive node
+
+Note that storage requirements will gradually increase over time.
+
+An Archive Node is typically run on a server or desktop computer as it requires more storage space.
+
+**Transaction history:** Unlike the default full node, an archive node does not prune older blocks, storing all block headers and coin proofs from the moment it was started. Full transaction details are still pruned after two months.
+
+**Coins:** It maintains a record of all spent and unspent coins since the archive node was started, not just the ones relevant to the user. If an archive file provided by another archive node (which contains data since the Genesis block) is imported, it will hold a complete record of the coins. 
+
+**Additional functionality** 
+
+- export block, coin and transaction data to an external MySQL database
+- export the chain history to a file, required for syncing new Archive or Mega MMR nodes 
+
+**Setup steps:**
+1. Start a node with Archive (-archive) enabled, this will prevent pruning of blocks from that point onwards.
+2. To obtain a complete record since Genesis, import an archive file from another Archive node runner, which contains the full history
+
+
+## Choosing the right node for You
+
+
+**Just Getting Started?** Stick with the default Full Node. It's easy to set up and doesn't demand much from your device.
+
+**Want to Support the Network More?** Consider hosting a Mega MMR node and relaying transactions by allowing incoming connections. You'll contribute to the network's resilience and help other users recover their nodes.
+
+**Want the most complete chain history?** Consider running an Archive node locally or hosting one on a server and relaying transactions by allowing incoming connections. You'll contribute to the network's resilience.

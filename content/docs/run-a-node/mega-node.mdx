@@ -16,9 +16,9 @@ A Mega node stores `all unspent` coins with their proofs, this differs to a stan
 
 The following requirements are separate to any specs required for non Minima related processes.
 
-**Processing**: 2 CPU
-**Memory**: 8GB RAM
-**Storage**: 5GB storage
+- **Processing**: 2 CPU
+- **Memory**: 8GB RAM
+- **Storage**: 5GB storage
 
 We do not recommend running a Mega node from an Android device as the RAM consumption is considerably higher than a standard node.
 
@@ -44,8 +44,26 @@ Start (or update) a node in the same way as as a normal node, adding the `-megam
 <Tabs items={["Terminal", "JNLP", "Docker"]}>
 
 <Tab value="Terminal">
- ```bash
-java -jar /path/to/minima.jar -mdsenable -mdspassword YOURSECUREPASSWORD -megammr
+
+1. Create a new folder and copy the minima.jar into that folder. We will run everything from there.
+2. Open your command line interface/terminal 
+3. Copy the path to the folder and from the command line, `cd` into that folder
+
+```
+cd C:\Users\Bob\MyMinimaFolder\
+```
+
+<Callout title="Tip">
+  To avoid typing in the folder path, drag and drop the folder into the command line window.
+</Callout>
+
+4. Enter the following into the command line window to start Minima
+
+Set your password for the MiniDapp system by replacing `INSERTPASSWORD` with your own.
+
+
+```bash title="Terminal"
+java -jar minima.jar -data .minima -p2pnodes megammr.minima.global:9001 -mdsenable -mdspassword INSERTPASSWORD
 ```
 
 </Tab>
@@ -127,23 +145,27 @@ You should see the response below, wait a few moments to receive the initial blo
 
 A Mega node should be backfilled with the chain history so that the node has a complete database of all the coins since the blockchain started.
 
-You can either:
-
-- [Chain resync](/docs/user-guides/node-recovery/chain-resync) the Mega node from an Archive node, or
-- Import a MegaMMR `.mmr` file shared from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
+Import a MegaMMR `.mmr` file, generated no longer than 1 week ago, from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
 
 Daily .mmr exports can be found [here](https://spartacusrex.com/megaarchive/).
-
-<Callout title="Info">
-  The .mmr file must have been generated no longer than 1 week ago.
-</Callout>
-
-To import the .mmr file, run the following command:
 
 ```bash title="Terminal"
 megammr action:import file:[PathToFile]/megammr.mmr
 ```
 
+Alternatively, you can [Chain resync](/docs/user-guides/node-recovery/chain-resync) the Mega node from an Archive node,
+
 </Step>
 
   </Steps>
+
+
+## Relevant User Guides
+
+ <Cards>
+  <Card
+    title="Public MDS"
+    description="How to set up a public minidapp system"
+    href="/docs/user-guides/public-wallet"
+/>
+ </Cards>

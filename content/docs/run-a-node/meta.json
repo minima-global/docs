@@ -3,19 +3,24 @@
   "root": true,
   "pages": [
     "index",
-    "system-requirements",
-    "---Select your Platform---",
+    "node-types",
+    "firewall-rules",
+    "startup-parameters",
+    "---Full Node---",
     "android",
     "windows",
     "mac",
     "docker-desktop",
-    "linux-vps",
-    "linux-vps-system",
+    "linux-vps-docker",
+    "linux-vps-service",
     "desktop-cli",
     "---Archive Node---",
     "archive-node",
-    "---Mega Node (NEW)---",
+    "---Mega Node---",
     "mega-node",
-    "public-wallet"
+    "public-wallet",
+     "---Minima E-Gateway (MEG)---",
+     "meg-about",
+     "meg-setup"
   ]
 }

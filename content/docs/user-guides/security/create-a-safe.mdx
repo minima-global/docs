@@ -1,0 +1,58 @@
+---
+title: Create a Safe
+description: Learn how to create a Safe for your coins
+tag: user-guides
+---
+
+The Safe allows you to have a separate seed phrase to lock up the majority of your coins - this could be for Minima or other custom tokens. 
+
+This means you can use the wallet for day-to-day spending (whatever you do not send to Safe) and have additional segregated Safes on the same node. 
+
+Each Safe is secured with a seed phrase which should be different to your main node's seed phrase. 
+
+You can then leave your node [unlocked](/docs/user-guides/lock-your-wallet) for daily use whilst keeping the majority of your holdings secured in a Safe with an alternative seed phrase.
+
+## Create a new Safe
+
+<img src="/img/app/vault.png" alt="test" width={100} height={100} />
+
+1. If you haven't already, make sure you have [taken note of your main seed phrase](/docs/user-guides/lock-your-wallet), this can be found in the Security MiniDapp.
+
+If you need to recover your node in the future, recovering your main seed phrase will also recover your Safes which will still remain locked.
+
+2. Open the Safe MiniDapp and select the token and amount you wish to lock in a Safe. 
+3. Generate a new Seed Phrase and write it down!
+4. Confirm the seed phrase and create the Safe, optionally leaving a small amount of Minima available for daily use.
+
+<Callout title="Write down the new Seed Phrase" type="warn">
+**You should not use the same seed phrase as your node, this would provide no extra protection to your coins.** 
+
+**It is NOT POSSIBLE to view/change this seed phrase once you have set it, so make sure you write it down and store it somewhere secure.**
+
+**If you forget it, your funds will be locked forever.**
+</Callout>
+
+## To unlock a Safe
+
+1. Open the Safe MiniDapp and select **Unlock** for the Safe you want to collect.
+2. Choose the amount to withdraw - you can withdraw to the main wallet or to a specific address.
+3. Enter the seed phrase used when creating the Safe.
+4. Optionally enter a message
+5. Set the Key Uses - this is the number of times you have unlocked a Safe with this seed phrase. 
+
+<Callout title="Key Uses" type="warn">
+If you have previously unlocked this Safe or another Safe with this seed phrase, you must increase the key use from the previous time - it does not have to be incremented but must be a different value to one you've previously used. 
+</Callout>
+
+
+
+
+## Restoring a Safe
+
+If you need to recover your node in the future, recovering your main seed phrase will also recover your Safes which will still remain locked.
+
+If your main seed phrase is compromised, your Safes will remain locked and secure, as long as the seed phrases used for the Safes have not been compromised. 
+
+You can restore a Safe seed phrase to a new node to recover the funds locked in a safe. This will NOT recover coins from your main wallet.
+
+When restoring a Safe seed phrase e.g. by importing the seed phrase from the Security minidapp, this seed phrase will become your new main seed phrase. To access your funds, you will need to unlock the Safe and (optionally) create a new one with a new seed phrase. 

@@ -3,7 +3,6 @@
   "root": false,
   "pages": [
     "basic-contract",
-    "simple-txn",
     "time-lock-contract",
     "multisig",
     "complex-multisig",
