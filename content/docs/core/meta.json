@@ -3,8 +3,6 @@
   "root": true,
   "tag": ["core"],
   "pages": [
-    "--- Whitepaper---",
-    "[Minima Whitepaper]( https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)",
     "---About Minima---",
     "index",
     "about-minima",
@@ -12,6 +10,9 @@
     "use-cases",
     "tokenomics",
     "get-involved",
+    "--- Whitepaper---",
+    "[PDF Version](https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)",
+    "minimawhitepaper",    
     "---Terms of Use---",
     "minidapp-terms",
     "website-terms",

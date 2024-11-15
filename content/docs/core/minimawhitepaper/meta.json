@@ -1,0 +1,6 @@
+{
+  "title": "Minima Whitepaper",
+  "root": false,
+  "pages": ["introduction", "..."],
+  "defaultOpen": true
+}

@@ -16,6 +16,9 @@ From the Home screen, you can check your top block number in the top right corne
 
 ## Node health
 
+<Tabs items={["Health MiniDapp", "Headless"]}>
+  <Tab value="Health MiniDapp">
+
 <img src="/img/app/health.png" alt="Health" width={130} height={130} />
 
 From the **Health** MiniDapp, you can check:
@@ -23,6 +26,37 @@ From the **Health** MiniDapp, you can check:
 1. The version number of Minima running
 2. The latest block number and time
 3. The full status of the node
+
+</Tab>
+<Tab value="Headless">
+
+The `status` command will show details of your node including version, last block and chain details.
+
+1. Type `status` into the command line/Terminal
+2. Check `block` and `time`, this is your tip block and the `time` of that block, time should be within a few minutes of the current time.
+
+<ImageZoom
+  src="/img/runanode/docker_vps_terminalstatus.png"
+  alt="docker_vps_terminalstatus"
+  width={500}
+  height={500}
+/>
+
+<Callout title="Checking your node is in sync" type="warn">
+Having a recent block time is not a guarantee that you are on the right chain.
+Consider cross checking your latest block with another node or checking the samechain response of your Maxima Contacts by running the maxcontacts command.
+
+If the time shown is significantly behind, you should restart your node to resync to the chain. If it doesn't catch up automatically, youu may need to perform a chain resync from an Archive node.
+
+</Callout>
+
+**Other useful commands:**
+
+- `network` - See the other nodes you are connected to
+- `help` - show all commands
+
+</Tab>
+</Tabs>
 
 ## Logs
 

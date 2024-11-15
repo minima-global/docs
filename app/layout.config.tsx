@@ -37,7 +37,8 @@ export const docsOptions: DocsLayoutProps = {
   ...baseOptions,
   tree: pageTree,
   sidebar: {
-    collapsible: false,
+    collapsible: true,
+    defaultOpenLevel: 1,
     banner: (
       <RootToggle
         options={modes.map((mode) => ({

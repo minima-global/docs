@@ -5,6 +5,7 @@
     "index",
     "node-types",
     "firewall-rules",
+    "startup-parameters",
     "---Full Node---",
     "android",
     "windows",

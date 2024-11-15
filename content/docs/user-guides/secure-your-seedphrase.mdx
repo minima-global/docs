@@ -14,21 +14,31 @@ Keeping your wallet secure involves:
 
 Your seed phrase will be required to restore your wallet if you lose access to your node and do not have a backup. It can be found in the Security MiniDapp.
 
-![Security](/img/app/security.png)
 
 ## How to find your seed phrase
+
+<Tabs items={["Security MiniDapp", "Command Line"]}>
+  <Tab value="Security MiniDapp">
+
+![Security](/img/app/security.png)
 
 1. Open the **Security** MiniDapp and ensure your node is not locked
 2. Select **Manage Seed Phrase**
 3. Select **Show Seed Phrase**
 4. Grab a pen and paper and write down your Seed Phrase in the order specified
+</Tab>
+<Tab value="Command Line">
+
+It is also possible to view your seed phrase by running the `vault` command from the Minima Terminal, RPC client or Docker CLI.
+
+</Tab>
+</Tabs>
+
 
 <Callout title="Store your seed phrase securely" type="warn">
   **Write down your seed phrase carefully, in the _correct order_ and store it
   in a safe place offline.**
 </Callout>
-
-It is also possible to view your seed phrase by running the `vault` command using the RPC client or Docker CLI.
 
 <Callout title="Note">
  

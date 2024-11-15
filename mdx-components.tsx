@@ -19,6 +19,8 @@ import { ThemeAwareSVG } from "@/components/theme-aware-svg"
 import { Separator } from "@/components/seperator"
 import CommandTable from "@/components/table"
 
+
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,

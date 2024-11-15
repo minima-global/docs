@@ -70,7 +70,7 @@ const Cards = () => {
     {
       title: "Run a node",
       description:
-        "Install and run a validating and constructing Minima node on your device.",
+        "Install and run a full Minima node on your device.",
       link: "/docs/run-a-node",
       icon: (
         <svg
@@ -107,7 +107,7 @@ const Cards = () => {
     },
     {
       title: "Knowledge Base",
-      description: "A deep dive into the Minima protocol and its architecture",
+      description: "A deep dive into Minima and Maxima",
       link: "/docs/learn",
       icon: (
         <svg
