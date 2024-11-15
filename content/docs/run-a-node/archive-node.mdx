@@ -62,9 +62,23 @@ Examples:
 
    </Tab>
   <Tab value="Command Line">
-  
+
+1. Create a new folder and copy the minima.jar into that folder. We will run everything from there.
+2. Open your command line interface/Terminal 
+3. Copy the path to the folder and from the command line, `cd` into that folder
+
+```
+cd C:\Users\Bob\MyMinimaFolder\
+```
+
+<Callout title="Tip">
+  To avoid typing in the folder path, drag and drop the folder into the command line window.
+</Callout>
+
+4. Enter the following into the command line window to start Minima
+
    ```bash 
-  java -jar [pathto]/minima.jar -mdsenable -mdspassword [insertpasswordhere] -archive
+  java -jar minima.jar -archive -data .minima -mdsenable -mdspassword INSERTPASSWORD
   ``` 
 
   <Callout title="Info">

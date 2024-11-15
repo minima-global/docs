@@ -44,8 +44,26 @@ Start (or update) a node in the same way as as a normal node, adding the `-megam
 <Tabs items={["Terminal", "JNLP", "Docker"]}>
 
 <Tab value="Terminal">
- ```bash
-java -jar /path/to/minima.jar -mdsenable -mdspassword YOURSECUREPASSWORD -megammr
+
+1. Create a new folder and copy the minima.jar into that folder. We will run everything from there.
+2. Open your command line interface/terminal 
+3. Copy the path to the folder and from the command line, `cd` into that folder
+
+```
+cd C:\Users\Bob\MyMinimaFolder\
+```
+
+<Callout title="Tip">
+  To avoid typing in the folder path, drag and drop the folder into the command line window.
+</Callout>
+
+4. Enter the following into the command line window to start Minima
+
+Set your password for the MiniDapp system by replacing `INSERTPASSWORD` with your own.
+
+
+```bash title="Terminal"
+java -jar minima.jar -data .minima -p2pnodes megammr.minima.global:9001 -mdsenable -mdspassword INSERTPASSWORD
 ```
 
 </Tab>

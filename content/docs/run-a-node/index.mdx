@@ -72,7 +72,7 @@ java -version
 
 <Step>
 
-<Heading as="h3">Navigate to the directory where you downloaded the Minima jar</Heading>
+<Heading as="h3">Navigate to the directory where you saved the Minima jar</Heading>
 
 ```bash title="Terminal"
 cd /path/to/minima.jar
@@ -82,14 +82,23 @@ cd /path/to/minima.jar
 
   <Step>
 <Heading as="h3">Run Minima</Heading>
-  ```bash title="Terminal"
-    java -jar minima.jar
+
+Adding `-mdsenable -mdspassword INSERTPASSWORD` will enable the minidapp system.
+
+Adding `-p2p2nodes megammr.minima.global:9001` will automatically connect you to the peer-to-peer network.
+
+```bash title="Terminal"
+    java -jar minima.jar -data .minima -mdsenable -mdspassword INSERTPASSWORD
 ```
 
 <Callout title="Tip" type="info">
  When you first run Minima the first thing you need is to add some connections.
 
-You can get this list by asking any user on the network.
+You can get this list by asking any user on the network to share their connections or by running 
+
+```
+peers action:addpeers peerslist:megammr.minima.global:9001
+```
 
 Alternatively, copy this link directly into the app when prompted to join the network (also in Settings > 'Add connections')
 
