@@ -3,10 +3,7 @@ import type { ReactNode } from "react"
 import { baseOptions } from "../layout.config"
 import { Metadata } from "next"
 
-const SITE_URL = "https://docs.minima.global"
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
   title: {
     default: "Docs",
     template: "%s | Docs",
