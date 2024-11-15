@@ -98,20 +98,6 @@ Before taking a closer look at the differences between these node types it's use
 *If all the coins in the Minima blockchain were a page in a book, every user would only hold the pages that relate to them, as well as the spine. When spending their coins, the user shares their relevant pages (coin proofs) with the other users on the network, who can check that they fit with their own spine - confirming the user's coins are valid.*
 
 
-## Detailed specifications
-
-All Minima nodes have a **txpow (transaction) database** and an **archive database**.
-
-The **txpow database** contains transactions and full blocks. This is limited to the most recent blocks from the unpruned section of the chain - approximately the last 24 hours worth.
-
-The **archive database** contains the last 2 months of **sync blocks**, which do not include transaction details but do hold all the MMR proofs for coins spent or created in the block. Sync blocks older than 2 months are not stored unless the node is set up as an archive node.
-
-**Archive nodes** store **all** the **sync blocks** from after the archive node is started, no pruning is done after 2 months. 
-
-<Callout title="Important" type="warn">
-An archive node can only be used to recover users who created their nodes after your archive node was created. If you wish to be able to recover *any* Minima user, you must perform a chain re-sync from an archive node that holds the entire blockchain since genesis.
-</Callout>
-
 ### Full node (default)
 
 A full node can run on almost any device — be it a mobile phone, desktop computer, raspberry pi, or a server.
@@ -132,14 +118,16 @@ A Mega node must be online constantly to remain in sync with the chain. Downtime
 
 **Coin records:** While it does not permanently store full transaction details, it stores all the proofs needed to verify any coin on the network. This is the entire set of unspent coins for the whole blockchain. Known as the Mega MMR. 
 
-**Setup steps:**
-1. Start a node with Mega MMR enabled (-megammr), this will start storing all coins from this point onwards.
-2. Optionally import a Mega MMR file or Archive file from another user which contains the full history
-
 
 ### Archive node
 
-Note that storage requirements will gradually increase over time.
+{/* All Minima nodes have a **txpow (transaction) database** and an **archive database**.
+
+The **txpow database** contains transactions and full blocks. This is limited to the most recent blocks from the unpruned section of the chain - approximately the last 24 hours worth. */}
+{/* 
+The **archive database** contains the last 2 months of **sync blocks**, which do not include transaction details but do hold all the MMR proofs for coins spent or created in the block. Sync blocks older than 2 months are not stored unless the node is set up as an archive node. */}
+
+**Archive nodes** store **all** the **sync blocks** from after the archive node is started, no pruning is done after 2 months. Note that storage requirements will gradually increase over time.
 
 An Archive Node is typically run on a server or desktop computer as it requires more storage space.
 
@@ -151,10 +139,6 @@ An Archive Node is typically run on a server or desktop computer as it requires 
 
 - export block, coin and transaction data to an external MySQL database
 - export the chain history to a file, required for syncing new Archive or Mega MMR nodes 
-
-**Setup steps:**
-1. Start a node with Archive (-archive) enabled, this will prevent pruning of blocks from that point onwards.
-2. To obtain a complete record since Genesis, import an archive file from another Archive node runner, which contains the full history
 
 
 ## Choosing the right node for You
