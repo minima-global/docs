@@ -4,141 +4,136 @@ description: About MEG
 tag: run-a-node
 ---
 
-Minima E-Gateway (MEG) is a middleware gateway service that enables enterprises, exchanges and developers to integrate with the Minima blockchain. 
+Minima E-Gateway (MEG) is a middleware gateway service that enables enterprises, exchanges and developers to integrate with the Minima blockchain.
 
-The primary function of MEG is to support interactions between Minima and other business applications and/or services through a combination of a HTTP/S API and web hooks. MEG operates as a stateless intermediary, enabling interactions without retaining any data. 
-
+The primary function of MEG is to support interactions between Minima and other business applications and/or services through a combination of a HTTP/S API and web hooks. MEG operates as a stateless intermediary, enabling interactions without retaining any data.
 
 ## System Overview
 
-MEG runs as a separate java program to Minima, and can be deployed easily by setting up the MEG java program as a background service on a single server instance. 
+MEG runs as a separate java program to Minima, and can be deployed easily by setting up the MEG java program as a background service on a single server instance.
 
 The MEG service must be configured to connect to a Minima node via the Minima node's RPC port.
 
 <ImageZoom
-src="/img/meg/meg_sysoverview.png"
-alt="meg system overview"
-width={700}
-height={700}
+  src="/img/meg/meg_sysoverview.png"
+  alt="meg system overview"
+  width={700}
+  height={700}
 />
 
-
-### Single server deployment 
+### Single server deployment
 
 A single server deployment scenario is suitable for a sandbox environment supporting a proof of concept, or pilot use case. It can also be used for small standalone production deployments where resource constraints exist or low usage volume is expected.
 
 <ImageZoom
-src="/img/meg/meg_singledeployment.png"
-alt="meg single node deployment"
-width={700}
-height={700}
+  src="/img/meg/meg_singledeployment.png"
+  alt="meg single node deployment"
+  width={700}
+  height={700}
 />
 
-
-### Production deployment 
+### Production deployment
 
 To support a large scale and/or high volume, production environments, multiple instances of MEG can be deployed offering high availability and load balancing scenarios.
 
 <ImageZoom
-src="/img/meg/meg_proddeployment.png"
-alt="meg production deployment"
-width={700}
-height={700}
+  src="/img/meg/meg_proddeployment.png"
+  alt="meg production deployment"
+  width={700}
+  height={700}
 />
 
 ### Offline deployment
 
-MEG can be used in a secure offline environment with an offline Minima node. This is useful where an offline Minima node is required for signing transactions. 
+MEG can be used in a secure offline environment with an offline Minima node. This is useful where an offline Minima node is required for signing transactions.
 
-## Minimum Server Requirements 
+## Minimum Server Requirements
 
-| Hardware | Details           |
-|---------------|-------------------|
-| CPU           | 4 CPU cores       |
-| RAM           | 16GB              |
-| Disk Space    | 32GB (in addition to OS) |
+| Hardware   | Details                  |
+| ---------- | ------------------------ |
+| CPU        | 4 CPU cores              |
+| RAM        | 16GB                     |
+| Disk Space | 32GB (in addition to OS) |
 
+| Software                 | Details                                                         |
+| ------------------------ | --------------------------------------------------------------- |
+| Operating System         | Linux variant (tested on Debian GNU/Linux 12 "bookworm", amd64) |
+| Java Runtime Environment | Java 11 or later                                                |
+| SQL Database             | MySQL 8.0<sup>\*</sup>                                          |
 
-| Software                   | Details                                 |
-|-------------------------------|-----------------------------------------|
-| Operating System              | Linux variant (tested on Debian GNU/Linux 12 "bookworm", amd64) |
-| Java Runtime Environment      | Java 11 or later                        |
-| SQL Database                  | MySQL 8.0<sup>*</sup>                               |
+<sup>*</sup>A SQL database is not a prerequisite for running MEG, however it is
+recommended for the purpose of exporting and storing all/relevant transaction
+detail
 
-<sup>*</sup>A SQL database is not a prerequisite for running MEG, however it is recommended for the purpose of exporting and storing all/relevant transaction detail
-
-
-| Network Ports   | Details                      |
-|---------------|------------------------------|
-| MEG      | 1 port required (default 8080)<sup>*</sup> |
-| Minima     | 5 port range required (default 9001-9005)<sup>*</sup> |
+| Network Ports | Details                                                |
+| ------------- | ------------------------------------------------------ |
+| MEG           | 1 port required (default 8080)<sup>\*</sup>            |
+| Minima        | 5 port range required (default 9001-9005)<sup>\*</sup> |
 
 <sup>*</sup>The MEG port and Minima base port can be configured.
 
+## Event flows
 
-## Event flows 
-
-Three types of interactions are supported: 
+Three types of interactions are supported:
 
 ### Triggers
 
-Triggers send HTTP/S based requests to a registered destination endpoint when certain on-chain events occur, for example in response to transactions sourced from a specified address or tokens occurring on the Minima blockchain. 
+Triggers send HTTP/S based requests to a registered destination endpoint when certain on-chain events occur, for example in response to transactions sourced from a specified address or tokens occurring on the Minima blockchain.
 On a 'Trigger' event, a POST request is made with the relevant JSON data to the specified URL.
 
 <ImageZoom
-src="/img/meg/meg_triggers.png"
-alt="meg triggers"
-width={700}
-height={700}
+  src="/img/meg/meg_triggers.png"
+  alt="meg triggers"
+  width={700}
+  height={700}
 />
 
-### Endpoints 
+### Endpoints
 
 Endpoints can be used to initiate transactions or other interactions on the Minima blockchain, in response to a HTTP/S based request sent from a registered client endpoint. Can be configured to use relevant parameters.
 
 <ImageZoom
-src="/img/meg/meg_endpoints.png"
-alt="meg system overview"
-width={700}
-height={700}
+  src="/img/meg/meg_endpoints.png"
+  alt="meg system overview"
+  width={700}
+  height={700}
 />
 
-### Wallet API 
+### Wallet API
 
 <Callout title="Requires a Mega Node">
-You MUST be running the Minima node with the `-megammr` startup parameter for this to work.
+  You MUST be running the Minima node with the `-megammr` startup parameter for
+  this to work.
 </Callout>
 
 The Wallet API includes dedicated endpoints to support custodial wallet functionality for any number of users. This does NOT access the main Wallet of the Minima node and does not save any of the private keys or data. Each API Endpoint requires certain parameters and can be sent as a POST or GET request.
 
 <ImageZoom
-src="/img/meg/meg_walletapi.png"
-alt="meg system overview"
-width={700}
-height={700}
+  src="/img/meg/meg_walletapi.png"
+  alt="meg system overview"
+  width={700}
+  height={700}
 />
 
 ## Start up parameters
 
 The following start up parameters are available for MEG:
 
+| Start up parameter   | Description                                                                             |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| `-port`              | The port to listen on.                                                                  |
+| `-data`              | The data folder.                                                                        |
+| `-adminpassword`     | The 'admin' User account password (then used to add other accounts).                    |
+| `-apicallerpassword` | The 'apicaller' User account password.                                                  |
+| `-meghost`           | The `http://host:port` of this instance of MEG.                                         |
+| `-minimarpc`         | The `http://host:port` of the Minima RPC.                                               |
+| `-minimarpcpassword` | The Minima RPC password if enabled.                                                     |
+| `-minkeyuses`        | MINIMUM key uses value for any Public Keys (if you are running this from a new server). |
+| `-help`              | Print this help.                                                                        |
 
-| Start up parameter    | Description                                                                                       |
-|-----------------------|---------------------------------------------------------------------------------------------------|
-| `-port`              | The port to listen on.                                                                            |
-| `-data`              | The data folder.                                                                                  |
-| `-adminpassword`     | The 'admin' User account password (then used to add other accounts).                                  |
-| `-apicallerpassword` | The 'apicaller' User account password.                                                            |
-| `-meghost`           | The `http://host:port` of this instance of MEG.                                                   |
-| `-minimarpc`         | The `http://host:port` of the Minima RPC.                                                         |
-| `-minimarpcpassword` | The Minima RPC password if enabled.                                                               |
-| `-minkeyuses`        | MINIMUM key uses value for any Public Keys (if you are running this from a new server).           |
-| `-help`              | Print this help.                                                                                  |
+## Admin Console
 
-
-## Admin Console 
-
-MEG exposes an admin console enabling admin operators to 
+MEG exposes an admin console enabling admin operators to
 
 1. configure triggers (from Minima events)
 2. configure custom endpoints
@@ -146,21 +141,19 @@ MEG exposes an admin console enabling admin operators to
 4. manage MEG users
 5. view logs
 
-
-
-## Access Control 
+## Access Control
 
 The admin console enables you to configure 3 types of users: admin, basic and API Caller.
 
-| Role               | Description                                                                                                                         |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| **Admin**          | Creates and removes users, adds and removes triggers and endpoints, sets the connection to the Minima node.                         |
-| **Basic**          | View-only user access to the console.                                                                                               |
-| **API Caller**     | Endpoints can only be called by 'apicaller' users using the Basic Authorization Header. Does not grant login access to the console. |
+| Role           | Description                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Admin**      | Creates and removes users, adds and removes triggers and endpoints, sets the connection to the Minima node.                         |
+| **Basic**      | View-only user access to the console.                                                                                               |
+| **API Caller** | Endpoints can only be called by 'apicaller' users using the Basic Authorization Header. Does not grant login access to the console. |
 
 MEG exposes ports to the localhost only. MEG can be positioned behind an API gateway and/or application firewall and due to the nature of its role, interactions should be restricted to authorised and trusted users and systems only.
 
-## Dependencies 
+## Dependencies
 
 MEG requires a Minima node (v1.0.41 or above) to be running with the following parameters
 
@@ -171,28 +164,27 @@ MEG requires a Minima node (v1.0.41 or above) to be running with the following p
 
 ## Installation steps
 
-
-
 1. Download the latest meg.jar and minima.jar files
-2. Start a Minima node with the required parameters 
-3. Start MEG with required parameters 
-4. Create a connection between MEG and the Minima node 
+2. Start a Minima node with the required parameters
+3. Start MEG with required parameters
+4. Create a connection between MEG and the Minima node
 5. Configure the MEG users
 6. Configure the required triggers and custom endpoints
 
 Please see [MEG setup](/docs/run-a-node/meg-setup) for details.
 
-## Uninstallation 
+## Uninstallation
+
 MEG can be uninstalled by stopping the java program and deleting the MEG data folder (defined on start-up)
 
-### Patching and Upgrades 
+### Patching and Upgrades
 
-New releases of MEG are made available on the Minima MEG Github repository. 
+New releases of MEG are made available on the Minima MEG Github repository.
 
 To upgrade MEG:
 
 1. If required, ensure you have a second instance of MEG running so that no trigger events are missed whilst upgrading.
 2. stop MEG
-2. replace the MEG java .jar file
-3. restart MEG, using the same data folder as previously defined at start up 
-4. check that the connection to the Minima node remains
+3. replace the MEG java .jar file
+4. restart MEG, using the same data folder as previously defined at start up
+5. check that the connection to the Minima node remains
