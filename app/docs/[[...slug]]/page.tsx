@@ -18,18 +18,6 @@ export default async function Page({
 
   const path = `/content/docs/${page.file.path}`
 
-  /*const time = await getGithubLastEdit({
-    owner: "minima-global",
-    repo: "docs",
-    path: path,
-  });*/
-
-  /*const lastUpdate = time?.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });*/
-
   return (
     <DocsPage
       toc={page.data.exports.toc}
