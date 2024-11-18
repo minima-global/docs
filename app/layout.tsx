@@ -5,6 +5,7 @@ import { Provider } from "@/components/provider"
 import { headers } from "next/headers"
 import "./global.css"
 import { Metadata } from "next"
+import Observer from "@/components/observer"
 const inter = Inter({
   subsets: ["latin"],
 })
@@ -25,7 +26,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <Body>
-        <Provider nonce={nonce ?? undefined}>{children}</Provider>
+        <Observer>
+          <Provider nonce={nonce ?? undefined}>{children}</Provider>
+        </Observer>
       </Body>
     </html>
   )
