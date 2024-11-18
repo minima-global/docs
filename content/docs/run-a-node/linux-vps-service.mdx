@@ -40,7 +40,7 @@ Inbound connections from all IPs can be allowed for
 
 Inbound connections from **all IPs** should be **denied** to:
 
-- **9003 tcp** : if not enabling the MiniDapp system (i.e. you are using Minima headlessly)
+- **9003 tcp** : if not enabling the MiniDapp system (i.e. you are using Minima on the command line only)
 - **9002 tcp** : Port not in use
 - **9004 tcp** : Port not in use
 - **9005 tcp**: RPC Port
@@ -218,9 +218,7 @@ Set a password for the user and confirm it, leave all other settings blank by pr
 <Heading as="h3"> Setup journal logs service</Heading>
 
 ```bash title="Terminal"
-   sudo tee <<EOF >/dev/null /etc/systemd/journald.conf
-   Storage=persistent
-   EOF
+echo "Storage=persistent" | sudo tee -a /etc/systemd/journald.conf >/dev/null
 ```
 
 </Step>
@@ -237,7 +235,7 @@ Set a password for the user and confirm it, leave all other settings blank by pr
 <Step>
 <Heading as="h3"> Create the Minima systemd file </Heading>
 
-<Tabs items={["MiniDapps", "Headless"]}>
+<Tabs items={["MiniDapps", "CLI only"]}>
 
 <Tab value="MiniDapps">
 
@@ -263,9 +261,9 @@ Set a password for the user and confirm it, leave all other settings blank by pr
 ```
 </Tab>
 
-<Tab value="Headless">
+<Tab value="CLI only">
 
-The following will create a systemd service file for a headless node (no Minidapps).
+The following will create a systemd service file for a node without the MiniDapp system enabled.
 
 ```bash title="Terminal"
    sudo tee <<EOF >/dev/null /etc/systemd/system/minima.service
@@ -362,10 +360,10 @@ Exit back to your user
 
 **Congratulations, your node is now running!**
 
-Now that your node is running, you can setup the RPC client to interact with your node headlessly.
+Now that your node is running, you can setup the RPC client to interact with your node.
 
-<Callout title="Headless">
-To interact with your node headlessly, bypassing the MiniDapp system, you can setup the RPC client as below. Otherwise, skip to [preparing for future releases](#prepare-for-future-releases)
+<Callout title="CLI only">
+To interact with your node you can setup the RPC client as below. Otherwise, skip to [preparing for future releases](#prepare-for-future-releases)
 </Callout>
 
 #### RPC client setup
@@ -673,11 +671,11 @@ To add/remove parameters after a node has been started, you must `quit` the node
 
 </Accordions>
 
-### Interacting headlessly
+### Interacting with Minima
 
 #### Using the RPC client
 
-The best way to interact with the node headlessly is to [enable the RPC client](/docs/run-a-node/linux-vps-service#rpc-client-setup).
+The best way to interact with the node is to [enable the RPC client](/docs/run-a-node/linux-vps-service#rpc-client-setup).
 
 Once enabled, to start the RPC client when logged on to the server, enter:
 
