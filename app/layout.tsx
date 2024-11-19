@@ -19,6 +19,20 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/icons/icon.png",
+        href: "/icons/icon.png",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/icons/icon.png",
+        href: "/icons/icon.png",
+      },
+    ],
+  },
 }
 
 export default function Layout({ children }: { children: ReactNode }) {

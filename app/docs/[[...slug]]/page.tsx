@@ -55,7 +55,6 @@ export function generateMetadata({ params }: { params: { slug?: string[] } }) {
   return {
     title: page.data.title,
     description: page.data.description,
-    icons: page.data.icon,
     twitter: {
       card: "summary_large_image",
     },
