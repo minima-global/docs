@@ -1,0 +1,146 @@
+---
+title: Using the Public Wallet
+description: Learn how to use the Public Wallet
+icon: Wallet    
+tag: user-guides
+---
+
+The official [Public Wallet](https://wallet.minima.global) provides a non-custodial Minima wallet for those who are unable to run their own Minima node. 
+
+The Public Wallet provides you with a native Minima wallet address and allows you to send, receive, and store Minima, custom tokens, and NFTs.
+
+On first use, you will generate a secret key. **Keep this key secure, as it will not be shown again after logging out. Losing this key means losing access to your assets.** No private data is stored or recorded by Minima.
+
+For future access, log in using this same secret key.
+
+If in future, you decide to run your own Minima node, simply send your assets to your new node wallet address.
+
+<ImageZoom
+src="/img/publicwallet.png"
+alt="Public Wallet"
+width={500}
+height={500}
+/>
+
+
+<Callout type="warn" title="Unofficial Public Wallets">
+If you prefer not to use the official Public Wallet and are unable to run your own node, you may ask someone running a Minima node on a server to [set up a public wallet](/docs/user-guides/mega-node/host-a-public-wallet) on your behalf. However, always exercise caution—websites can be compromised or manipulated, so only use wallet providers you know and trust. 
+</Callout>
+
+
+
+## How to use the Public Wallet for the first time
+
+<Callout type="warn" title="Existing node runners">
+It is **not possible to use a 24 word seed phrase from an existing Minima node** to access your wallet from the Public Wallet interface. 
+</Callout>
+
+<Steps>
+<Step>
+
+**Generate a new secret key**
+
+Generate a new 16 character secret key by clicking on "Generate Secret Key".
+
+</Step>
+
+<Step>
+
+**Write down your new secret key**
+
+You must keep this safe as you cannot recover it later and it won't be shown again after you log out. **If lost you will lose access to your assets.**
+
+</Step>
+
+<Step>
+**Navigate to the Receive tab to see your wallet address**
+
+Copy your Mx wallet address or scan the QR code. This can be shared and is the address you can receive native Minima or custom tokens / NFTs that have been created on the Minima blockchain to.
+
+<Callout type="warn">
+Do NOT attempt to send Wrapped Minima, Ethereum or any tokens from different blockchains to this address. They will be lost!
+</Callout>
+
+</Step>
+<Step>
+**Logout**
+
+Before logging out, ensure that you have written down your 16 character secret key. 
+
+</Step>
+</Steps>
+
+
+## How to send from the Public Wallet
+
+<Steps>
+<Step>
+
+**Login with your secret key**
+
+Optionally, click on **Remember Me** if you trust the device you are using. 
+
+<Callout type="warn">
+Do NOT choose **Remember me** if you are on a shared or public computer.
+</Callout>
+
+</Step>
+
+<Step>
+
+**Navigate to the Send tab**
+
+Select which token you wish to send from the drop down list, then enter the amount to send and paste in the recipient's Minima wallet address.
+
+</Step>
+
+<Step>
+**Set your secret key uses**
+
+Your secret key uses value must be different on every transaction. It will increment automatically but if you decide to use an unofficial Public Wallet, you must set this number yourself.
+
+</Step>
+
+<Step>
+**Click Send**
+
+Your transaction will be posted to the network. Please wait a few minutes for your balance to update.
+
+</Step>
+</Steps>
+
+
+## How to migrate your Public Wallet assets to your own node
+
+If you decide to start running your own node, you should migrate your assets from your Public Wallet account to your new node. 
+
+<Steps>
+<Step>
+
+**Start your new node**
+
+Please see the [Run a node](/docs/run-a-node) section to get started. **Ensure you have joined the network and written down your new 24 word seed phrase.**
+
+</Step>
+
+<Step>
+
+**Find your new node wallet address**
+
+Open the Wallet MiniDapp on your new node and copy your Mx wallet address from the **Receive** page.
+</Step>
+
+<Step>
+**Send your assets from Public Wallet to your node wallet**
+
+Login to the Public Wallet and send your assets to your new wallet.
+
+</Step>
+
+<Step>
+**You can now use your node wallet only**
+
+You no longer need to access the Public wallet.
+
+</Step>
+</Steps>
