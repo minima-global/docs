@@ -1,9 +1,6 @@
 import {
   Blocks,
   BookOpen,
-  CpuIcon,
-  PencilRulerIcon,
-  ShapesIcon,
   Waypoints,
   GraduationCap,
   Sparkles,

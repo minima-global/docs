@@ -4,6 +4,8 @@
   "pages": [
     "---Get Started---",
     "index",
+    "getting-started",
+    "minima-cli",
     "testnet-single",
     "testnet-multiple",
     "terminal-commands",
