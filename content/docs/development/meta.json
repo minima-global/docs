@@ -4,8 +4,8 @@
   "pages": [
     "---Get Started---",
     "index",
-    "getting-started",
-    "minima-cli",
+    "cli",
+    "using-typescript",
     "testnet-single",
     "testnet-multiple",
     "terminal-commands",

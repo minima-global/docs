@@ -1,0 +1,63 @@
+---
+title: CLI
+description: How to get started with Minima
+icon: Laptop
+tag: development
+---
+
+You can use the CLI to create a new Minima project with a template. The current templates that are available are:
+
+- react-ts
+- vanilla-js
+
+## init
+
+Use the init command to initialize configuration and dependencies for a new project.
+
+<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
+  <Tab value="npm">
+    ```bash
+    npx @minima-global/create-minima-app init
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm dlx @minima-global/create-minima-app init
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bunx @minima-global/create-minima-app init
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn create @minima-global/create-minima-app init
+    ```
+  </Tab>
+</Tabs>
+
+You will be asked a few questions to configure your project to setup rpc and install your MiniDapp.
+
+```bash
+   1. Whats the name of your project?
+   2. Are you running Minima RPC?
+   3. What port is your Minima node running on?
+   4. Which template would you like to use?
+```
+
+## options
+
+You can pass the following flags to the init command to configure your project.
+
+```bash
+   Initialize a new Minima App or configure an existing one
+
+   Options:
+   -n, --name <name>  the name of the app. (default: minima-app)
+   -p, --port <port>  the port of the Minima node. (default: 9001)
+   -r, --rpc <rpc>    the RPC URL of the Minima node. (default: true)
+   -t, --template <template>  the template to use.
+   -h, --help       display help for command
+```
