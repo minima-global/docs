@@ -59,7 +59,7 @@ The first step is to create a new component folder inside the `src` folder, lets
 Inside the `components` folder, create a new file called `balance.tsx`.
 
 ```tsx title="balance.tsx"
-export function MyBalance() {
+export function Balance() {
   return <div>Balance Tutorial</div>
 }
 ```
@@ -87,15 +87,15 @@ You should now see `Balance Tutorial` printed in the browser window.
 Now let's go back to the `src/compontents/balace.tsx` and add the following inside our function:
 
 ```tsx
-import { useCallback } from "react" // [!code highlight]
-import { MDS } from "@minima-global/mds" // [!code highlight]
+import { useCallback } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds"; // [!code highlight]
 
 export function Balance() {
   const getBalance = useCallback(async() => { // [!code highlight]
-    const balance = await MDS.cmd.balance() // [!code highlight]
+    const balance = await MDS.cmd.balance(); // [!code highlight]
       // [!code highlight]
-      console.log(balance.response) // [!code highlight]
-  }, []) // [!code highlight]
+      console.log(balance.response); // [!code highlight]
+  }, []); // [!code highlight]
 
   return <div>Balance Tutorial</div>
 }
@@ -108,18 +108,18 @@ We can imort `MDS` from `@minima-global/mds` this adds a typesafe version of [MD
 To run our function we need to add a `useEffect`, this is a function that is called when the component is rendered to the screen.
 
 ```tsx
-import { useCallback, useEffect } from "react" // [!code highlight]
-import { MDS } from "@minima-global/mds"
+import { useCallback, useEffect } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds";
 
 export function Balance() {
   const getBalance = useCallback(async() => {
-    const balance = await MDS.cmd.balance()
-      console.log(balance.response)
-  }, [])
+    const balance = await MDS.cmd.balance();
+      console.log(balance.response);
+  }, []);
 
   useEffect(() => {    // [!code highlight]
-    getBalance() // [!code highlight]
-  }, [getBalance]) // [!code highlight]
+    getBalance(); // [!code highlight]
+  }, [getBalance]); // [!code highlight]
 
   return <div>Balance Tutorial</div>
 }
@@ -146,20 +146,20 @@ Now we need to update our component so that we can store the balance for it to s
 
 
 ```tsx
-import { useCallback, useEffect, useState } from "react" // [!code highlight]
-import { MDS } from "@minima-global/mds"
+import { useCallback, useEffect, useState } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds";
 
 export function Balance() {
-  const [balance,setBalance] = useState<string>("") // [!code highlight]
+  const [balance, setBalance] = useState<string | undefined>(""); // [!code highlight]
 
   const getBalance = useCallback(async() => {
-    const balance = await MDS.cmd.balance()
-      console.log(balance.response)
-  }, [])
+    const balance = await MDS.cmd.balance();
+      console.log(balance.response);
+  }, []);
 
   useEffect(() => {
-    getBalance()
-  }, [getBalance])
+    getBalance();
+  }, [getBalance]);
 
   return <div>Balance Tutorial</div>
 }
@@ -172,24 +172,24 @@ We can use `setBalance` in this case to change the value of `balance`.
 Now let's remove the `console.log` and use the setter that we have just created
 
 ```tsx
-import { useCallback, useEffect, useState } from "react"
-import { MDS } from "@minima-global/mds"
+import { useCallback, useEffect, useState } from "react";
+import { MDS } from "@minima-global/mds";
 
 
-const Balance = () => {
-  const [balance, setBalance] = useState<string>("")
+export function Balance() {
+  const [balance, setBalance] = useState<string | undefined>("");
 
    const getBalance = useCallback(async () => {
-     const balance = await MDS.cmd.balance()
+     const balance = await MDS.cmd.balance();
      if (balance.response) { // [!code highlight]
-       const minimaToken = res.response.find((token) => token.token === "Minima") // [!code highlight]
-         setBalance(minimaToken?.confirmed) // [!code highlight]
+       const minimaToken = balance.response.find((token) => token.token === "Minima"); // [!code highlight]
+         setBalance(minimaToken?.confirmed); // [!code highlight]
      }
-   }, [])
+   }, []);
 
   useEffect(() => {
-    getBalance()
-  }, [getBalance])
+    getBalance();
+  }, [getBalance]);
 
   return <div>Balance Tutorial</div>
 }
@@ -199,28 +199,28 @@ const Balance = () => {
 Now we can use the balance state to print the value to the screen:
 
 ```tsx
-import { useCallback, useEffect, useState } from "react"
-import { MDS } from "@minima-global/mds"
+import { useCallback, useEffect, useState } from "react";
+import { MDS } from "@minima-global/mds";
 
-export function MyBalance() {
-  const [balance, setBalance] = useState<string>()
+export function Balance() {
+  const [balance, setBalance] = useState<string | undefined>("");
 
   const getBalance = useCallback(async () => {
-    const res = await MDS.cmd.balance()
-    if (res.response) {
-      const minimaToken = res.response.find((token) => token.token === "Minima")
-      setBalance(minimaToken?.confirmed)
+    const balance = await MDS.cmd.balance();
+    if (balance.response) {
+      const minimaToken = balance.response.find((token) => token.token === "Minima");
+      setBalance(minimaToken?.confirmed);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    getBalance()
-  }, [getBalance])
+    getBalance();
+  }, [getBalance]);
 
   return (
     <div> // [!code highlight]
       Balance Tutorial <br /> Your confirmed balance is: {balance} // [!code highlight]
     </div> // [!code highlight]
-  )
+  );
 }
 ```
