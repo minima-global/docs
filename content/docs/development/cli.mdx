@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: Minidapp CLI
 description: How to get started with Minima
 icon: Laptop
 tag: development
@@ -58,6 +58,66 @@ You can pass the following flags to the init command to configure your project.
    -n, --name <name>  the name of the app. (default: minima-app)
    -p, --port <port>  the port of the Minima node. (default: 9001)
    -r, --rpc <rpc>    the RPC URL of the Minima node. (default: true)
+   -s, --service      create a service.js file. (default: false)
    -t, --template <template>  the template to use.
+   -h, --help       display help for command
+```
+
+# Minima CLI
+
+The Minima CLI provides a set of scripts that can be used when developing a minidapp and include the following scripts:
+
+- zip
+- install
+- update
+- uninstall
+
+Creating a project using `create-minima-app` includes the Minima CLI package automatically and provides a set of scripts located in your `package.json` file
+
+```json
+{
+ "minima:zip": "minima zip",
+ "minima:install": "minima install",
+ "minima:update": "minima update",
+ "minima:uninstall": "minima uninstall",
+ "minima:refresh": "minima zip && minima uninstall && minima install"
+}
+ ```
+
+
+## installation
+
+<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
+  <Tab value="npm">
+    ```bash
+    npx @minima-global/create-minima-app init
+    ```
+  </Tab>
+
+  <Tab value="pnpm">
+    ```bash
+    pnpm dlx @minima-global/create-minima-app init
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bunx @minima-global/create-minima-app init
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn create @minima-global/create-minima-app init
+    ```
+  </Tab>
+</Tabs>
+
+
+## options
+
+You can pass the port flag to the `install` , `update` and `uninstall` commands.
+
+```bash
+   Options:
+   -p, --port <port>  the port of the Minima node. (default: 9001)
    -h, --help       display help for command
 ```
