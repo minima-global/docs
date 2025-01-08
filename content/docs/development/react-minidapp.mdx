@@ -183,7 +183,7 @@ const Balance = () => {
      const balance = await MDS.cmd.balance()
      if (balance.response) { // [!code highlight]
        const minimaToken = res.response.find((token) => token.token === "Minima") // [!code highlight]
-       setBalance(minimaToken) // [!code highlight]
+         setBalance(minimaToken?.confirmed) // [!code highlight]
      }
    }, [])
 
@@ -209,7 +209,7 @@ export function MyBalance() {
     const res = await MDS.cmd.balance()
     if (res.response) {
       const minimaToken = res.response.find((token) => token.token === "Minima")
-      setBalance(minimaToken)
+      setBalance(minimaToken?.confirmed)
     }
   }, [])
 
@@ -219,7 +219,7 @@ export function MyBalance() {
 
   return (
     <div> // [!code highlight]
-      Balance Tutorial <br /> Your confirmed balance is: {balance?.confirmed} // [!code highlight]
+      Balance Tutorial <br /> Your confirmed balance is: {balance} // [!code highlight]
     </div> // [!code highlight]
   )
 }
