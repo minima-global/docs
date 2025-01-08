@@ -60,7 +60,7 @@ Inside the `components` folder, create a new file called `balance.tsx`.
 
 ```tsx title="balance.tsx"
 export function Balance() {
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 ```
 
@@ -69,15 +69,15 @@ Now let's import this component into our `index.tsx`.
 We need to add `import Balance from '../components/balance';` and `<Balance />` in the return, feel free to add any html you want alongside the `Balance` component.
 
 ```tsx title="index.tsx"
-import { createFileRoute } from "@tanstack/react-router"
-import { Balance } from "../components/balance"
+import { createFileRoute } from "@tanstack/react-router";
+import { Balance } from "../components/balance";
 
 export const Route = createFileRoute("/")({
   component: Index,
 })
 
 function Index() {
-  return <Balance />
+  return <Balance />;
 }
 
 ```
@@ -97,7 +97,7 @@ export function Balance() {
       console.log(balance.response); // [!code highlight]
   }, []); // [!code highlight]
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
 ```
@@ -121,7 +121,7 @@ export function Balance() {
     getBalance(); // [!code highlight]
   }, [getBalance]); // [!code highlight]
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
 ```
@@ -161,7 +161,7 @@ export function Balance() {
     getBalance();
   }, [getBalance]);
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
 ```
@@ -191,7 +191,7 @@ export function Balance() {
     getBalance();
   }, [getBalance]);
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
 ```
