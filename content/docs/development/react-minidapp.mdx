@@ -12,7 +12,7 @@ In this tutorial, we will build a MiniDapp using React.
 - Node.js https://nodejs.org/en/download/
 - A Code Editor, we recommend Visual Studio code https://code.visualstudio.com/
 
-Before we start, make sure you have a running Minima Node running. You can start your own signgle testnet node by following the instructions [here](/docs/development/testnet-single).
+Before we start, make sure you have a running Minima Node running. You can start your own single testnet node by following the instructions [here](/docs/development/testnet-single).
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ To enable RPC on your node, run the following command in the Minima Terminal:
 rpc enable:true
 ```
 
-you can also enable RPC by passing the `--rpcenable` flag when starting your node.
+you can also enable RPC by passing the `-rpcenable` flag when starting your node.
 
 <AutoPlay src="/create-minima-app-video.mp4" />
 
@@ -183,7 +183,7 @@ const Balance = () => {
      const balance = await MDS.cmd.balance()
      if (balance.response) { // [!code highlight]
        const minimaToken = res.response.find((token) => token.token === "Minima") // [!code highlight]
-       setBalance(minimaToken) // [!code highlight]
+         setBalance(minimaToken?.confirmed) // [!code highlight]
      }
    }, [])
 
@@ -209,7 +209,7 @@ export function MyBalance() {
     const res = await MDS.cmd.balance()
     if (res.response) {
       const minimaToken = res.response.find((token) => token.token === "Minima")
-      setBalance(minimaToken)
+      setBalance(minimaToken?.confirmed)
     }
   }, [])
 
@@ -219,7 +219,7 @@ export function MyBalance() {
 
   return (
     <div> // [!code highlight]
-      Balance Tutorial <br /> Your confirmed balance is: {balance?.confirmed} // [!code highlight]
+      Balance Tutorial <br /> Your confirmed balance is: {balance} // [!code highlight]
     </div> // [!code highlight]
   )
 }
