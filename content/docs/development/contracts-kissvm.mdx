@@ -59,21 +59,20 @@ Here is a breakdown of the simple and complete KISSVM language.
 | LEN ( HEX \| SCRIPT ) | Length of the data |
 | REV ( HEX ) | Reverse the data |
 | SUBSET ( HEX NUMBER NUMBER ) | Return the HEX subset of the data - start - length |
+| SETLEN ( NUMBER HEX ) | Set the length of a HEX value, trims if too large or pads with 0 if too short |
 | OVERWRITE ( HEX NUMBER HEX NUMBER NUMBER) | Copy bytes from the first HEX and pos to the second HEX and pos, length the last NUMBER |
 | GET (NUMBER NUMBER .. NUMBER) | Return the array value set with LET ( EXPRESSION EXPRESSION .. EXPRESSION )1 |
 | EXISTS ( NUMBER NUMBER .. NUMBER ) | Does the array value exists |
 | ADDRESS ( STRING ) | Return the address of the script |
 | REPLACE ( STRING STRING STRING) | Replace in 1st string all occurrence of 2nd string with 3rd |
 | SUBSTR ( NUMBER NUMBER STRING ) | Get the substring |
-| CLEAN ( STRING ) | Return a CLEAN version of the script |
 | UTF8 ( HEX ) | Convert the HEX value to a UTF8 string |
 | ASCII ( HEX ) | Convert the HEX value to an ASCII string |
 | BOOL ( VALUE ) | Convert to TRUE or FALSE value |
 | HEX ( SCRIPT ) | Convert SCRIPT to HEX |
 | NUMBER ( HEX ) | Convert HEX to NUMBER |
 | STRING ( HEX ) | Convert a HEX value to SCRIPT |
-| ABS ( NUMBER ) | Convert SCRIPT to HEX |
-| NUMBER ( HEX ) | Return the absolute value of a number |
+| ABS ( NUMBER ) | Return the absolute value of a number |
 | CEIL ( NUMBER ) | Return the number rounded up |
 | FLOOR ( NUMBER ) | Return the number rounded down |
 | MIN ( NUMBER NUMBER ) | Return the minimum value of the 2 numbers |
@@ -81,12 +80,12 @@ Here is a breakdown of the simple and complete KISSVM language.
 | INC ( NUMBER ) | Increment a number |
 | DEC ( NUMBER ) | Decrement a number |
 | POW ( NUMBER NUMBER ) | Returns the power of N of a number. N must be a whole number. |
+| SQRT ( NUMBER ) | Returns the square root of a number |
 | SIGDIG ( NUMBER NUMBER ) | Set the significant digits of the number |
 | BITSET ( HEX NUMBER BOOLEAN ) | Set the value of the BIT at that Position to 0 or 1 |
 | BITGET ( HEX NUMBER ) | Get the BOOLEAN value of the bit at the position. |
 | BITCOUNT ( HEX ) | Count the number of bits set in a HEX value |
-| PROOF ( HEX HEX HEX ) | Check the data, mmr proof, and root match. Same as mmrproof on Minima. |
-| KECCAK ( HEX \| STRING ) | Returns the KECCAK value of the HEX value. |
+| PROOF ( HEX \|STRING NUMBER HEX NUMBER HEX ) | Check the mmr data, mmr root, with mmr proof are correct. Use 0 Numbers for non-sum mmr trees. Same as mmrproof on Minima |
 | SHA2 ( HEX \| STRING ) | Returns the SHA2 value of the HEX value. |
 | SHA3 ( HEX \| STRING ) | Returns the SHA3 value of the HEX value. |
 | SIGNEDBY ( HEX ) | Returns true if the transaction is signed by this public key |
