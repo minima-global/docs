@@ -366,7 +366,107 @@ Now that your node is running, you can setup the RPC client to interact with you
 To interact with your node you can setup the RPC client as below. Otherwise, skip to [preparing for future releases](#prepare-for-future-releases)
 </Callout>
 
-#### RPC client setup
+
+### RPC client setup
+
+You can interact with your node headlessly by setting up the RPC client for your node: 
+
+1. Log on to your server as your user with sudo priviledges, stop and disable Minima
+```
+sudo systemctl stop minima
+```
+```
+sudo systemctl disable minima
+```
+2. Edit the Minima service file
+```
+sudo nano /etc/systemd/system/minima.service
+``` 
+3. Edit the start up line to include the following parameters to enable RPC
+
+```
+-rpcenable -rpcpassword yourrpcpassword -rpcssl
+```
+
+***Enter a password over 12 characters using a-z, A-Z, 0-9 and !@#=?+>,.-_'()/< symbols only.***
+
+**Example**
+```
+...
+ExecStart=/usr/bin/java -jar /home/minima/minima.jar -rpcenable -rpcpassword yourrpcpassword -rpcssl -mdsenable -mdspassword yourpasswordhere -daemon -basefolder /home/minima -data /home/minima/.minima
+...
+```
+
+Press `ctrl+x`, then `y` then Enter to save and exit
+
+4. Reload the daemon and start Minima
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl enable minima
+```
+```
+sudo systemctl start minima
+```
+5. Check the logs to ensure it has started up
+```
+sudo journalctl -u minima -f
+```
+then `ctrl+c` to exit the logs
+
+6. Create a file and paste in the script below, ensuring that you **change the password**
+
+```
+sudo nano minima
+```
+
+```
+#!/bin/sh
+
+#Start the Minima RPC Client 
+java -cp /home/minima/minima.jar org.minima.utils.MinimaRPCClient -password yourrpcpassword -host https://127.0.0.1:9005
+```
+
+Write the file using ctrl-`x` then confirm with `y`
+
+7. Give the right permissions
+
+```
+sudo chmod +x ./minima
+```
+
+8. Run the script to start the RPC Client Terminal
+
+```
+./minima
+```
+
+Going forward, simply login and start the Minima Terminal using `./minima`. 
+
+
+<ImageZoom
+src="/img/runanode/RPCClient.png"
+alt="RPCClient"
+width={700}
+height={700}
+/>
+
+
+You can run any Minima commands here.
+
+Type `block` then enter to return your top block. `status` will return details about your node.
+
+Type `help` to see a list of all commands and `help command:` to see detailed help for any command.
+
+
+To exit the Terminal, type `exit`.
+
+**Do not type `quit` as this will shut down your node.**
+
+
+{/* 
+
 
 <Steps>
 <Step>
@@ -420,7 +520,7 @@ Type `help` to see a list of all commands and `help command:` to see detailed he
 
 To exit the Terminal, type `exit`.
 
-**Do not type `quit` as this will shut down your node.**
+**Do not type `quit` as this will shut down your node.** */}
 
 <Callout title="Future releases" type="info">
  Your node will not auto-update so [prepare for future releases](/docs/run-a-node/linux-vps-service#prepare-for-future-releases) to make updating easy.
