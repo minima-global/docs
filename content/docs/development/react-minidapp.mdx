@@ -3,6 +3,7 @@ title: React MiniDapp
 description: Learn how to create a MiniDapp using React
 tag: development
 ---
+import AutoPlay from 'components/auto-play'
 
 In this tutorial, we will build a MiniDapp using React.
 
@@ -10,283 +11,216 @@ In this tutorial, we will build a MiniDapp using React.
 
 - Node.js https://nodejs.org/en/download/
 - A Code Editor, we recommend Visual Studio code https://code.visualstudio.com/
-- A running Minima node
-- Download the create-react-minidapp boilerplate [here](https://github.com/minima-global/awesome-minima/tree/main/boilerplates/react/create-react-minidapp)
-- Download the latest mds.js file [here](https://github.com/minima-global/Minima/blob/master/mds/mds.js)
 
-## Getting Started with Create Minima App
+Before we start, make sure you have a running Minima Node running. You can start your own single testnet node by following the instructions [here](/docs/development/testnet-single).
 
-This boilerplate has been created with `Create React App`. You can use this boilerplate to build Minima MiniDapps.
+## Getting Started
 
-To create your application, unzip and the open the folder in your code editor. We will edit the files in the `/src` folder.
-
-If you need some guidance, please follow the **Balance tutorial** below.
-
-## How to build and install your app
-
-To build your app, open the Terminal and run the following commands in the `create-minima-app` directory:
+To get started, we will use the `create-minima-app` CLI to create a new project.
 
 ```bash title="Terminal"
-npm i
+npx @minima-global/create-minima-app init
 ```
+To streamline development you can enable RPC on you minima node and the cli will configure your new project automatically.
 
-and then run
+To enable RPC on your node, run the following command in the Minima Terminal:
 
 ```bash title="Terminal"
-npm run build
+rpc enable:true
 ```
 
-Once the app has been built, you can run the following to create a **my-minima-app.mds.zip** file in the `/minidapp` folder. This is the zipped minidapp that can be installed onto a node.
+you can also enable RPC by passing the `-rpcenable` flag when starting your node.
 
-```bash title="Terminal"
-npm run zip
-```
+<AutoPlay src="/create-minima-app-video.mp4" />
 
-### Installing on a Desktop node
-
-1. Login to Minima by going to `https://localhost:9003` (9003 is the default MiniDapp System port). Use the password you set when starting the node or run `mds` in the Minima Terminal to check the password.
-
-2. Once logged in, click on the `+` in the top right, locate your **my-minima-app.mds.zip** zip file and click the `install` button. Your app should be installed.
-
-3. Click on your app to open it.
-
-### Installing on Android
-
-Either connect to your Android node using the Desktop connect feature and continue to install the MiniDapp as above, or transfer your app to your phone's storage and open the Minima app.
-
-1. Click on the `+` button at the top right of the screen.
-
-2. Locate and select the zip file on your phone and tap install.
-
-You should now see your app in the list. Tap on your app to open it.
-
-## Do I have to reinstall after every change?
-
-No, we have a solution that allows you to get around the issue to take advantage of `Create React App`'s automatic reloading on file changes.
-
-1. Ensure you have installed the app using the instructions above on desktop
-
-2. Duplicate the `.env.example` file and rename it to `.env` (this is your project root)
-
-3. Configure the environment values, you can leave everything default unless you are running Minima on a custom port. If connecting to a phone node, change the IP address to that as shown in Settings > Desktop Connect in your Minima app.
-
-4. Open your MiniDapp on Desktop, your url will look something like: `https://127.0.0.1:9003/{APP_ID}/index.html?uid=YOUR_UID`
-
-5. Copy the value at the end where YOUR_UID is in the URL e.g. `0xD497A626EF65C24417D4F7AE0CC48289BCB1062FB9763D47A20326984E099299`
-
-6. Replace `REACT_APP_DEBUG_UID` in the env file with the uid you copied
-
-7. Ensure the following code is included in **mds.js**
-
-```javascript title="mds.js"
-// env overrides
-if (window.DEBUG) {
-  host = window.DEBUG_HOST
-  port = Math.floor(window.DEBUG_PORT)
-  MDS.minidappuid = window.DEBUG_UID
-}
-```
-
-the above code should be added directly below this existing code
-
-```javascript title="mds.js"
-//HARD SET if debug mode - running from a file
-if (MDS.DEBUG_HOST != null) {
-  MDS.log("DEBUG Settings Found..")
-  host = MDS.DEBUG_HOST
-  port = MDS.DEBUG_PORT
-}
-```
-
-8. From the Terminal, run `npm run start`
-
-9. Edit `/src/App.jsx` and the browser window will automatically reload and should be connected to Minima
 
 ## Balance Tutorial
 
-### Showing the balance with the Create Minima App
-
 Let's dive into a short tutorial that will show you how to show the balance of your wallet in the app.
 
-Open `/src/App.jsx`, this is the main application file.
+Open `/src/routes/index.tsx`, this is the index file for the `/` route.
 
-The first thing we have to do is call the MDS `balance` command. The full list of commands can be found [here](/docs/development/terminal-commands).
+We can start by cleaning up the file and remove all the code, replace it with the following:
 
-The first step is to create a new component file, lets call it `Balance.jsx` in the `/src` folder.
+```tsx title="index.tsx"
+import { createFileRoute } from "@tanstack/react-router";
 
-```jsx title="Balance.jsx"
-import React from "react"
+export const Route = createFileRoute("/")({
+  component: Index,
+});
 
-const Balance = () => {
-  return <div>Balance Tutorial</div>
+function Index() {
+  return <div>Home</div>;
 }
-
-export default Balance
 ```
 
-Now let's import this component in our `App.jsx`.
+The first step is to create a new component folder inside the `src` folder, lets call it `components`.
 
-We need to add `import Balance from './Balance';` and `<Balance />` in the return, feel free to put it anywhere you like, we have just put it after the `<p>` tag.
+Inside the `components` folder, create a new file called `balance.tsx`.
 
-```jsx title="App.jsx"
-import React, { useEffect } from "react"
-import minimaLogo from "./minima_logo.png"
-import "./App.css"
-import Balance from "./Balance"
+```tsx title="balance.tsx"
+export function Balance() {
+  return <div>Balance Tutorial</div>;
+}
+```
 
-function App() {
-  useEffect(() => {
-    window.MDS.init()
-  }, [])
+Now let's import this component into our `index.tsx`.
 
-  return (
-    <div className="App">
-      <section className="container">
-        <img src={minimaLogo} className="logo" alt="logo" />
-        <Balance />
-      </section>
-    </div>
-  )
+We need to add `import Balance from '../components/balance';` and `<Balance />` in the return, feel free to add any html you want alongside the `Balance` component.
+
+```tsx title="index.tsx"
+import { createFileRoute } from "@tanstack/react-router";
+import { Balance } from "../components/balance";
+
+export const Route = createFileRoute("/")({
+  component: Index,
+})
+
+function Index() {
+  return <Balance />;
 }
 
-export default App
 ```
 
 You should now see `Balance Tutorial` printed in the browser window.
 
-Now let's go back to the `/src/Balance.jsx` and add the following inside `const Balance`:
+Now let's go back to the `src/compontents/balace.tsx` and add the following inside our function:
 
-```jsx
-import React from "react"
+```tsx
+import { useCallback } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds"; // [!code highlight]
 
-const Balance = () => {
-  const getBalance = React.useCallback(() => { // [!code highlight] 
-    window.MDS.cmd("balance", function (balance) { // [!code highlight]
-            console.log(balance.response) // [!code highlight]
-    }) // [!code highlight]
-  }, []) // [!code highlight]
+export function Balance() {
+  const getBalance = useCallback(async() => { // [!code highlight]
+    const balance = await MDS.cmd.balance(); // [!code highlight]
+      // [!code highlight]
+      console.log(balance.response); // [!code highlight]
+  }, []); // [!code highlight]
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
-export default Balance
 ```
+We can imort `MDS` from `@minima-global/mds` this adds a typesafe version of [MDS](/docs/development/using-typescript) to our project.
 
-`React.useCallback` ensures the function is not re-run unless one of the dependencies change, you can read more about it in the React documentation: https://react.dev/reference/react/useCallback
-
+`useCallback` ensures the function is not re-run unless one of the dependencies change, you can read more about it in the React documentation: https://react.dev/reference/react/useCallback
 
 To run our function we need to add a `useEffect`, this is a function that is called when the component is rendered to the screen.
 
-```jsx
-import React from 'react';
+```tsx
+import { useCallback, useEffect } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds";
 
-const Balance = () => {
-  const getBalance = React.useCallback(() => {
-    window.MDS.cmd('balance', function (balance) {
+export function Balance() {
+  const getBalance = useCallback(async() => {
+    const balance = await MDS.cmd.balance();
       console.log(balance.response);
-    })
   }, []);
 
-  React.useEffect(() => { // [!code highlight]
+  useEffect(() => {    // [!code highlight]
     getBalance(); // [!code highlight]
   }, [getBalance]); // [!code highlight]
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
-export default Balance;
 ```
 
 Now go to the browser and open the developer tools, open the `Console` tab and reload the page to refresh the logs. You should see an array being printed to the logs.
 
 ```json
-[{
-  coins: "1",
-  confirmed: "100",
-  sendable: "100",
-  token: "Minima",
-  tokenid: "0x00",
-  total: "1000000000",
-  unconfirmed: "0"
-}]
+[
+  {
+    "coins": "1",
+    "confirmed": "100",
+    "sendable": "100",
+    "token": "Minima",
+    "tokenid": "0x00",
+    "total": "1000000000",
+    "unconfirmed": "0"
+  }
+]
 ```
 
-Now we need to update our component so that we can store the balance for it to show up on the screen, we can use `React.useState` for this.
+Now we need to update our component so that we can store the balance for it to show up on the screen, we can use `useState` for this.
 
-```jsx
-import React from 'react';
 
-const Balance = () => {
-  const [balance, setBalance] = React.useState(null); // [!code highlight]
+```tsx
+import { useCallback, useEffect, useState } from "react"; // [!code highlight]
+import { MDS } from "@minima-global/mds";
 
-  const getBalance = React.useCallback(() => {
-    window.MDS.cmd('balance', function (balance) {
+export function Balance() {
+  const [balance, setBalance] = useState<string | undefined>(""); // [!code highlight]
+
+  const getBalance = useCallback(async() => {
+    const balance = await MDS.cmd.balance();
       console.log(balance.response);
-    })
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getBalance();
   }, [getBalance]);
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
-export default Balance;
 ```
- `React.useState` allows us to create a value that will cause React to re-render when the value changes. <br/>
- We can use `setBalance` in this case to change the value of `balance`.
 
+`useState` allows us to create a value that will cause React to re-render when the value changes. <br/>
+We can use `setBalance` in this case to change the value of `balance`.
 
 Now let's remove the `console.log` and use the setter that we have just created
 
-```jsx
-import React from 'react';
-const Balance = () => {
-  const [balance, setBalance] = React.useState(null);
+```tsx
+import { useCallback, useEffect, useState } from "react";
+import { MDS } from "@minima-global/mds";
 
-  const getBalance = React.useCallback(() => {
-    window.MDS.cmd('balance', function (balance) {
-      if (balance.response) { // [!code highlight]
-        const minimaToken = balance.response.find(token => token.token === 'Minima'); // [!code highlight]
-        setBalance(minimaToken.confirmed); // [!code highlight]
-      }
-    })
-  }, []);
 
-  React.useEffect(() => {
+export function Balance() {
+  const [balance, setBalance] = useState<string | undefined>("");
+
+   const getBalance = useCallback(async () => {
+     const balance = await MDS.cmd.balance();
+     if (balance.response) { // [!code highlight]
+       const minimaToken = balance.response.find((token) => token.token === "Minima"); // [!code highlight]
+         setBalance(minimaToken?.confirmed); // [!code highlight]
+     }
+   }, []);
+
+  useEffect(() => {
     getBalance();
   }, [getBalance]);
 
-  return <div>Balance Tutorial</div>
+  return <div>Balance Tutorial</div>;
 }
 
-export default Balance;
 ```
 
 Now we can use the balance state to print the value to the screen:
 
-```jsx
-import React from 'react';
+```tsx
+import { useCallback, useEffect, useState } from "react";
+import { MDS } from "@minima-global/mds";
 
-const Balance = () => {
-  const [balance, setBalance] = React.useState(null);
+export function Balance() {
+  const [balance, setBalance] = useState<string | undefined>("");
 
-  const getBalance = React.useCallback(() => {
-    window.MDS.cmd('balance', function (balance) {
-      if (balance.response) {
-        const minimaToken = balance.response.find(token => token.token === 'Minima');
-        setBalance(minimaToken.confirmed);
-      }
-    })
+  const getBalance = useCallback(async () => {
+    const balance = await MDS.cmd.balance();
+    if (balance.response) {
+      const minimaToken = balance.response.find((token) => token.token === "Minima");
+      setBalance(minimaToken?.confirmed);
+    }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getBalance();
   }, [getBalance]);
 
-  return <div>Balance Tutorial <br/> Your confirmed balance is: {balance}</div> // [!code highlight]
+  return (
+    <div> // [!code highlight]
+      Balance Tutorial <br /> Your confirmed balance is: {balance} // [!code highlight]
+    </div> // [!code highlight]
+  );
 }
-
-export default Balance;
 ```

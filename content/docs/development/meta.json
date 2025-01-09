@@ -1,3 +1,4 @@
+
 {
   "title": "Development",
   "root": true,
@@ -6,6 +7,8 @@
     "index",
     "testnet-single",
     "testnet-multiple",
+    "cli",
+    "using-typescript",
     "terminal-commands",
     "---Transactions---",
     "txnbasics",
@@ -38,3 +41,4 @@
     "vestr"
   ]
 }
+

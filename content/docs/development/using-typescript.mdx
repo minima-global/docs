@@ -1,0 +1,144 @@
+---
+title: Using Typescript
+description: Learn how to use the Minima Node.js SDK
+tag: development
+icon: Typescript
+---
+
+The Minima MDS (MiniDapp System) Library is a TypeScript implementation of the MDS interface for building MiniDapps. This library can be used when building frontend application
+
+
+## Getting Started
+
+Setup the MDS in your project using your preferred package manager.
+
+
+<Tabs items={["npm", "yarn", "pnpm", "bun"]}>
+  <Tab value="npm">
+    ```bash
+    npm install @minima-global/mds
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @minima-global/mds
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @minima-global/mds
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bun add @minima-global/mds
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+The `MDS.init()` function is used to initialize the MDS library and handle events from the MDS.
+
+You get access to the `event` and `data` parameters which you can use to respond to events from the MDS.
+
+```typescript title="example.ts"
+import { MDS } from "@minima-global/mds";
+
+MDS.init(async ({ event, data }) => {
+  // Handle events from the MDS
+})
+```
+
+You can check the `event` parameter to determine which event has been triggered and handle the event accordingly.
+
+```typescript title="example.ts"
+import { MDS, MinimaEvents } from "@minima-global/mds"; // [!code highlight]
+
+MDS.init(async ({ event, data }) => {
+  if (event === MinimaEvents.INITED) {
+    console.log("MDS Initialized and ready 🚀")
+  }
+})
+```
+
+All Minima CLI commands are available as methods on the `MDS.cmd` object. To see the full list of commands available see the [Terminal Commands](/docs/development/terminal-commands) page.
+
+You can use the `MDS.cmd` object to send commands and get access to the response by either using the `await` keyword or by passing a callback function.
+
+```typescript title="example.ts"
+import { MDS, MinimaEvents } from "@minima-global/mds";
+
+// using async/await
+MDS.init(async ({ event, data }) => {
+  if (event === MinimaEvents.INITED) {
+    const command = await MDS.cmd.block() // [!code highlight]
+    console.log(command.response.block) // [!code highlight]
+  }
+})
+
+// using callback
+MDS.init(({ event, data }) => {
+  if (event === MinimaEvents.INITED) {
+    MDS.cmd.block((data) => { // [!code highlight]
+      console.log(data.response.block) // [!code highlight]
+    }) // [!code highlight]
+  }
+})
+```
+
+
+The `params` object is used to pass type safe parameters to the command.
+
+```typescript title="example.ts"
+import { MDS, MinimaEvents } from "@minima-global/mds";
+
+const MX_ADDRESS = "MxG086K6127VBG29AW0RUF0F1QGZZ0J3M3ZFYF4FWZMR1R49Y7ZPVR9V7916PGN" // [!code highlight]
+
+MDS.init(async ({ event, data }) => {
+  if (event === MinimaEvents.INITED) {
+    const command = await MDS.cmd.send({ // [!code highlight]
+      params: { // [!code highlight]
+        address: MX_ADDRESS, // [!code highlight]
+        amount: 100 // [!code highlight]
+      } // [!code highlight]
+    }) // [!code highlight]
+  }
+})
+```
+
+## Types
+
+To import the types for a command you can use the following syntax:
+
+```typescript title="example.ts"
+import type { Block } from "@minima-global/mds";
+```
+
+Example of the `MDS.cmd.block()` return types:
+
+```typescript title="example.ts"
+import { MDS, type MDSResponse, type Block } from "@minima-global/mds";
+
+const command = await MDS.cmd.block()
+
+// command is typed as :
+type Command = MDSResponse<Block>
+
+// command.response is typed as :
+type Response = Block
+
+```
+
+All responses from the MDS are typed using the `MDSResponse` type and include the following properties:
+
+ - `command`: The command that was sent to the MDS.
+ - `params`: The parameters that were sent to the command.
+ - `pending`: Whether the command is pending.
+ - `status`: Whether the command was successful.
+ - `error`: An error message if the command failed.
+ - `pendinguid`: The pending UID if the command is pending.
+ - `response`: The response data for the command.
+
+
+Where the `response` property is inferred from the command that was sent.
