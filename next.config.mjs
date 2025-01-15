@@ -117,6 +117,11 @@ const config = {
         destination: "/docs/core/minima-privacy-policy",
         permanent: true,
       },
+      {
+        source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
+        destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
+        permanent: true,
+      },
     ]
   },
   async headers() {
