@@ -91,7 +91,7 @@ state:
 burn:
 ```
 
-## Example
+### Example
 
 Example send command to lock a coin in the Future cash contract
 
@@ -136,6 +136,49 @@ Example coin locked in Future cash contract
     "created":"695816"
   },
 ```
+
+## Manually collecting coins
+
+To manually collect coins from the contract, you can construct a transaction using the correct coinid, amount and output address found in the coin's state variables.
+
+Note that the funds can be collected on behalf of the recipient, provided the transaction is created from a Mega MMR node. Otherwise it can only be claimed by the intended recipient of the Future Cash funds. 
+
+The following example shows how to manually collect the example coin above from the Future Cash contract.
+
+1. Create a transaction with your chosen id
+
+```
+txncreate id:claimfc
+```
+
+
+2. Add the coin as an input 
+
+If claiming on behalf of the recipient, this MUST be done from a megammr node, as a standard full node won't have the coin proof.
+
+```
+txninput id:collectfc coinid:0xC67DB6138B578FF734D6D68CC7D6C97F7F17A5B96E4D00215390B54F93F5CF8B
+```
+
+
+3. Add an output to the recipient's address for the amount of the coin, as provided in the state variable 2 of the coin
+
+
+```
+txnoutput id:collectfc address:0x3DC92CD49CA6513AFF6180E49F287B0C8CDF78076CDF05FE6E00E66EFF6CA479 amount:2 tokenid:0x00 storestate:false
+```
+
+4. Add the coin proof to the transaction
+```
+txnbasics id:collectfc
+```
+
+5. Post and mine the transaction 
+```
+txnpost id:collectfc mine:true
+```
+
+The transaction will now be mined and posted and the funds will be transferred to the recipient's address.
 
 ## Source code
 
