@@ -22,9 +22,11 @@ We assume that no keys will be stored on either the online node or the offline n
 
 For the following tutorials, you will need:
 
-1. An online [Mega MMR Minima node](/docs/run-a-node/mega-node) - this ensures the node is recording all coin proofs required for transactions.
+1. An online Mega MMR Minima node - this ensures the node is recording all coin proofs required for transactions.
 
-2. An online instance of [MEG](/docs/run-a-node/meg-setup) running
+2. An online instance of MEG running.
+
+For setup instructions, see the <a href="https://docs.minima.global/docs/run-a-node/meg-setup" target="_blank">MEG Setup</a> page.
 
 3. An API user created in MEG 
 
@@ -37,7 +39,7 @@ For the following tutorials, you will need:
 
 Generating wallets can optionally be done from a Minima node that is offline, ensuring that the private keys are never hot. 
 
-**You will need to securely store all generated Wallet details for your users. This information will not be stored on the node and will not be shown again.**
+**You will need to securely store all generated Wallet details and key uses for your users. This information will not be stored on the node and will not be shown again.**
 
 To create a new wallet with a secure random seed phrase, use the following Wallet API endpoint:
 
@@ -202,7 +204,46 @@ The response contains the full txpow unit details.
 
 ## How to estimate the burn
 
-To find out recent on-chain burn metrics, you can create an endpoint for the burn function which displays min, max, avg and median burn for the last 1, 10 and 50 blocks. 
+Minima does not require payment of fees to miners, however the burn is used to prioritize transactions in the mempool if blocks are full.
+
+To find out recent on-chain burn metrics, create an endpoint for the `burn` function which displays min, max, avg and median burn for the last 1, 10 and 50 blocks. 
+
+
+## How to manage UTxOs
+
+Since Minima is a UTXO-based blockchain, it is important to consolidate coins frequently to ensure the running of the node is efficient.
+
+The consolidate function allows you to join multiple UTxOs, creating 10 equal value coins.
+
+For example, if you have 100 coins, you can consolidate using `maxcoins:50` and this will consolidate 50 coins into 10, leaving a total of 60 coins. 
+
+```
+/wallet/consolidate
+```
+
+Providing the following parameters:
+
+| Parameter          | Description                                                                                             |
+|---------------|---------------------------------------------------------------------------------------------------------|
+| `tokenid` | TokenID of the token (defaults to Minima) |
+| `fromaddress` | Address to send from AND back to |
+| `privatekey` | Private Key of the FROM Address |
+| `script` | The script of the FROM Address |
+| `burn` | Transaction Burn / Fee (optional) |
+| `maxcoins` | How many coins to consolidate (optional - defaults to 50) |
+| `keyuses` | The number of times this address has been used (nonce) |
+| `publickey` | Use the keyuses value MEG stores for this public key |
+
+Note: Either provide your own value for `keyuses` or provide the `publickey` and MEG will find the keyuses. If you provide both values MEG will store the keyuses value in the DB.
+
+
+Example:
+```
+curl http://127.0.0.1:8080/wallet/consolidate -d "tokenid=0x00&fromaddress=MxG08...&privatekey=0xAA49...&script=RETURN SIGNEDBY(0xC79A...)&burn=0.01&maxcoins=50&keyuses=1&publickey=0xC79A..." -X POST --user api:123
+```
+
+The response contains the full transaction.
+
 
 ## Example transactions
 
