@@ -137,6 +137,11 @@ const config = {
         source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
         destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
+      },
+      {
+        source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
+        destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
+        permanent: true,
       }
     ]
   },
