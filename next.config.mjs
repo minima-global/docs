@@ -118,10 +118,26 @@ const config = {
         permanent: true,
       },
       {
+
+        source: "/docs/learn/minimawhitepaper/abstract",
+        destination: "/docs/core/minimawhitepaper/introduction",
+        permanent: true,
+      },
+      {
+        source: "/docs/user-guides/public-wallet",
+        destination: "/docs/user-guides/web-wallet",
+        permanent: true,
+      },
+      {
+        source: "/docs/user-guides/mega-node/host-a-public-wallet",
+        destination: "/docs/user-guides/mega-node/host-a-web-wallet",
+        permanent: true,
+      },
+      {
         source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
         destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
-      },
+      }
     ]
   },
   async headers() {
