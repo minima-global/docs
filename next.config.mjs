@@ -133,6 +133,7 @@ const config = {
         destination: "/docs/user-guides/mega-node/host-a-web-wallet",
         permanent: true,
       },
+      {
         source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
         destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
