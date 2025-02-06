@@ -118,6 +118,7 @@ const config = {
         permanent: true,
       },
       {
+
         source: "/docs/learn/minimawhitepaper/abstract",
         destination: "/docs/core/minimawhitepaper/introduction",
         permanent: true,
@@ -130,6 +131,10 @@ const config = {
       {
         source: "/docs/user-guides/mega-node/host-a-public-wallet",
         destination: "/docs/user-guides/mega-node/host-a-web-wallet",
+        permanent: true,
+      },
+        source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
+        destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
       }
     ]

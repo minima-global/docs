@@ -1448,7 +1448,7 @@ Accept/deny pending commands from MiniDapps with READ permissions.
     },
     trust: {
       description:
-        "(Optional) The ip:port to send a message to. Use with action:send.",
+        "(Optional) read or write. read is the default. Write permission should only be given to trusted MiniDapps.",
     },
     enable: {
       description:
@@ -3503,6 +3503,48 @@ txnoutput id:eltootxn amount:10 address:0xFED5..
 ```
 
 </Accordion>
+
+
+<Accordion title="txnpost">
+
+Post a transaction. Automatically set the Scripts and MMR proofs. Optionally set a burn for the transaction and mine the transaction immediately to return the final txpowid.
+
+<CommandTable
+  type={{
+    id: {
+      description: "The id of the transaction.",
+    },
+    auto: {
+      description: "(optional) Set the scripts and MMR proofs for the transaction.",
+    },
+    burn: {
+      description: "(optional) Amount in Minima to burn with the transaction.",
+    },
+    mine: {
+      description: "(optional) true or false - should you mine the transaction immediately.",
+    },
+    txndelete: {
+      description: "(optional) true or false - delete this txn after posting.",
+    },
+  }}
+/>
+
+Examples:
+
+```bash title="Terminal"
+txnpost id:simpletxn
+```
+
+```bash title="Terminal"
+txnpost id:simpletxn auto:true burn:0.1
+```
+
+```bash title="Terminal"
+txnpost id:multisig burn:0.1
+```
+
+</Accordion>
+
 
 <Accordion title="txnscript">
 
