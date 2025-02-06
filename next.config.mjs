@@ -117,6 +117,21 @@ const config = {
         destination: "/docs/core/minima-privacy-policy",
         permanent: true,
       },
+      {
+        source: "/docs/learn/minimawhitepaper/abstract",
+        destination: "/docs/core/minimawhitepaper/introduction",
+        permanent: true,
+      },
+      {
+        source: "/docs/user-guides/public-wallet",
+        destination: "/docs/user-guides/web-wallet",
+        permanent: true,
+      },
+      {
+        source: "/docs/user-guides/mega-node/host-a-public-wallet",
+        destination: "/docs/user-guides/mega-node/host-a-web-wallet",
+        permanent: true,
+      }
     ]
   },
   async headers() {
