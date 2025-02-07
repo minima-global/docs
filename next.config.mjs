@@ -139,7 +139,7 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
+        source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
         destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
         permanent: true,
       }
