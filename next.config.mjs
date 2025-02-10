@@ -8,10 +8,11 @@ const config = {
   async redirects() {
     return [
       {
-        source: "/docs/terms/minimatermsandconditions#cookies",
-        destination: "/docs/core/website-terms#cookies",
+        source: "/docs/terms/:slug",
+        destination: "/docs/core/:slug",
         permanent: true,
       },
+
       {
         source: "/docs/runanode/selectplatform/windows",
         destination: "/docs/run-a-node/windows",
