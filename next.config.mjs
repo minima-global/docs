@@ -142,6 +142,11 @@ const config = {
         source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
         destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
         permanent: true,
+      },
+      {
+        source: "/docs/terms/minimatermsandconditions#cookies",
+        destination: "/docs/core/website-terms#cookies",
+        permanent: true,
       }
     ]
   },
