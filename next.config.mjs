@@ -1,5 +1,5 @@
-import createMDX from "fumadocs-mdx/config";
-const withMDX = createMDX();
+import createMDX from "fumadocs-mdx/config"
+const withMDX = createMDX()
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -8,11 +8,10 @@ const config = {
   async redirects() {
     return [
       {
-        source: "/docs/terms/:slug",
-        destination: "/docs/core/:slug",
+        source: "/docs/terms/minimatermsandconditions#cookies",
+        destination: "/docs/core/website-terms#cookies",
         permanent: true,
       },
-
       {
         source: "/docs/runanode/selectplatform/windows",
         destination: "/docs/run-a-node/windows",
@@ -64,12 +63,12 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/dapptutorial/reactminidapp/",
+        source: "/docs/buildonminima/dapptutorial/reactminidapp",
         destination: "/docs/development/react-minidapp",
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/txntutorial/layer1/simpletxn/",
+        source: "/docs/buildonminima/txntutorial/layer1/simpletxn",
         destination: "/docs/development/simple-txn",
         permanent: true,
       },
@@ -84,7 +83,7 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/dappcontracts/",
+        source: "/docs/buildonminima/dappcontracts",
         destination: "/docs/development/future-cash",
         permanent: true,
       },
@@ -119,6 +118,7 @@ const config = {
         permanent: true,
       },
       {
+
         source: "/docs/learn/minimawhitepaper/abstract",
         destination: "/docs/core/minimawhitepaper/introduction",
         permanent: true,
@@ -134,20 +134,16 @@ const config = {
         permanent: true,
       },
       {
-        source:
-          "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
-        destination:
-          "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
+        source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
+        destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
       },
       {
-        source:
-          "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
-        destination:
-          "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
+        source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
+        destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
         permanent: true,
-      },
-    ];
+      }
+    ]
   },
   async headers() {
     return [
@@ -160,8 +156,8 @@ const config = {
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 
-export default withMDX(config);
+export default withMDX(config)
