@@ -9,7 +9,7 @@ const config = {
     return [
       {
         source: "/docs/terms/minimatermsandconditions#cookies",
-        destination: "docs/core/website-terms#cookies",
+        destination: "/docs/core/website-terms#cookies",
         permanent: true,
       },
       {
@@ -63,12 +63,12 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/dapptutorial/reactminidapp/",
+        source: "/docs/buildonminima/dapptutorial/reactminidapp",
         destination: "/docs/development/react-minidapp",
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/txntutorial/layer1/simpletxn/",
+        source: "/docs/buildonminima/txntutorial/layer1/simpletxn",
         destination: "/docs/development/simple-txn",
         permanent: true,
       },
@@ -83,7 +83,7 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/buildonminima/dappcontracts/",
+        source: "/docs/buildonminima/dappcontracts",
         destination: "/docs/development/future-cash",
         permanent: true,
       },
@@ -141,11 +141,6 @@ const config = {
       {
         source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
         destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
-        permanent: true,
-      },
-      {
-        source: "/docs/terms/minimatermsandconditions#cookies",
-        destination: "/docs/core/website-terms#cookies",
         permanent: true,
       }
     ]
