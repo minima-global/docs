@@ -8,8 +8,8 @@ const config = {
   async redirects() {
     return [
       {
-        source: "/docs/terms/minimatermsandconditions#cookies",
-        destination: "/docs/core/website-terms#cookies",
+        source: "/docs/terms/minimatermsandconditions",
+        destination: "/docs/core/website-terms",
         permanent: true,
       },
       {
@@ -35,11 +35,6 @@ const config = {
       {
         source: "/docs/runanode/selectplatform/linux_vps",
         destination: "/docs/run-a-node/linux-vps-docker",
-        permanent: true,
-      },
-      {
-        source: "/docs/about/tokendistribution#maximize",
-        destination: "/docs/core/tokenomics#maximize",
         permanent: true,
       },
       {
