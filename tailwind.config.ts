@@ -1,14 +1,11 @@
-import { createPreset } from "fumadocs-ui/tailwind-plugin"
-
-const svgToDataUri = require("mini-svg-data-uri")
+const svgToDataUri = require("mini-svg-data-uri");
 
 const {
   default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette")
+} = require("tailwindcss/lib/util/flattenColorPalette");
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [createPreset()],
   content: [
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
@@ -73,14 +70,14 @@ export default {
           }),
         },
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
-      )
+      );
     },
   ],
-}
+};
 
 function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"))
+  let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  )
+  );
 }

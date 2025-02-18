@@ -2,6 +2,7 @@
   "title": "Core",
   "root": true,
   "tag": ["core"],
+  "icon": "Sparkles",
   "pages": [
     "---About Minima---",
     "index",
@@ -11,7 +12,7 @@
     "get-involved",
     "--- Whitepaper---",
     "[PDF Version](https://docs.minima.global/minima_pdfs/Minima_Whitepaper_v11.pdf)",
-    "minimawhitepaper",    
+    "minimawhitepaper",
     "---Terms of Use---",
     "minidapp-terms",
     "website-terms",

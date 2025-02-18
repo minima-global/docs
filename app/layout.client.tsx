@@ -1,11 +1,11 @@
-"use client"
-import { cva } from "class-variance-authority"
-import Link from "next/link"
-import { useParams, usePathname } from "next/navigation"
-import { ReactNode, useEffect, useState } from "react"
-import { modes } from "./lib/modes"
-import { cn } from "./lib/utils"
-import Footer from "@/components/footer"
+"use client";
+import { cva } from "class-variance-authority";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
+import { modes } from "./lib/modes";
+import { cn } from "./lib/utils";
+import Footer from "@/components/footer";
 
 const itemVariants = cva(
   "rounded-md px-3 py-1 transition-colors hover:text-fd-accent-foreground",
@@ -16,20 +16,20 @@ const itemVariants = cva(
       },
     },
   }
-)
+);
 
 export function Body({
   children,
 }: {
-  children: ReactNode
+  children: ReactNode;
 }): React.ReactElement {
-  const mode = useMode()
-  const isHome = usePathname() === "/"
-  const [mounted, setMounted] = useState(false)
+  const mode = useMode();
+  const isHome = usePathname() === "/";
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   return (
     <body
@@ -38,19 +38,26 @@ export function Body({
       {children}
       {mounted && <Footer />}
     </body>
-  )
+  );
 }
 
 export function useMode(): string | undefined {
-  const { slug } = useParams()
-  return Array.isArray(slug) && slug.length > 0 ? slug[0] : undefined
+  const { slug } = useParams();
+  return Array.isArray(slug) && slug.length > 0 ? slug[0] : undefined;
 }
 
 export function NavChildren(): React.ReactElement {
-  const mode = useMode()
+  const mode = useMode();
+
+  console.log(mode);
 
   return (
-    <div className="rounded-md border  p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block  ">
+    <div
+      className={cn(
+        "rounded-md p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block",
+        mode ? "lg:hidden" : "lg:block"
+      )}
+    >
       {modes.map((m) => (
         <Link
           key={m.param}
@@ -61,5 +68,5 @@ export function NavChildren(): React.ReactElement {
         </Link>
       ))}
     </div>
-  )
+  );
 }

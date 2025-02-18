@@ -1,20 +1,21 @@
-import { pageTree } from "@/app/source"
-import { RootToggle } from "fumadocs-ui/components/layout/root-toggle"
-import type { HomeLayoutProps } from "fumadocs-ui/home-layout"
-import { type DocsLayoutProps } from "fumadocs-ui/layout"
-import { NavChildren } from "./layout.client"
-import { modes } from "./lib/modes"
+import { RootToggle } from "fumadocs-ui/components/layout/root-toggle";
+import { NavChildren, useMode } from "./layout.client";
+import { modes } from "./lib/modes";
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import type { DocsLayoutProps } from "fumadocs-ui/layouts/docs";
+import { source } from "./source";
+import { Sparkles } from "lucide-react";
 
 // shared configuration
-export const baseOptions: HomeLayoutProps = {
+export const baseOptions: BaseLayoutProps = {
   githubUrl: "https://github.com/minima-global",
   nav: {
     url: "/",
     title: (
-      <div className="flex items-center gap-2 justify-center -mt-2">
+      <div className="flex items-center gap-2 justify-center mr-4">
         <svg
-          width="40"
-          height="40"
+          width="25"
+          height="25"
           viewBox="0 0 37 33"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,22 +26,58 @@ export const baseOptions: HomeLayoutProps = {
             fill="#currentColor"
           />
         </svg>
+
+        <span className="font-medium text-sm mt-1">Documentation</span>
       </div>
     ),
-    transparentMode: "top",
     children: <NavChildren />,
   },
-}
+};
 
 // docs layout configuration
 export const docsOptions: DocsLayoutProps = {
   ...baseOptions,
-  tree: pageTree,
+  tree: source.pageTree,
   sidebar: {
     collapsible: true,
     defaultOpenLevel: 1,
-    banner: (
-      <RootToggle
+
+    tabs: {
+      transform(option, node) {
+        const meta = source.getNodeMeta(node);
+        if (!meta) return option;
+
+        const color = `var(--${meta.file.dirname}-color, var(--color-fd-foreground))`;
+
+        return {
+          ...option,
+          title: <>{modes.find((m) => m.param === meta.file.dirname)?.name}</>,
+          description: (
+            <>{modes.find((m) => m.param === meta.file.dirname)?.description}</>
+          ),
+
+          icon: (
+            <div
+              className="rounded-md p-1 shadow-lg ring-2 [&_svg]:size-5"
+              style={
+                {
+                  color,
+                  border: `1px solid color-mix(in oklab, ${color} 50%, transparent)`,
+                  "--tw-ring-color": `color-mix(in oklab, ${color} 20%, transparent)`,
+                } as object
+              }
+            >
+              {node.icon}
+            </div>
+          ),
+        };
+      },
+    },
+  },
+};
+
+/**
+ *     <RootToggle
         options={modes.map((mode) => ({
           url: `/docs/${mode.param}`,
           icon: (
@@ -57,6 +94,4 @@ export const docsOptions: DocsLayoutProps = {
           description: mode.description,
         }))}
       />
-    ),
-  },
-}
+ */

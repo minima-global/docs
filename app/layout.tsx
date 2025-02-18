@@ -1,18 +1,18 @@
-import { Body } from "@/app/layout.client"
-import { Inter } from "next/font/google"
-import type { ReactNode } from "react"
-import { Provider } from "@/components/provider"
-import { headers } from "next/headers"
-import "./global.css"
-import { Metadata } from "next"
-import Observer from "@/components/observer"
+import { Body } from "@/app/layout.client";
+import { Inter } from "next/font/google";
+import type { ReactNode } from "react";
+import { Provider } from "@/components/provider";
+import { headers } from "next/headers";
+import "./global.css";
+import { Metadata } from "next";
+import Observer from "@/components/observer";
 const inter = Inter({
   subsets: ["latin"],
-})
+});
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
-const SITE_URL = "https://docs.minima.global"
+const SITE_URL = "https://docs.minima.global";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,10 +33,11 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
-export default function Layout({ children }: { children: ReactNode }) {
-  const nonce = headers().get("x-nonce")
+export default async function Layout({ children }: { children: ReactNode }) {
+  const headersList = await headers();
+  const nonce = headersList.get("x-nonce");
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <Body>
@@ -45,5 +46,5 @@ export default function Layout({ children }: { children: ReactNode }) {
         </Observer>
       </Body>
     </html>
-  )
+  );
 }
