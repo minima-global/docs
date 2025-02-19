@@ -1,11 +1,11 @@
-import { HTMLAttributes } from "react"
+import { HTMLAttributes } from "react";
 
 export const Logo = ({
   props,
   pathClassName,
 }: {
-  props: HTMLAttributes<HTMLOrSVGElement>
-  pathClassName?: string
+  props: HTMLAttributes<HTMLOrSVGElement>;
+  pathClassName?: string;
 }) => {
   return (
     <svg
@@ -45,5 +45,5 @@ export const Logo = ({
         />
       </g>
     </svg>
-  )
-}
+  );
+};

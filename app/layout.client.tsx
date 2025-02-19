@@ -49,13 +49,10 @@ export function useMode(): string | undefined {
 export function NavChildren(): React.ReactElement {
   const mode = useMode();
 
-  console.log(mode);
-
   return (
     <div
       className={cn(
-        "rounded-md p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block",
-        mode ? "lg:hidden" : "lg:block"
+        "rounded-md p-1 text-sm text-fd-muted-foreground max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2 hidden lg:block"
       )}
     >
       {modes.map((m) => (

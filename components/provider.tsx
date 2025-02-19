@@ -1,6 +1,6 @@
 "use client";
 import { RootProvider } from "fumadocs-ui/provider";
-import Script from "next/script";
+import { useTheme } from "next-themes";
 import { ReactNode, useEffect, useState } from "react";
 
 export function Provider({
@@ -12,6 +12,7 @@ export function Provider({
 }) {
   // prevent hydration error
   const [isMounted, setIsMounted] = useState(false);
+  const { theme, forcedTheme, themes } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);

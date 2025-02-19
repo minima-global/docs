@@ -57,12 +57,11 @@
 }
 
 :root {
-  --development-color: hsl(31 80% 54%);
-  --core-color: hsl(250, 80%, 54%);
-  --learn-color: hsl(161 40% 27%);
-  --run-a-node-color: hsl(215 100% 34%);
-  --user-guides-color: hsl(10 85% 55%);
-
+  --development-color: hsl(31 95% 54%);
+  --core-color: hsl(280, 90%, 65%);
+  --learn-color: hsl(161 70% 37%);
+  --run-a-node-color: hsl(215 100% 60%);
+  --user-guides-color: hsl(10 95% 60%);
 }
 
 body {

@@ -1,5 +1,6 @@
 {
   "title": "User Guides",
+  "description": "How to use Minima",
   "root": true,
   "pages": [
     "index",
@@ -19,7 +20,7 @@
     "mds/approve-transactions",
     "mds/manage-minidapps",
     "---Maxima---",
-    "maxima/maxima-contacts", 
+    "maxima/maxima-contacts",
     "maxima/advanced-maxima-options",
     "---Node Recovery---",
     "node-recovery/recovery-options",

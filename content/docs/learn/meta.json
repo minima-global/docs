@@ -1,5 +1,6 @@
 {
-  "title": "Learn",
+  "title": "Knowledge Base",
+  "description": "Learn how Minima works",
   "root": true,
   "defaultOpen": false,
   "pages": [

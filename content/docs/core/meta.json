@@ -1,8 +1,9 @@
 {
-  "title": "Core",
+  "title": "Introduction",
   "root": true,
   "tag": ["core"],
   "icon": "Sparkles",
+  "description": "Welcome to Minima",
   "pages": [
     "---About Minima---",
     "index",
