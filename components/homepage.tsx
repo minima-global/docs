@@ -1,8 +1,9 @@
-"use client"
-import { cn } from "@/app/lib/utils"
-import Link from "next/link"
-import { SparklesCore } from "./sparkles"
-import { motion } from "framer-motion"
+"use client";
+import { cn } from "@/app/lib/utils";
+import Link from "next/link";
+import { SparklesCore } from "./sparkles";
+import { motion } from "motion/react";
+
 export function DocsHomePage() {
   return (
     <div className=" bg-background relative  md:px-8 flex flex-col justify-start items-start z-20 py-10 lg:py-16  mx-auto w-full   dark:bg-grid-white/[0.2] bg-grid-black/[0.2]">
@@ -44,7 +45,7 @@ export function DocsHomePage() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 const Cards = () => {
@@ -69,8 +70,7 @@ const Cards = () => {
     },
     {
       title: "Run a node",
-      description:
-        "Install and run a full Minima node on your device.",
+      description: "Install and run a full Minima node on your device.",
       link: "/docs/run-a-node",
       icon: (
         <svg
@@ -167,7 +167,7 @@ const Cards = () => {
         </svg>
       ),
     },
-  ]
+  ];
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -184,8 +184,8 @@ const Cards = () => {
         />
       ))}
     </motion.div>
-  )
-}
+  );
+};
 
 const FeatureCards = ({
   title,
@@ -194,11 +194,11 @@ const FeatureCards = ({
   index,
   link,
 }: {
-  title: string
-  description: string
-  icon: React.ReactNode
-  index: number
-  link: string
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  index: number;
+  link: string;
 }) => {
   return (
     <motion.div
@@ -237,5 +237,5 @@ const FeatureCards = ({
         </p>
       </Link>
     </motion.div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import createMDX from "fumadocs-mdx/config"
-const withMDX = createMDX()
+import { createMDX } from "fumadocs-mdx/next";
+const withMDX = createMDX();
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -113,7 +113,6 @@ const config = {
         permanent: true,
       },
       {
-
         source: "/docs/learn/minimawhitepaper/abstract",
         destination: "/docs/core/minimawhitepaper/introduction",
         permanent: true,
@@ -129,16 +128,20 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
-        destination: "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
+        source:
+          "/docs/learn/minimawhitepaper/smartcontractstokensandtransactions",
+        destination:
+          "/docs/core/minimawhitepaper/smartcontractstokensandtransactions",
         permanent: true,
       },
       {
-        source: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
-        destination: "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
+        source:
+          "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-public-mega-wallet",
+        destination:
+          "/docs/core/minidapp-terms#section-d-minidapp-for-transacting-web-public-wallet",
         permanent: true,
-      }
-    ]
+      },
+    ];
   },
   async headers() {
     return [
@@ -151,8 +154,8 @@ const config = {
           },
         ],
       },
-    ]
+    ];
   },
-}
+};
 
-export default withMDX(config)
+export default withMDX(config);
