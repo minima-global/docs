@@ -1,5 +1,6 @@
 {
   "title": "Run a node",
+  "description": "Join the Minima network",
   "root": true,
   "pages": [
     "index",
@@ -19,8 +20,8 @@
     "---Mega Node---",
     "mega-node",
     "web-wallet",
-     "---Minima E-Gateway (MEG)---",
-     "meg-about",
-     "meg-setup"
+    "---Minima E-Gateway (MEG)---",
+    "meg-about",
+    "meg-setup"
   ]
 }

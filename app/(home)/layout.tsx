@@ -1,7 +1,7 @@
-import { HomeLayout } from "fumadocs-ui/home-layout"
-import type { ReactNode } from "react"
-import { baseOptions } from "../layout.config"
-import { Metadata } from "next"
+import type { ReactNode } from "react";
+import { baseOptions } from "../layout.config";
+import { Metadata } from "next";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
 
 export const metadata: Metadata = {
   title: {
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
-}
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
-  return <HomeLayout {...baseOptions}>{children}</HomeLayout>
+  return <HomeLayout {...baseOptions}>{children}</HomeLayout>;
 }
