@@ -160,11 +160,13 @@ OR - you can set the MINIMUM nonce value to a high enough value without copying 
 The current MAX value for all keyuses is displayed on the Admin page.
 
 
-## How to check an on-chain transaction (online)
+## How to check an on-chain transaction or block (online)
 
-Once a transaction has been posted, you can check the block number it is in and number of block confirmations it has on-chain. This can only be done within the first 24 hours from the transaction being posted. 
+Once a transaction or block has been posted, you can check its block number and number of block confirmations it has on-chain. 
 
-Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+This can only be done for as long as you have set the `-txpowdbstore` start up parameter. If not using this startup parameter, this check must be performed within the first 24 hours from the time of the transaction or block, then it is pruned.
+
+Use the `checktxpow` Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
 
 ```
 /wallet/checktxpow
@@ -185,11 +187,13 @@ The response contains
 | `confirmations` | the number of block confirmations for the transaction                       |
 
 
-## How to get a transaction (txpow) details (online)
+## How to get transaction or block (txpow) details (online)
 
-Once a transaction has been posted, you can retrieve the details of the transaction from the node using the txpowid. This can only be done within the first 48 hours from the transaction being posted, then it is pruned.
+Once a transaction or block has been posted, you can retrieve the details of the transaction or block from the node using its txpowid. 
 
-To get the transaction details, use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+This can only be done for as long as you have set the `-txpowdbstore` start up parameter. If not using this start up parameter, this check must be performed within the first 48 hours from the time of the transaction or block, then it is pruned.
+
+To get the transaction or block details, use `gettxpow` Wallet API endpoint, providing the `txpowid` of the transaction or block as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
 
 ```
 /wallet/gettxpow
