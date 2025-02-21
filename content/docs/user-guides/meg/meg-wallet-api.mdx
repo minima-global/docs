@@ -189,6 +189,8 @@ The response contains
 
 ## How to get transaction or block (txpow) details (online)
 
+**IMPORTANT: This call will also return details for orphan blocks and transactions. Use `checktxpow` to ensure the blocks or transactions is confirmed on-chain.**
+
 Once a transaction or block has been posted, you can retrieve the details of the transaction or block from the node using its txpowid. 
 
 This can only be done for as long as you have set the `-txpowdbstore` start up parameter. If not using this start up parameter, this check must be performed within the first 48 hours from the time of the transaction or block, then it is pruned.
