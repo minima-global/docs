@@ -6,11 +6,11 @@ tag: run-a-node
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs"
 
-This guide explains how to
+This guide explains how to:
 
 - Set up a MEG (Minima E-Gateway) instance and connect it to a Minima node
 - Test the MEG setup
-- Store more of the chain history on the node, if required
+- Store more of the chain history on the node, if required,
 - Export the chain history to MySQL
 
 
@@ -127,7 +127,7 @@ From the CLI, start a Minima Mega node with the following start up parameters:
 Example 
 
 ```
-java -jar [path]/minima.jar -rpcenable -megammr -notifyalltxpow -basefolder /home/minima -data /home/minima/.minima -p2pnodes megammr.minima.global:9001
+java -jar [path]/minima.jar -megammr -rpcenable -basefolder /home/minima -data /home/minima/.minima -p2pnodes megammr.minima.global:9001 -notifyalltxpow -txpowdbstore 50 -mysqlalltxpow
 ```
 
 You should see something similar to the following:
