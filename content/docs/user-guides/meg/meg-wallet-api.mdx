@@ -10,6 +10,8 @@ This does NOT access the main wallet of the Minima node and does not save any of
 
 Each API Endpoint requires certain parameters and can be sent as a POST or GET request.
 
+This guide provides essential information on the Wallet API endpoints, however to see the complete set of available endpoints, please see the Wallet API page via MEG. 
+
 ## Recommended setup
 
 When providing custodial wallet solutions for users, we highly recommend a dual-node setup, using an offline node for signing transactions and an online Mega MMR node for constructing and posting transactions, and any other actions that require on-chain information. 
@@ -33,6 +35,7 @@ For setup instructions, see the <a href="https://docs.minima.global/docs/run-a-n
 4. (Optional) An offline Minima node with RPC enabled
 
 5. (Optional) An offline instance of MEG running
+
 
 
 ## How to create a new wallet
@@ -189,24 +192,127 @@ The response contains
 
 ## How to get transaction or block (txpow) details (online)
 
-**IMPORTANT: This call will also return details for orphan blocks and transactions. Use `checktxpow` to ensure the blocks or transactions is confirmed on-chain.**
-
 Once a transaction or block has been posted, you can retrieve the details of the transaction or block from the node using its txpowid. 
 
 This can only be done for as long as you have set the `-txpowdbstore` start up parameter. If not using this start up parameter, this check must be performed within the first 48 hours from the time of the transaction or block, then it is pruned.
 
-To get the transaction or block details, use `gettxpow` Wallet API endpoint, providing the `txpowid` of the transaction or block as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+To get the transaction or block details, use `gettxpow` Wallet API endpoint, providing the `txpowid` of the transaction or `block` as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`
 
 ```
 /wallet/gettxpow
 ```
 
-Example:
+Example with `txpowid` parameter:
 ```
 curl http://127.0.0.1:8080/wallet/gettxpow -d "txpowid=0x0000170771B9339A3A80DD1B3450E932F7C4054414AC6FACA5376D83E71062F1" -X POST --user api:123
 ```
 
 The response contains the full txpow unit details.
+
+**IMPORTANT: This call will also return details for orphan blocks and transactions. Use `checktxpow` to ensure the blocks or transactions is confirmed on-chain.**
+
+Example with `block` parameter:
+```
+curl http://127.0.0.1:8080/wallet/gettxpow -d "block=1234567" -X POST --user api:123
+```
+
+The response returns the txpowid and txpow details for the block provided. This will only return blocks that are confirmed on chain.
+
+## How to read a TxPoW response
+
+A TxPoW can be a:
+
+A. block with no transactions
+
+B. block with a set of transactions (the `txnlist`)
+
+C. block that is also a transaction - with or without a separate list of transactions, the `txnlist`
+
+D. transaction only (not a block) - with or without a separate list of transactions, the `txnlist`
+
+Examples:
+
+**TxPow A - a block **with no** transactions**
+
+```
+    "txpowid":"0x0000001B8D901EA487EA6AE915EE01F46FA917AA51731193D5A7DBBE854D626D",
+    "isblock":true,
+    "istransaction":false,
+    ....
+    "txnlist":[]
+```
+
+**TxPow B - a block **with** a set of transactions**
+
+```
+    "txpowid":"0x00000015C1D07EAC6F2C43201BBB96AE2C0BA8FF793CFD754B75D06F30D1257C",
+    "isblock":true,
+    "istransaction":false,
+    ....
+    "txnlist":["0x00000FF195C79FCA9B1D1F5BC113A827CBDD1FCE0288CA5BB1A475C74274DB77",
+     "0x00000F9154AF7503039D624AAB2038975A00756EF7DDD7B1E4BEE4A3DFE9742F",
+     "0x000011A4F53AF09F2B4EA6337A9F454A1FA10E566E4B480A3E0CED7689690615"]
+```
+
+**TxPow C - a block that is also a transaction**
+
+When a block is also a transaction, you will see the inputs and outputs of the transaction in the `body`.
+
+This could also contain a list of transactions in `txnlist`.
+
+```
+    "txpowid":"0x0000001B8D901EA487EA6AE915EE01F46FA917AA51731193D5A7DBBE854D626D",
+    "isblock":true,
+    "istransaction":true,
+
+    ...
+
+     "body":{
+      "prng":"0x...",
+      "txndiff":"0x...",
+      "txn":{
+        "inputs":[{
+          ...
+        }],
+        "outputs":[{
+         ...
+        },
+
+    ...
+
+    "txnlist":[]
+```
+
+**TxPow D - a transaction only, NOT a block**
+
+When a block is also a transaction, you will see the inputs and outputs of the transaction in the `body`.
+
+This could also contain a list of transactions in `txnlist`.
+
+```
+    "txpowid":"0x00002C7846BDE0701D56C53A18A20C4044DF81FAF209173E645E2B40D5A0EA41",
+    "isblock":false,
+    "istransaction":true,
+
+    ...
+
+     "body":{
+      "prng":"0x...",
+      "txndiff":"0x...",
+      "txn":{
+        "inputs":[{
+          ...
+        }],
+        "outputs":[{
+         ...
+        },
+
+    ...
+
+    "txnlist":[]
+```
+
+
 
 ## How to estimate the burn
 
@@ -529,7 +635,7 @@ The transaction will be posted to the network.
 
 Within 24 hours of the transaction being posted, you can check the block number it is in and number of block confirmations it has on-chain.
 
-Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`) 
+Use following Wallet API endpoint, providing the `txpowid` of the transaction as a parameter - this can be found in the response from `send`, `posttxn` or `minetxn`.
 
 Node status: Online
 
@@ -542,23 +648,32 @@ Node status: Online
 </Steps>
 
 
+-----------------------------
 
 
-{/* 
 ## MySQL setup (Optional)
 
-REPLACE WITH LINK TO MYSQL PAGE
+You can connect your Minima node to a MySQL database for the purpose of recording and storing block and transaction history that would otherwise be automatically pruned from the node. This way you can always query your SQL database for transactions. 
 
-We recommend setting up a connection from your Minima node to a MySQL database for the purpose of recording and storing full block history that is automatically pruned from the node after 12 hours. 
-This way you can always query your SQL database for transactions. 
-Download and install MySQL
-Create a database called archivedb on a port of your choice
-Create a user archiveuser with full access to archivedb
-Check the connection from the Minima node to the database using the following command into the Minima terminal 
+<Callout type="info" title="Backing up transaction details to MySQL">
+By default, only compact block data will be backed up to MySQL, this will not contain detailed transaction data. To also backup detailed transaction data, you must use the `-mysqlalltxpow` startup parameter when starting the Minima node and [enable automatic backups](#how-to-enable-automatic-backups). 
+</Callout>
 
+**The commands used in this section can be created as custom endpoints in MEG.**
+
+### MySQL configuration
+
+1. Download and install MySQL
+2. Create a database called `archivedb` on a port of your choice
+3. Create a user e.g. `archiveuser` with full access to archivedb
+4. Check the connection from the Minima node to the database using the following command into the Minima terminal 
+
+```
 mysql host:127.0.0.1:3306 user:archiveuser password:archiveuserpassword database:archivedb action:info
+```
 
 You should see an output similar to the following:
+
 ```
 {
   "command":"mysql",
@@ -587,10 +702,44 @@ You should see an output similar to the following:
 }
 ```
 
-Set autobackups on, this will periodically sync blocks and txpow data from the node to the SQL database.
+For further setup guidance, see [here](/docs/user-guides/mysql/mysql-setup)
+
+
+### How to set your login details
+
+Set the MySQL login details so you don't need to type them in every time.
 
 ```
-mysql host:127.0.0.1:3306 user:archiveuser password:archiveuserpassword database:archivedb action:autobackup enable:true
+mysql action:setlogin ..LOGIN_DETAILS.. 
+```
+
+Example
+
+```bash title="Terminal"
+mysql action:setlogin host:127.0.0.1:3306 database:archivedb user:archiveuser password:youruserpassword 
+```
+
+Subsequently, you can omit the host, database, user and password parameters.
+
+
+### How to import historical data to MySQL
+
+If block level detail from Genesis is required, import historical block data from a .dat file into the MySQL database using:
+
+```bash title="Terminal"
+mysql ...LOGIN DETAILS... action:rawimport file:archiveexport.raw.dat 
+```
+
+The latest archive file can be found [here](https://spartacusrex.com/archive/).
+
+**Please note this only contains compact block data and will not contain transaction details. You will only be able to start recording complete transaction details from the point of starting your node.**
+
+### How to enable automatic backups
+
+Set autobackups on, this will periodically sync blocks and txpow data (if using the `-mysqlalltxpow` start up parameter) from the node to the SQL database.
+
+```bash title="Terminal"
+mysql ...LOGIN DETAILS... action:autobackup enable:true
 ```
 
 You should see an output similar to the following, with autobackup set to true.
@@ -613,5 +762,20 @@ You should see an output similar to the following, with autobackup set to true.
 }
 ```
 The first backup will take place within 24 hours.
-Then to query for a specific txpow (block), you can use
-mysql ..LOGIN_DETAILS.. action:findtxpow txpowid:0x00FFEEDD.. */}
+
+### How to query the MySQL database
+
+To query for a specific txpow (block), you can use:
+
+```
+mysql ..LOGIN_DETAILS.. action:findtxpow txpowid:0x00FFEEDD..
+```
+
+To check the history of all the spent and unspent coins from an address, you can use:
+
+```
+mysql ..LOGIN_DETAILS.. action:addresscheck address:Mx..
+```
+
+
+For full details of the `mysql` command, run `help command:mysql` from the Minima terminal. 

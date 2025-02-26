@@ -999,7 +999,7 @@ You can also create a coins db in MySQL to search for coins using SQL queries.
     },
     action: {
       description:
-        "action:info, action:integrity, action:update, action:addresscheck, action:autobackup, action:resync, action:wipe, action:h2export, action:h2import, action:rawexport, action:findtxpow",
+        "action:info, action:integrity, action:update, action:addresscheck, action:autobackup, action:resync, action:wipe, action:h2export, action:h2import, action:rawimport, action:rawexport, action:findtxpow",
     },
     phrase: {
       description:
@@ -1064,6 +1064,10 @@ type={{
   h2import: {
     description:
       'import an archive gzip file to the MySQL db.',
+  },
+  rawimport: {
+    description:
+      'import an archive .dat file into the MySQL db',
   },
   rawexport: {
     description:
