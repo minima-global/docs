@@ -62,9 +62,6 @@ export default async function Page(props: {
             Accordions,
             Heading,
             Link,
-            ul: (props) => (
-              <ul className=" pl-[1.6em]  indent-[-1.4em]  " {...props} />
-            ),
             SvgComponent,
             SvgComponent2,
             SvgComponentTest,
