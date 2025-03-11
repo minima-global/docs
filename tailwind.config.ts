@@ -18,16 +18,16 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--background))",
-        primaryOrange: "hsl(var(--orange))",
-        lightOrange: "hsl(var(--light-orange))",
-        lighterOrange: "hsl(var(--lighter-orange))",
-        grey: "hsl(var(--grey))",
-        grey10: "hsl(var(--grey-10))",
-        grey20: "hsl(var(--grey-20))",
-        grey40: "hsl(var(--grey-40))",
-        grey60: "hsl(var(--grey-60))",
-        grey80: "hsl(var(--grey-80))",
-        greyHighlight: "hsl(var(--grey-highlight))",
+        primaryOrange: "hsl(var(--orange-color))",
+        lightOrange: "hsl(var(--light-orange-color))",
+        lighterOrange: "hsl(var(--lighter-orange-color))",
+        grey: "hsl(var(--grey-color))",
+        grey10: "hsl(var(--grey-10-color))",
+        grey20: "hsl(var(--grey-20-color))",
+        grey40: "hsl(var(--grey-40-color))",
+        grey60: "hsl(var(--grey-60-color))",
+        grey80: "hsl(var(--grey-80-color))",
+        greyHighlight: "hsl(var(--grey-highlight-color))",
       },
 
       animation: {
