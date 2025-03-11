@@ -1,0 +1,13 @@
+runtime: nodejs20
+service: docs-staging
+
+automatic_scaling:
+  min_idle_instances: 1
+  max_idle_instances: 1
+  min_pending_latency: 250ms
+  max_pending_latency: 500ms
+
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
