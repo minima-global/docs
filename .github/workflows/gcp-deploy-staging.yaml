@@ -40,4 +40,4 @@ jobs:
 
       - name: Deploy to Google App Engine
         run: |
-          gcloud app deploy app.yaml --quiet --no-promote
+          gcloud app deploy staging.yaml --quiet
