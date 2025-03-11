@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 const FOOTER_NAV = [
   {
@@ -128,7 +128,7 @@ const FOOTER_NAV = [
       },
     ],
   },
-]
+];
 
 const Footer: React.FC = () => (
   <footer className="w-full ">
@@ -172,7 +172,7 @@ const Footer: React.FC = () => (
                   key={title}
                   className="col-span-6 mt-10 md:col-span-3 lg:mt-0"
                 >
-                  <h5 className="mb-4 font-semibold text-lightOrange">
+                  <h5 className="mb-4 font-semibold text-light-orange">
                     {title}
                   </h5>
                   <ul className="flex flex-col gap-2.5 lg:gap-2 xl:gap-3">
@@ -181,7 +181,7 @@ const Footer: React.FC = () => (
                         <Link
                           target={external ? "_blank" : "_self"}
                           href={href}
-                          className="text-grey40 hover:text-white"
+                          className="text-grey-40 hover:text-white"
                         >
                           {title}
                         </Link>
@@ -217,7 +217,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 45 45"
                   fill="none"
@@ -233,7 +233,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 46 45"
                   fill="none"
@@ -253,7 +253,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 45 45"
                   fill="none"
@@ -273,7 +273,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 45 44"
                   fill="none"
@@ -294,7 +294,7 @@ const Footer: React.FC = () => (
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   viewBox="0 0 1226.5 1227"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                 >
                   <g>
                     <g id="Layer_1">
@@ -313,7 +313,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 45 45"
                   fill="none"
@@ -329,7 +329,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 46 45"
                   fill="none"
@@ -349,7 +349,7 @@ const Footer: React.FC = () => (
               >
                 <svg
                   width="45"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                   height="45"
                   viewBox="0 0 45 45"
                   fill="none"
@@ -376,7 +376,7 @@ const Footer: React.FC = () => (
                   viewBox="0 0 96 96"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-lightOrange"
+                  className="h-[32px] w-[32px] cursor-pointer fill-grey transition-colors hover:fill-light-orange"
                 >
                   <g
                     id="Page-1"
@@ -409,6 +409,6 @@ const Footer: React.FC = () => (
       </div>
     </div>
   </footer>
-)
+);
 
-export default Footer
+export default Footer;

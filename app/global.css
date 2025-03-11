@@ -11,6 +11,17 @@
 }
 
 @theme {
+  --color-orange: hsl(19, 100%, 51%);
+  --color-light-orange: hsl(25, 100%, 59%);
+  --color-lighter-orange: hsl(32, 100%, 64%);
+  --color-grey: hsl(240, 6%, 59%);
+  --color-grey-10: hsl(240, 5%, 96%);
+  --color-grey-20: hsl(240, 5%, 92%);
+  --color-grey-40: hsl(240, 6%, 84%);
+  --color-grey-60: hsl(240, 4%, 48%);
+  --color-grey-80: hsl(240, 5%, 67%);
+  --color-grey-highlight: hsl(240, 12%, 22%);
+
   @keyframes stroke {
     from {
       stroke-dasharray: 1000;
