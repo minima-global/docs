@@ -106,7 +106,7 @@ const FOOTER_NAV = [
         key: "developer-hub",
         title: "Developer hub",
         external: true,
-        href: "https://build.minima.global/resources",
+        href: "https://docs.minima.global/docs/development",
       },
       {
         key: "grants-program",
