@@ -143,7 +143,7 @@ const Footer: React.FC = () => (
               The only Layer 1 to run a full node on any device
             </p>
             <p className="mb-4 text-xs text-grey">
-              All rights reserve Minima AG &copy;2024.
+              All rights reserve Minima AG &copy;{new Date().getFullYear()}.
             </p>
             <div className="flex gap-2 text-xs text-grey lg:flex-col xl:flex-row">
               <Link
