@@ -5,7 +5,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "pm2": "pm2 start npm --name \"minima-docs\" -- start"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.0",
