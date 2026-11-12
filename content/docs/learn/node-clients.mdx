@@ -1,0 +1,63 @@
+---
+title: Node Clients
+description: The different apps you can use to run a Minima node, official and community-built
+tag: learn
+---
+
+## What is a node client?
+
+A **node client** is the software that runs a Minima node. Every client runs the same Minima protocol on the same network, so they all agree on the same chain and the same coins. They differ in what else they include and which devices they run on.
+
+There are two official clients, **Minima Classic** and **Minima Core**, plus community builds of Minima Core.
+
+## Official clients
+
+| | Minima Classic | Minima Core |
+|---|---|---|
+| Made by | Minima Global | Spartacus Rex |
+| What it runs | The full node, plus [MiniDapps](/docs/learn/minidapps-about) and [Maxima](/docs/learn/maxima-about) | The full node only – "just the chain" |
+| Apps | MiniDapps, installed inside the node | [Android apps](/docs/learn/android-apps) that connect to the node |
+| Key uses | Standard key-use counter | [Block number as key uses](/docs/run-a-node/minima-core#block-number-as-key-uses) on Android; the standard counter from the command line, unless you add `-blockaskeyuses` |
+| Runs on | Android, Windows, Mac, Linux, Docker | Android, or any computer with Java |
+| Get it | [Run a node](/docs/run-a-node) | [Google Play](https://play.google.com/store/apps/details?id=org.minima.core), or see [Minima Core](/docs/run-a-node/minima-core) |
+| Source code | [minima-global/Minima](https://github.com/minima-global/Minima) | [spartacusrex-minima/minima-core](https://github.com/spartacusrex-minima/minima-core) |
+
+<Callout title="The same seed phrase gives different addresses" type="warn">
+  Clients that use block number as key uses (official Minima Core on Android,
+  BlackBear, and Pandamonium by default) create a larger key for each address.
+  The same seed phrase therefore gives **different addresses** than it does in
+  Minima Classic. Clients with the standard counter (Minima Classic, Minima Core
+  from the command line, minimaCore Desktop and PandaBear) all give the same
+  addresses. Restoring your
+  seed phrase in Minima Core does not move coins from your Minima Classic
+  addresses. Move your coins first by sending them to an address on the new node.
+</Callout>
+
+## Community builds
+
+Community developers build their own versions of Minima Core with extra features. These builds are not made or checked by Minima Global.
+
+<Callout title="Use community builds at your own risk" type="info">
+  Community builds are open source and provided as-is, with no warranty. They
+  are still in active development and hold real keys and funds. Read the
+  source code, back up your seed phrase, and start with small amounts.
+</Callout>
+
+### eurobuddha's Panda builds
+
+Community developer [eurobuddha](https://eurobuddha.com) publishes these builds of Minima Core, along with a family of [Android apps](/docs/learn/android-apps) that work with them. Source code is on [eurobuddha's GitHub](https://github.com/eurobuddha).
+
+| Build | Runs on | What's different |
+|---|---|---|
+| **PandaBear** | Android | Minima Core with the standard (classic) key-use counter, so it keeps your Minima Classic addresses |
+| **BlackBear** | Android | Minima Core with block number as key uses and a low-memory startup, both always on |
+| **Pandamonium** | Android | Minima Core with apps built in, including Keets chat, AtomiX swaps, an Ethereum wallet, NFT wallets, Future Cash Next, MiniMall, Atelier, Salon and the Minima Faucet. Block number as key uses and low-memory startup are on by default. Its built-in Minima Wallet can derive both standard and block-number-as-key-uses addresses from your seed phrase |
+| **minimaCore Desktop** | Mac, Windows, Linux | A desktop version of Spartacus Rex's Minima Core for Android, with a built-in wallet, terminal and history. It uses the standard key-use counter, so it shows the same addresses as Minima Classic |
+
+Find out more and download these builds at [eurobuddha.com](https://eurobuddha.com).
+
+<Callout title="Run one node client at a time" type="warn">
+  Don't run two Minima Core builds on the same phone at once. To move from one
+  build to another, back up your node, shut down the old build, then restore
+  the backup in the new one.
+</Callout>

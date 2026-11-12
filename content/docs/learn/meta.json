@@ -24,7 +24,10 @@
     "maxima-messaging",
     "maxima-mls",
     "maxima-faq",
-    "---MiniDapps---",
-    "minidapps-about"
+    "---Node Clients---",
+    "node-clients",
+    "---Layer 3 Apps---",
+    "minidapps-about",
+    "android-apps"
   ]
 }

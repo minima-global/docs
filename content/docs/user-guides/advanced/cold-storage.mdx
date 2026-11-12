@@ -48,7 +48,7 @@ No internet connection/bluetooth/nearby sharing should be enabled. This device w
 3. Start a new Minima node. Your private keys will be generated but as it is not connected to the internet, it will NOT connect to the chain.
 
 4. Using the command line interface where the Minima logs are running or the Docker Terminal, run the `vault` command to view your 24-word seed phrase and the seed itself.
-   If using a phone as your offline device, you can also go to the **Vault** page and view your seed from the menu there.
+   If using a phone as your offline device, you can also view your seed phrase in the **Security** MiniDapp.
 
 Example:
 
@@ -130,6 +130,13 @@ vault action:restorekeys phrase:"YOUR 24 WORDS HERE"
   device.
 </Callout>
 
+<Callout title="Keep your key uses up to date" type="info">
+  Restoring a backup adds a safety margin of 256 to your key uses. If you sign
+  many transactions on your offline device (more than about 250 with the same
+  key), take a fresh backup of the offline node, with its keys password-locked,
+  so a replacement device starts from your latest key uses.
+</Callout>
+
 ```bash title="Terminal"
 vault action:passwordlock password:setvaultpassword confirm:setvaultpassword
 ```
@@ -158,7 +165,7 @@ To send funds from your wallet, you will need to use both devices.
 
 ### Transacting
 
-To make a transaction when using the Cold Storage solution, there are 5 steps. You will need to use the Terminal MiniDapp,Docker Terminal, or your desktop Command Line where Minima is running:
+To make a transaction when using the Cold Storage solution, there are 5 steps. You will need to use the Terminal MiniDapp, Docker Terminal, or your desktop Command Line where Minima is running:
 
 1. On the online node, use the `sendnosign` command to create a transaction file, sending the amount you wish to send to your chosen recipient's address
 2. Transfer the unsigned transaction file to the offline device
@@ -216,7 +223,7 @@ sendsign file:/home/minima/data/unsignedtransaction-1672851796504.txn password:y
 {
   "command":"sendsign",
   "params":{
-    "file":"/home/minima/data/unsignedtransaction-1672851796504.txn"
+    "file":"/home/minima/data/unsignedtransaction-1672851796504.txn",
     "password":"yourvaultpassword"
   },
   "status":true,
@@ -239,7 +246,7 @@ and then use
 sendsign file:......
 ```
 
-then,relock your node using:
+then relock your node using:
 
 ```bash title="Terminal"
 vault action:passwordlock password:yourvaultpassword confirm:yourvaultpassword

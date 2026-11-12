@@ -11,6 +11,14 @@ Please note that not all parameters will be applicable for all platforms.
 
 For docker, these must be converted to environment variables, e.g. `-e minima_clean=true` please see the [Docker](/docs/run-a-node/docker-desktop) guide for details.
 
+<Callout title="Minima Classic and Minima Core">
+  These are the startup options for **Minima Classic**. [Minima
+  Core](/docs/run-a-node/minima-core) accepts the options on this page except
+  `-rpcssl` (Minima Core has no RPC encryption option). The MiniDapp System
+  options are accepted by Minima Core but do nothing, because it has no
+  MiniDapp System.
+</Callout>
+
 ## General
 
 | Parameter            | Description                                                                                       |
@@ -27,6 +35,8 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-desktop`          | Use Desktop settings - this node can't accept incoming connections                                |
 | `-rescuenode`       | If you connect to a heavier chain, use this MegaMMR node to resync                                |
 | `-seed`             | Use this seed phrase if starting a new node                                                        |
+| `-anyseed`          | Use this seed (any phrase - it does not have to be BIP39 words) when starting a new node            |
+| `-megammr`          | Run a Mega MMR node - stores all unspent coins and their proofs, so other nodes can resync from it  |
 
 ## Config
 
@@ -36,6 +46,23 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-basefolder`     | Sets a default folder for file creation, backup, and restore. Default is the home directory.      |
 | `-conf`           | Specifies an absolute path to a configuration file.                                               |
 
+## Network
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-p2pnodes [list or URL]` | A list of nodes (or a URL to a file with the list) to use if your peers list is empty, e.g. `-p2pnodes megammr.minima.global:9001` |
+| `-p2prootnode [host:port]` | Specify the initial P2P host:port to connect to                                                  |
+| `-p2p2`             | Enable the new P2P2 system                                                                                |
+| `-allowgenmessage`  | Allow simple messages sent from peers                                                                     |
+
+## Mega MMR nodes
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-megaprune`        | Prune unspendable addresses from the Mega MMR                                                             |
+| `-megaprunestate`   | Prune all coins with a state (useful for exchanges)                                                       |
+| `-megaprunetokens`  | Prune all tokens - only keep Minima coins                                                                 |
+
 ## Transaction (TxPoW) management
 
 | Parameter         | Description                                                                                                     |
@@ -43,6 +70,14 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-txpowdbstore`     | How many days to store TxPoW in the internal H2 Database (default 3)                              |
 | `-notifyalltxpow`   | Creates a NEWTXPOW notification for all transactions/blocks                                               |  
 | `-mysqlalltxpow`    | Store all TxPoW in MySQL when mysql autobackup is enabled                                           |
+
+## MySQL
+
+| Parameter            | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `-mysqldb [user:password@host:port/database]` | Save these MySQL login details and turn on automatic backups, e.g. `archiveuser:youruserpassword@127.0.0.1:3306/archivedb` |
+| `-mysqldbcoins`     | Enable the MySQL coins database backup from the command line                                              |
+| `-mysqldbdelay [ms]` | When running in Docker: delay in milliseconds before the first MySQL connection                          |
 
 ## MiniDapp System
 
@@ -55,6 +90,7 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-nodefaultminidapps` | Do NOT install the default MiniDAPPs                                                                     |
 | `-publicmdsuid`     | Set your own Session ID for the Public MiniDAPP System  (Mega MMR nodes only)                                                  |
 | `-nosslmds`         | Disable the self signed SSL cert for MDS. Use STunnel or your own SSL proxy instead.                      |
+| `-publicmds`        | Enable the Public MiniDapp System from the command line (Mega MMR nodes)                                  |
 
 
 ## RPC
@@ -64,7 +100,8 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-rpcenable`        | Enable remote procedure call                                                                              |
 | `-rpcssl`           | Use Self Signed SSL cert to run RPC                                                                       |
 | `-rpcpassword [yourrpcpassword]` | Set Basic Auth password for RPC calls (Use with SSL / stunnel). Only secure if used with SSL. |
-| `-rpcclrf`          | Use CRLF at the end of the RPC headers (NodeJS)                                                           |
+| `-rpccrlf`          | Use CRLF at the end of the RPC headers (NodeJS)                                                           |
+| `-rpc [port]`       | Specify the RPC port (default: base port + 4)                                                             |
 
 ## Test nodes
 
@@ -87,6 +124,7 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-limitbandwidth` | Limit the amount sent for archive sync                                                                        |
 | `-noshutdownhook` | Do not use the shutdown hook (Android)                                                                        |
 | `-slavenode`      | Connect to the node on the given ip:port only and only accept TxBlock messages                                                   |
+| `-sqlcoindb`        | For low-RAM systems: use a SQL coin database in the TxPoW tree                                            |
 
 ## Debuggings
 
@@ -95,6 +133,9 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 | `-p2p-log-level-info` | Set the P2P log level to info                                                                           |
 | `-p2p-log-level-debug` | Set the P2P log level to debug                                                                         |
 | `-syncibdlogs`        | Show detailed SYNC_IBD logs                                                                             |
+| `-shownetcalls`     | Show all the network calls                                                                                |
+| `-shownetcallsnopoll` | Show all the network calls except poll messages                                                         |
+| `-dbignorelocks`    | Debug option to stop database lock checking                                                               |
 
 
 ## Help
@@ -103,3 +144,4 @@ For docker, these must be converted to environment variables, e.g. `-e minima_cl
 |----------------------|-----------------------------------------------------------------------------------------------------------|
 | `-showparams`       | Show relevant startup params on launch                                                                    |
 | `-help`             | Print help for the startup parameters                                                                     |
+| `-jnlp`             | Used internally by the JNLP desktop launcher                                                              |

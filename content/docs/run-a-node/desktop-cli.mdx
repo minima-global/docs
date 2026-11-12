@@ -4,7 +4,7 @@ description: Run a Minima node on your desktop using the command line interface
 tag: run-a-node
 ---
 
-<Callout type="warn" title="Ensure that Minima running">
+<Callout type="warn" title="Keep Minima running">
 
 The following process is for running a Minima node manually from your command line/terminal interface. Closing the terminal window or turning off your computer will stop Minima running.
 
@@ -107,7 +107,7 @@ Enter the password you set as your `-mdspassword` when starting the node.
 Mac: 
 
 ```bash 
-sudo java -jar minima.jar -data .minima -p2pnodes megammr.minima.global:9001
+java -jar minima.jar -data .minima -p2pnodes megammr.minima.global:9001
 ```
 
 Windows:
@@ -256,8 +256,7 @@ You may now use the Terminal MiniDapp to execute all commands. You will no longe
   To create a fresh install of a node -clean can be added on to the end of the
   start up command DO NOT use -clean if you are simply restarting your node,
   your coins will be wiped and you will only be able to recover them from a
-  backup! e.g. java -jar C:\Users\Username\Downloads\minima.jar -mdsenable
-  -clean
+  backup! e.g. `java -jar minima.jar -data .minima -mdsenable -mdspassword INSERTPASSWORD -clean`
 </Callout>
 
 ## How to remove your node
@@ -271,7 +270,6 @@ You may now use the Terminal MiniDapp to execute all commands. You will no longe
 2. Delete the minima.jar file you downloaded
 3. Remove the minima database files located in your home directory or the directory you specified at startup with the `-data` parameter (you may need to show hidden files)
 
-Once your node running, you will need to [join the network](/docs/user-guides/join-the-network).
 
 ## Additional Resources
 

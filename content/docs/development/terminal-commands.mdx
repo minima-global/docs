@@ -753,7 +753,7 @@ archive action:resync host:89.98.89.98:8888 phrase:"YOUR 24 WORD SEED PHRASE"
 ```
 
 ```bash title="Terminal"
-archive action:resync host:89.98.89.98:8888 phrase:"YOUR 24 WORD SEED PHRASE" keys:90 keyuses:2000
+archive action:resync host:89.98.89.98:8888 phrase:"YOUR 24 WORD SEED PHRASE" keys:64 keyuses:2000
 ```
 
 ```bash title="Terminal"
@@ -1088,7 +1088,7 @@ mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepa
 ```
 
 ```bash title="Terminal"
-mysql host:dockermysql database:archivedb user:archiveuser password:archivepassword action:info
+mysql host:minimysql database:archivedb user:archiveuser password:archivepassword action:info
 ```
 
 ```bash title="Terminal"
@@ -1108,7 +1108,7 @@ mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepa
 ```
 
 ```bash title="Terminal"
-mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync phrase:"24 WORDS HERE" keys:90 keyuses:2000
+mysql host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword action:resync phrase:"24 WORDS HERE" keys:64 keyuses:2000
 ```
 
 </Accordion>
@@ -1196,15 +1196,15 @@ Parameters used with the `action:` parameter:
 Examples:
 
 ```bash title="Terminal"
-mysqlcoins action:update maxcoins:100 host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
+mysqlcoins action:update maxcoins:100 host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword
 ```
 
 ```bash title="Terminal"
-mysqlcoins action:search where:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103'" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
+mysqlcoins action:search where:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103'" host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword
 ```
 
 ```bash title="Terminal"
-mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103' AND state LIKE '%0xFFEEDD%' LIMIT 10" host:127.0.0.1:3307 database:coinsdb user:myuser password:myuser
+mysqlcoins action:search query:"address='0x791E78C60652B0E19B8FE9EB035B122B261490C477FD76E38C0C928187076103' AND state LIKE '%0xFFEEDD%' LIMIT 10" host:mysqlhost:port database:archivedb user:archiveuser password:archivepassword
 ```
 
 </Accordion>

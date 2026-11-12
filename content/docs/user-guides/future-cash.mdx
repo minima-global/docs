@@ -1,0 +1,107 @@
+---
+title: Future Cash
+description: Lock MINIMA until a future date and have it collected automatically
+tag: user-guides
+---
+
+## What is Future Cash?
+
+Future Cash lets you **send money to the future**. You lock MINIMA so that it can only be spent after a date you choose:
+
+- **for yourself** – savings you can't touch early, or
+- **for someone else** – for example, a gift that unlocks on their birthday.
+
+The lock is a [smart contract](/docs/development/future-cash) on the Minima blockchain. **Once locked, nobody can unlock it early, not even you.** When the date arrives, the coins can only be paid to the address chosen when they were locked.
+
+Future Cash is built by community developer **eurobuddha**. This version adds a **Guardian** that collects matured payments for you automatically and protects them from key reuse.
+
+## Get Future Cash
+
+| Your node | Install |
+|---|---|
+| Minima Classic (MiniDapps) | **Already installed**: Minima 1.0.49 comes with the **Future Cash** MiniDapp (version 3.1.21). Newer versions are in the PandaDapps store at [eurobuddha.com/store](https://eurobuddha.com/store/) |
+| [Minima Core](/docs/run-a-node/minima-core) on Android | The **Future Cash Next** app from PandaApps, or from the [releases page](https://github.com/eurobuddha/futurecash-next-apk/releases/latest) |
+
+Both versions use the same contract, so a payment locked in one can be collected by the other. There is also an [official Future Cash user guide](https://minidapps.minima.global/futurecash/guide.html), linked from inside the MiniDapp.
+
+<Callout title="Switch the MiniDapp to WRITE" type="info">
+  On Minima Classic, open **MiniHub**, find **Future Cash** and set it to
+  **WRITE**. The Guardian collects payments in the background without asking
+  you, which needs WRITE permission. In READ mode every action waits for your
+  approval, and automatic collecting can't work. On Minima Core, switch
+  **Future Cash Next** on in **Minima Core → Apps** and mark it as **admin**,
+  because collecting a payment means signing a transaction.
+</Callout>
+
+## Lock a payment
+
+<Steps>
+<Step>
+### Enter the amount
+
+Open the **Stakes** tab and enter how much MINIMA to lock.
+</Step>
+<Step>
+### Choose when it unlocks
+
+Pick a date and time, or use the quick buttons (+1 hour, day, week or month). You can also enter a number of blocks; one block is about 52 seconds on average.
+</Step>
+<Step>
+### Choose who it pays
+
+- **Me** – Future Cash picks a fresh, unused address on your node. This is the recommended option.
+- **Someone else** – paste their Mx… address. Ask them to install Future Cash too, so their Guardian collects it when it unlocks.
+</Step>
+<Step>
+### Lock it
+
+Check the amount and date, then press **Lock it**. This can't be undone. The payment appears under **Pending** with a countdown.
+</Step>
+</Steps>
+
+## Automatic collecting
+
+When a payment unlocks, the **Guardian** collects it for you. It runs whenever your node is running, even when the app is closed, and checks your payments on every new block.
+
+Before collecting, the Guardian checks the address the payment unlocks to:
+
+| The address is… | What the Guardian does |
+|---|---|
+| **Clean** – its one-time keys have not been reused | Collects the payment to that address |
+| **At risk** – its keys have been reused | Collects the payment and immediately moves it on to a safe address you have chosen, then checks it arrived |
+| **Not checked yet** | Waits. The coins stay locked in the contract, where they are safe |
+
+Prefer to do it yourself? Every unlocked payment has a **Collect now** button, and the Guardian tab has **Collect all now**.
+
+### Why the Guardian checks for key reuse
+
+Minima signs with **one-time keys**. If an address's key has been used to sign more than once, part of its private key can leak, and coins landing there could be taken. See [Block number as key uses](/docs/run-a-node/minima-core#block-number-as-key-uses) for how keys come to be reused.
+
+To check, Future Cash sends your node's **public keys and addresses** to an online audit service. Public keys can't be used to spend your coins. Your private keys and seed phrase never leave your node. If the service can't be reached, the Guardian keeps using its last result and re-checks against your node's own key counters.
+
+## If you see a key-reuse warning
+
+Your coins are still yours. The **Rescue your at-risk stakes** panel offers two options:
+
+- **Quick sweep** (the usual choice) – each at-risk payment is collected and moved to a safe place. Choose a fresh, unused address on this node, or, for the strongest protection, an address from a different seed phrase. Future Cash refuses a destination address that has already been reused.
+- **Full seed migration** – if many of your addresses have been reused, move everything to a new seed phrase. Future Cash walks you through this using the AnyPhraseRecovery MiniDapp.
+
+If you use a vault password, the Guardian can't sign while your vault is locked. It will show **vault locked** and wait.
+
+## If a payment unlocked but wasn't collected
+
+The Guardian tab always says what it is waiting for. The most common reasons are:
+
+1. The MiniDapp is in **READ** mode – switch it to WRITE in MiniHub.
+2. The key check is out of date – open the app or press **Re-audit**.
+3. An at-risk payment has no safe destination set, or your vault is locked.
+4. Your chosen safe destination has since been reused – set a new one.
+5. Automatic collecting is switched off – press **Collect now**.
+
+Nothing is lost by waiting: unlocked coins stay in the contract until they are collected, and can only ever be paid to the address chosen when they were locked.
+
+## Related
+
+- [Future Cash contract](/docs/development/future-cash) – how the time-lock contract works
+- [Keys and signatures](/docs/learn/keys-signatures)
+- [Lock your wallet](/docs/user-guides/security/lock-your-wallet)

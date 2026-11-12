@@ -19,6 +19,8 @@
     "mds/minidapp-permissions",
     "mds/approve-transactions",
     "mds/manage-minidapps",
+    "---Apps---",
+    "future-cash",
     "---Maxima---",
     "maxima/maxima-contacts",
     "maxima/advanced-maxima-options",

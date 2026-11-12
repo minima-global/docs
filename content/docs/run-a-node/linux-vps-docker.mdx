@@ -154,15 +154,13 @@ height={500}
 
 ### Start the container
 
-Set your password below to at least 12 characters using alphanumeric characters and symbols.
-
 <Callout title="Password" type="info">
   Set your password below to at least 12 characters using alphanumeric
   characters and symbols.
 </Callout>
 
 ```bash title="Terminal"
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_server=true -v ~/minimadocker9001:/home/minima/data -p 9001:9001 -p 127.0.0.1:9003:9003 --restart unless-stopped --name minima9001 minimaglobal/minima:latest
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_server=true -v ~/minimadocker9001:/home/minima/data -p 9001-9003:9001-9003 --restart unless-stopped --name minima9001 minimaglobal/minima:latest
 ```
 
 
@@ -172,7 +170,7 @@ docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_server=true -v ~/mi
   
   - `-d` - Daemon mode, Minima will run in the background
   - `-e minima_mdspassword=INSERTPASSWORD` - Sets the password to login to your node
-  - `-e minima_desktop=true` - Sets your node type as a desktop node that does not receive incoming connections
+  - `-e minima_server=true` - Sets your node type as a server node that accepts incoming connections on port 9001, so it acts as a relay node for the network
   - `-v ~/minimadocker9001:/home/minima/data` - Maps the Minima data directory to a local directory
   - `-p 9001-9003:9001-9003` - Maps the Minima ports to the host machine
   - `--restart unless-stopped` - Restarts the container if it stops
@@ -186,21 +184,18 @@ The following start up parameters can optionally be specified when starting your
   To add/remove parameters after a node has been started, you must stop and
   remove your minima9001 Docker container, then start it again, adding/removing
   the required parameters in front of `-v ~/minimadocker9001:/home/minima/data`.
-  As long as you use the same minimadocker8001 folder, your previous node will
+  As long as you use the same minimadocker9001 folder, your previous node will
   be preserved but will use different parameters.
 </Callout>
 
 <Heading as="h4">General</Heading>
 
 - `-e minima_clean=true` - **CAREFUL!** Clears existing data, starts a new fresh node. All coins will be lost.
-- `e minima_host=ipaddress` - specify the host IP
-- `minima_dbpassword=yourdbpassword` - Main Wallet / SQL AES password - MUST be specified on first launch. CANNOT be changed later.
-- `minima_allowallip=true` - Allow all IPs for Maxima / Networking. Local IPs won't be allowed otherwise.
-- `minima_archive=true` - Run an Archive node - store all archive data / the cascade to allow for resyncs from this node
-- `minima_isclient=true` - Tells the P2P System that this node can't accept incoming connections
-- `minima_server=true` - Use Server settings - this node can accept incoming connections
-- `minima_desktop=true` - Use Desktop settings - this node can't accept incoming connections
-- `minima_connect=ip:port` - Disable the automatic P2P system and create your own network by manually connecting to this list of host:port
+- `-e minima_host=ipaddress` - specify the host IP
+- `-e minima_dbpassword=yourdbpassword` - Main Wallet / SQL AES password - MUST be specified on first launch. CANNOT be changed later.
+- `-e minima_allowallip=true` - Allow all IPs for Maxima / Networking. Local IPs won't be allowed otherwise.
+- `-e minima_archive=true` - Run an Archive node - store all archive data / the cascade to allow for resyncs from this node
+- `-e minima_connect=ip:port` - Disable the automatic P2P system and create your own network by manually connecting to this list of host:port
 
 <Heading as="h4">MiniDapp System (MDS)</Heading>
 
@@ -212,7 +207,7 @@ The following start up parameters can optionally be specified when starting your
 - `-e minima_rpcenable=true/false` - enable remote procedure call. Disabled by default.
 - `-e minima_rpcssl=true` - use Self Signed SSL cert to run RPC
 - `-e minima_rpcpassword=yourrpcpassword` - set Basic Auth password for RPC calls ( Use with SSL / stunnel ). Only secure if used with SSL.
-- `-e minima_rpcclrf=true` - use CRLF at the end of the RPC headers (NodeJS)
+- `-e minima_rpccrlf=true` - use CRLF at the end of the RPC headers (NodeJS)
 
 <Heading as="h4">Help</Heading>
 
@@ -248,6 +243,20 @@ sudo systemctl enable containerd.service
 
 </Step>
 
+<Step>
+
+### Remove admin rights from the minima user
+
+The minima user no longer needs sudo (admin) rights. Log out of the minima user with `exit`, then from your own admin account run:
+
+```bash title="Terminal"
+sudo deluser minima sudo
+```
+
+The minima user can still run Docker, because it is in the `docker` group.
+
+</Step>
+
 </Steps>
 
 Your node is now installed & running!
@@ -259,9 +268,17 @@ Congratulations! Your Node is up and running. Continue to [install the Watchtowe
 
 1. Start a Watchtower container to **automatically update Minima when a new version is available.**
 ```bash title="Terminal"
-docker run -d --restart unless-stopped --name watchtower -e WATCHTOWER_CLEANUP=true -e WATCHTOWER_TIMEOUT=60s -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower
+docker run -d --restart unless-stopped --name watchtower -e DOCKER_API_VERSION=1.44 -e WATCHTOWER_CLEANUP=true -e WATCHTOWER_TIMEOUT=60s -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower
 ```
 Every 24 hours, the Watchtower will check whether there is a new version of Minima and will update if so. 
+
+<Callout title="Docker 29 and later" type="warn">
+  Watchtower is no longer maintained (its project was archived in December
+  2025). On Docker 29 and later it only works with the `-e
+  DOCKER_API_VERSION=1.44` setting shown above. If your Docker is older than
+  version 25, remove that setting.
+</Callout>
+
 
 <ImageZoom
 src="/img/runanode/docker_vps_16startwatchtower.png"
@@ -289,7 +306,9 @@ Next, access your MiniDapp hub and secure your node.
 
 <Heading as="h3">Login</Heading>
 
-To login to your node, open a web browser and navigate to [`https://localhost:9003`](`https://localhost:9003`) .
+To login to your node, open a web browser and navigate to **https://YourServerIP:9003/**
+
+Docker bypasses UFW, so use your VPS provider's firewall to allow port 9003 from your home IP address only (see [Setup your Firewall](#setup-your-firewall)).
 
 <Callout type="warn">
   The first time accessing your Minima node, you may need to pass through the
@@ -315,9 +334,8 @@ height={500}
 Enter the password you set when starting your Minima node to login.
 
 <Callout title="Dont remember your password?">
-  To check your password, click on the name of your Minima node (e.g.
-  minima9001) in Docker desktop. On the **Inspect** tab, check the parameter for
-  **mdspassword**.
+  To check your password, run `docker inspect minima9001 | grep minima_mdspassword`
+  on the server.
 </Callout>
 
 Please see the [first steps](#first-steps) to complete now your node is running.
@@ -379,7 +397,7 @@ docker stop minima9001
 docker rm minima9001
 ```
 
-2. Repeat step 6 from [Start your node,](#start-your-node) with a different password. Your password should be at least 12 characters using alphanumeric characters and symbols
+2. Repeat step 6 (**Start the container**) from [Setting up your node](#setting-up-your-node) with a different password. Your password should be at least 12 characters using alphanumeric characters and symbols
 
 <Callout title="Note" type="info">
 Deleting the container will not delete the **minimadocker9001** data folder so your coins will be safe during this process.
@@ -406,7 +424,7 @@ The additional test parameters used are:
 
 </Accordion>
 
-<Accordion title="How to enable RPC (advanced users)">
+<Accordion id="enable-rpc" title="How to enable RPC (advanced users)">
 
 <Callout title="RPC Access" type="warn">
   Only enable RPC if you understand the risks and have appropriate firewalls in
@@ -418,19 +436,19 @@ By default Minima is installed on ports 9001-9005. The default RPC port is 9005.
 If enabling RPC by opening the 9005 port, use the following additional parameters and set an RPC password for connecting over RPC on the start up line. You will only be able to use RPC commands if SSH'd into the server.
 
 ```bash title="Terminal"
--e minima_rpcpassword=INSERTRPCPASSWORD -p 9001-9003:9001-9003 -p 127.0.0.1:9005:9005
+-e minima_rpcenable=true -e minima_rpcpassword=INSERTRPCPASSWORD -p 9001-9003:9001-9003 -p 127.0.0.1:9005:9005
 ```
 
 Example:
 
 ```bash title="Terminal"
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_rpcpassword=INSERTRPCPASSWORD -e minima_server=true -v ~/minimadocker9001:/home/minima/data -p 9001-9003:9001-9003 -p 127.0.0.1:9005:9005 --restart unless-stopped --name minima9001 minimaglobal/minima:latest
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_rpcenable=true -e minima_rpcpassword=INSERTRPCPASSWORD -e minima_server=true -v ~/minimadocker9001:/home/minima/data -p 9001-9003:9001-9003 -p 127.0.0.1:9005:9005 --restart unless-stopped --name minima9001 minimaglobal/minima:latest
 ```
 
 On a second node running on ports 8001-8005, this would be:
 
 ```bash title="Terminal"
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_rpcpassword=INSERTRPCPASSWORD -e minima_server=true -v ~/minimadocker8001:/home/minima/data -p 8001-8003:9001-9003 -p 127.0.0.1:8005:9005 --restart unless-stopped --name minima8001 minimaglobal/minima:latest
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_rpcenable=true -e minima_rpcpassword=INSERTRPCPASSWORD -e minima_server=true -e minima_port=8001 -v ~/minimadocker8001:/home/minima/data -p 8001-8003:8001-8003 -p 127.0.0.1:8005:8005 --restart unless-stopped --name minima8001 minimaglobal/minima:latest
 ```
 
 <Heading as="h4"> Accessing the Minima RPC client via Docker</Heading>
@@ -468,7 +486,7 @@ curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/help | jq
 However, if you wish to check your node from an external computer, you must use SSH with each command.
 
 ```bash title="Terminal"
-ssh root@YourServerIP curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/status
+ssh minima@YourServerIP curl -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/status
 ```
 
 **Each request will also require your server password.**
@@ -482,14 +500,18 @@ ssh root@YourServerIP curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/status
 To create a node on port 8001:
 
 ```bash title="Terminal"
-docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -v ~/minimadocker8001:/home/minima/data -p 8001-8003:9001-9003 --restart unless-stopped --name minima8001 minimaglobal/minima:latest
+docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_server=true -e minima_port=8001 -v ~/minimadocker8001:/home/minima/data -p 8001-8003:8001-8003 --restart unless-stopped --name minima8001 minimaglobal/minima:latest
 ```
+
+`-e minima_port=8001` makes the node use ports 8001-8005 inside the container too. Nodes tell each other which port to connect on, so this lets other nodes reach your second node and lets it act as a relay node. In your VPS provider's firewall, allow inbound connections on port 8001, and port 8003 from your home IP address only.
 
 Access your second node by going to **https://YourServerIP:8003/**
 
 </Accordion>
 
 <Accordion title="How to check your login password">
+
+To see your password you need the Minima terminal, which needs RPC. If RPC is not enabled, these steps enable it temporarily:
 
 1. Login to your server as the minima user.
 2. Access your Docker container by running the following command:
@@ -504,7 +526,7 @@ docker exec -it minima9001 /bin/bash
 nano minima.config
 ```
 
-4. Scroll to the bottom of the file and find the line Scroll to the bottom of the file and add a new line, insert `rpcenable=true`.
+4. Scroll to the bottom of the file and add a new line: `rpcenable=true`.
 
 Example:
 
@@ -552,7 +574,7 @@ height={500}
 <Callout title="Note" type="info">
   RPC will be disabled the next time your docker container is updated to a new
   version, to enable RPC permanently, see [How to enable RPC (advanced
-  users)](/rpc)
+  users)](#enable-rpc)
 </Callout>
 
  </Accordion>
@@ -573,46 +595,14 @@ docker stop minima9001
 docker rm minima9001
 ```
 
-2. Delete the minimadocker9001 folder from your home directory by running
+2. From your own admin account (the minima user no longer has sudo rights), delete the minima user's minimadocker9001 folder:
 
 ```bash title="Terminal"
-sudo rm -rf minimadocker9001
+sudo rm -rf /home/minima/minimadocker9001
 ```
 
 </Accordion>
 
-<Accordion title="Curl commands">
-You can send commands to your Minima node using curl to the RPC port. 
-
-To install curl:
-`sudo apt install curl` then `y`
-
-For improved formatting:
-`sudo apt install jq` then `y`
-
-Example: 
-
-To check the status of your Minima node when logged on to the server:
-
-```bash title="Terminal"
-curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/status | jq
-```
-
-You will see the current block and other information about your node. 
-
-To show the full list of commands:
-```bash title="Terminal"
-curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/help | jq
-```
-
-However, if you wish to check your node from an external computer, you must use SSH with each command. 
-
-```bash title="Terminal"
-ssh root@YourServerIP curl -k -u minima:INSERTRPCPASSWORD 127.0.0.1:9005/status
-```
-
-Each request will also require your server password.
-</Accordion>
 </Accordions>
 
 For help and support, find us in [Discord](https://discord.com/invite/minimaglobal) or [Telegram](https://t.me/Minima_Global).

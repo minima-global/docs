@@ -55,9 +55,15 @@ backup password:(optional) file:(optional) auto:(optional)
 
 | Parameter  | Description                                         |
 | ---------- | --------------------------------------------------- |
-| `password` | The password to encrypt the backup file with        |
+| `password` | The password to encrypt the backup file with. **Always set one** - without it, the backup uses the default password `minima`, which anyone can use to open it |
 | `file`     | The name of the backup file to create               |
 | `auto`     | Set to `true` to enable auto backups every 24 hours |
+
+<Callout type="warn" title="Always set a backup password">
+  If you don't set a password, Minima uses the default password `minima`.
+  Anyone with the file can restore it and, if your node wasn't locked, read
+  your seed phrase.
+</Callout>
 
 <Callout title="Note">
   Setting `auto:true` will backup your node every 24 hours however these backups

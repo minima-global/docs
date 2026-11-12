@@ -1,0 +1,85 @@
+---
+title: Android Apps (IPC)
+description: Native Android apps that use your Minima Core node
+tag: learn
+---
+
+## What are Android apps for Minima Core?
+
+[Minima Core](/docs/run-a-node/minima-core) runs just the chain, with no MiniDapp System. Instead, extra features come from **native Android apps**: ordinary apps you install on your phone that use your Minima Core node rather than running a node of their own.
+
+The apps talk to the node through **IPC** (inter-process communication), the standard way Android apps send messages to each other on the same phone. An app sends a node command, such as `balance` or `send`, and the node sends back the result.
+
+| | MiniDapps | Android apps (IPC) |
+|---|---|---|
+| Works with | [Minima Classic](/docs/learn/node-clients) | [Minima Core](/docs/learn/node-clients) |
+| Where they run | Inside the node's MiniDapp System | As separate apps on your phone |
+| Built with | HTML, CSS and JavaScript (`mds.js`) | Native Android (Java or Kotlin) with `minimaapi` |
+| Installed from | A MiniDapp store, inside the node | An Android app store or APK file |
+
+## Using an app
+
+<Steps>
+<Step>
+### Install the app
+
+Install the app on the same phone as Minima Core. Community developer [eurobuddha](https://eurobuddha.com) runs **PandaApps** (or **PandaGet** for Linux devices), an app store with a range of node clients and apps for Minima Core.
+</Step>
+<Step>
+### Enable it in Minima Core
+
+Open **Minima Core → Apps** and switch the app on. Until you do, the app can't send commands to your node.
+
+An enabled app can run **read** commands, such as checking your balance or history. Commands that send coins, sign, or touch your wallet (for example `send`, `sign`, `vault` and `backup`) are refused unless you also mark the app as **admin** in Minima Core → Apps.
+</Step>
+</Steps>
+
+<Callout title="Only give admin rights to apps you trust" type="warn">
+  An admin app can do anything on your node, including sending your coins and
+  showing your seed phrase. Only give admin rights to apps from developers you
+  trust, and switch off apps you no longer use.
+</Callout>
+
+## Building an app
+
+Your app talks to Minima Core through **`minimaapi.aar`**, an Android library published with Minima Core. Add it to your project as a module or library, then:
+
+1. **Register** with the node by creating a `MinimaAPI` object.
+2. **Send commands** with `Command(...)`. Each reply comes back as a JSON object.
+3. **Call `onDestroy()`** when your activity closes, so the connection shuts down cleanly.
+
+```java title="MainActivity.java"
+// Register with the node (also needed to receive notifications)
+mMinimaAPI = new MinimaAPI(this, new MinimaAPIListener() {
+    @Override
+    public void response(JSONObject zResponse) {
+        MinimaAPILogger.log(zResponse.toString());
+    }
+});
+
+// Run a Minima command
+mMinimaAPI.Command("block", new MinimaAPIListener() {
+    @Override
+    public void response(JSONObject zResponse) {
+        // Use the JSON reply here.
+        // Update the UI on the UI thread with runOnUiThread(...)
+    }
+});
+
+// When the activity closes
+@Override
+protected void onDestroy() {
+    super.onDestroy();
+    mMinimaAPI.onDestroy();
+}
+```
+
+Once your app is installed, it appears in **Minima Core → Apps**, where the user must enable it.
+
+To receive notifications of node events, such as new blocks, create a `BroadcastReceiver` in your app that listens for:
+
+```text
+org.minima.core.NOTIFY
+```
+
+The [Minima Core Android repository](https://github.com/spartacusrex-minima/minima-core-android) has the library and a Terminal app to use as a working example.

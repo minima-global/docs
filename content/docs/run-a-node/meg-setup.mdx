@@ -18,7 +18,18 @@ This is intended as a guide for setting up a proof-of-concept environment. In Pr
 
 ## Downloads required
 
-You will need to download the latest [minima.jar](https://github.com/minima-global/Minima/releases) and [meg.jar](https://github.com/minima-global/MEG/releases) from GitHub.
+You will need to download the latest Minima Core [minima.jar](https://github.com/spartacusrex-minima/minima-core/tree/main/jar) and [minima-meg-server.jar](https://github.com/minima-global/MEG/raw/main/jar/minima-meg-server.jar) from GitHub.
+
+<Callout title="Don't use block number as key uses on a MEG node" type="error">
+  Run the MEG node with Minima Core's standard key-use counter. Do **not** add
+  `-blockaskeyuses`. An exchange node signs far more transactions than the chain
+  makes blocks, so the block-number counter runs further and further ahead of
+  the chain. If the node is ever resynced or restored, it starts counting from
+  the current block number again and **reuses one-time keys**, putting funds at
+  risk. See [block number as key
+  uses](/docs/run-a-node/minima-core#block-number-as-key-uses).
+</Callout>
+
 
 {/* 
 
@@ -97,7 +108,7 @@ If this node should also be a mega mmr node, you will then need to re-import the
 
 You can choose which type of Minima node is appropriate depending on your implementation. If you are unsure, please see [Node Types.](/docs/run-a-node/node-types)
 
-We will continue the setup with a Mega node so that transactions can be creatd and posted for **any** user. 
+We will continue the setup with a Mega node so that transactions can be created and posted for **any** user. 
 
 <Steps>
 <Step>
@@ -120,8 +131,6 @@ From the CLI, start a Minima Mega node with the following start up parameters:
 | `-notifyalltxpow`                   | (Optional) creates a NEWTXPOW notification for all transactions                                     |
 | `-txpowdbstore`                     | (Optional) define how many days to store full transaction details on the node. Default is 3.             |  
 | `-mysqlalltxpow`                    | (Optional) Store all TxPoW in MySQL when mysql autobackup is enabled                                |
-| `-mdsenable`                        | (Optional) enables the minidapp system e.g. for block explorer                                      |
-| `-mdspassword insertpasswordhere`   | (Optional) sets the password to login to the minidapp system                                        |
 | `-clean`                            | (Optional) to wipe and start a fresh node - ANY COINS ON THE NODE WILL BE WIPED                     |
 
 Example 
@@ -133,7 +142,6 @@ java -jar [path]/minima.jar -megammr -rpcenable -basefolder /home/minima -data /
 You should see something similar to the following:
 
 ```
-Minima @ 05/07/2024 16:24:24 [9.0 MB] : Welcome to Minima v1.0.41 - for assistance type help. Then press enter.
 Minima @ 05/07/2024 16:24:25 [60.8 MB] : Generating Base Private Seed Key
 ```
 
@@ -145,7 +153,7 @@ Now the node is running and you should automatically join the network. A seed ph
 
 ### Confirm the node is synced to the latest block
 
-Wait a few moments, then run the command `block` from the Minima Terminal, RPC Client or Terminal MiniDapp to ensure the node is connected to the network and up to date with the chain tip.
+Wait a few moments, then run the command `block` from the Minima Terminal or RPC Client to ensure the node is connected to the network and up to date with the chain tip.
 
 </Step>
  <Step>
@@ -156,7 +164,7 @@ Wait a few moments, then run the command `block` from the Minima Terminal, RPC C
 
 A Mega node should be backfilled with the chain history so that the node has a complete database of all the coins since the blockchain started.
 
-Import a MegaMMR `.mmr` file, generated no longer than 1 week ago, from another Mega node runner by running the following command from the Minima Terminal, RPC Client or Terminal MiniDapp.
+Import a MegaMMR `.mmr` file, generated no longer than 1 week ago, from another Mega node runner by running the following command from the Minima Terminal or RPC Client.
 
 Daily .mmr exports can be found [here](https://spartacusrex.com/megaarchive/).
 
@@ -211,10 +219,13 @@ java -jar minima-meg-server.jar -port 8080 -data /home/meg/.megdata -adminpasswo
 
 </Step>
 
+<Step>
+
 ### Access the MEG interface
 
 Access the MEG interface on http://127.0.0.1:8080, enter the admin username and password.
 
+</Step>
 
 <Step>
 
@@ -263,7 +274,7 @@ The following types of users are available:
 - **Basic** - view only user to the console.
 - **API Caller** - Endpoints can only be called by ‘apicaller’ users - using Basic Authorization Header. Does not grant login access to the console.
 
-For testing, Create an API caller user from the admin page.
+For testing, create an API caller user from the admin page. The test commands below use its username and password (`YOURAPIUSER:YOURAPIPASSWORD`).
 
 </Step>
 </Steps>
@@ -293,7 +304,7 @@ Select **Add New Trigger**
 If successful, in the MEG CLI window, you should see the output similar to the following:
 
 ```
-TESTPOST RECEIVED : {"minima":{"data":{"relevant":false,"txpow":{"isblock":true,"burn":0,"size":884,"txpowid":"0x000000F332044AD24EF0EAB325A5BC1CE1F4A09A99BF1951199E4F329A8F03E3","header":{"magic":{"currentmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","currentmaxkissvmops":"1024","currentmaxtxn":"256","desiredmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","desiredmaxtxpowsize":"65536","currentmaxtxpowsize":"65536","desiredmaxkissvmops":"1024","desiredmaxtxn":"256"},"date":"Fri Jul 05 17:19:50 BST 2024","blkdiff":"0x010A7EA0176FD8CCB451F7830362F8007344047301152B4DC5CC79A6BC75","cascadelevels":32,"nonce":"99798592797762047.99828701931909910138311404738574454620161","timemilli":"1720196390951","total":"999994932.79702442062990000000000000099999999999784698","mmr":"0x2CA5409C6E51CD702EDE72FC9A5C03D52F36B0D0B93AD48351438EC63B7BA510","txbodyhash":"0xFD29478185F192E84CA8860FD770A910352A28CF46C3E66FB3F40629B12725F1","chainid":"0x00","block":"931293","customhash":"0x00","superparents":[{"difficulty":0,"parent":"0x000000F3E54954FEAC8183457E70B791DB544A80264034F5D72477E62F2DE97B","count":1},{"difficulty":2,"parent":"0x0000002FD4B4220324A6C70BC866FB79F43AD4C4AC64F919835ED16508BD51F5","count":2},{"difficulty":5,"parent":"0x00000007224C8B0F64581B85AC28855322716B3D587F863E72A54B5296ED0FBE","count":3},{"difficulty":6,"parent":"0x0000000386DFB9EF42D1882F749F44DBA873850C2D106D6E5A6786931CD4E233","count":1},{"difficulty":7,"parent":"0x000000012F2104DBE1643473E81314F76BBF88014B037068D0D5B85E805648C8","count":1},{"difficulty":8,"parent":"0x00000000D8FE3A33BEC316EF113C82ABDB90D19067801433DCC1374F3C994562","count":1},{"difficulty":9,"parent":"0x000000005097F0D3CACD78B92C7FDE069C7CC1BA06141B729330DE3E6DD25D2F","count":1},{"difficulty":10,"parent":"0x000000002918D212D5B4B8B37F5D86F2E8A3AF461565826329E599ED2A7DEFAA","count":1},{"difficulty":12,"parent":"0x000000000B000FFB75C23D99C81C45692328F54CA0DE0B75ED10CA01EB54D101","count":2},{"difficulty":13,"parent":"0x00000000062FFA8AD59159A86C8DB38F29EEB638BB45286A2D959B8CABC82E75","count":1},{"difficulty":16,"parent":"0x0000000000B4CB70648FEA38BFBB4770333D062C088C1E3E9C28CAA52FD6FBE0","count":3},{"difficulty":17,"parent":"0x0000000000027AC01DDD0C66C98047A73F703F3D5200E33E742A2838D4F727E9","count":1},{"difficulty":19,"parent":"0x0000000000002B67F865461B9F2DAC7A14D0C7A070F46DAE04E8C5FE6ABF0F98","count":2},{"difficulty":31,"parent":"0x00","count":12}]},"hasbody":true,"body":{"witness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txnlist":[],"burntxn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"txndiff":"0x5BCE215703AB919D36898FE644FA27DCB8A9F02FF6F1EB362AE353E33E5E","burnwitness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"prng":"0xE49F5E62204186DCF62217C46277E737D31557B0A4D365D48B47B64682437669"},"istransaction":false,"superblock":0}},"event":"NEWTXPOW"},"meg":{"extradata":"","trigger":"NEWTXPOW","url":"<http://127.0.0.1:8001/testpost>"}}
+TESTPOST RECEIVED : {"minima":{"data":{"relevant":false,"txpow":{"isblock":true,"burn":0,"size":884,"txpowid":"0x000000F332044AD24EF0EAB325A5BC1CE1F4A09A99BF1951199E4F329A8F03E3","header":{"magic":{"currentmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","currentmaxkissvmops":"1024","currentmaxtxn":"256","desiredmintxpowwork":"0x068DB8BAC710CB295E9E1B089A027525460AA64C2F837B4A2339C0EBEDFA43","desiredmaxtxpowsize":"65536","currentmaxtxpowsize":"65536","desiredmaxkissvmops":"1024","desiredmaxtxn":"256"},"date":"Fri Jul 05 17:19:50 BST 2024","blkdiff":"0x010A7EA0176FD8CCB451F7830362F8007344047301152B4DC5CC79A6BC75","cascadelevels":32,"nonce":"99798592797762047.99828701931909910138311404738574454620161","timemilli":"1720196390951","total":"999994932.79702442062990000000000000099999999999784698","mmr":"0x2CA5409C6E51CD702EDE72FC9A5C03D52F36B0D0B93AD48351438EC63B7BA510","txbodyhash":"0xFD29478185F192E84CA8860FD770A910352A28CF46C3E66FB3F40629B12725F1","chainid":"0x00","block":"931293","customhash":"0x00","superparents":[{"difficulty":0,"parent":"0x000000F3E54954FEAC8183457E70B791DB544A80264034F5D72477E62F2DE97B","count":1},{"difficulty":2,"parent":"0x0000002FD4B4220324A6C70BC866FB79F43AD4C4AC64F919835ED16508BD51F5","count":2},{"difficulty":5,"parent":"0x00000007224C8B0F64581B85AC28855322716B3D587F863E72A54B5296ED0FBE","count":3},{"difficulty":6,"parent":"0x0000000386DFB9EF42D1882F749F44DBA873850C2D106D6E5A6786931CD4E233","count":1},{"difficulty":7,"parent":"0x000000012F2104DBE1643473E81314F76BBF88014B037068D0D5B85E805648C8","count":1},{"difficulty":8,"parent":"0x00000000D8FE3A33BEC316EF113C82ABDB90D19067801433DCC1374F3C994562","count":1},{"difficulty":9,"parent":"0x000000005097F0D3CACD78B92C7FDE069C7CC1BA06141B729330DE3E6DD25D2F","count":1},{"difficulty":10,"parent":"0x000000002918D212D5B4B8B37F5D86F2E8A3AF461565826329E599ED2A7DEFAA","count":1},{"difficulty":12,"parent":"0x000000000B000FFB75C23D99C81C45692328F54CA0DE0B75ED10CA01EB54D101","count":2},{"difficulty":13,"parent":"0x00000000062FFA8AD59159A86C8DB38F29EEB638BB45286A2D959B8CABC82E75","count":1},{"difficulty":16,"parent":"0x0000000000B4CB70648FEA38BFBB4770333D062C088C1E3E9C28CAA52FD6FBE0","count":3},{"difficulty":17,"parent":"0x0000000000027AC01DDD0C66C98047A73F703F3D5200E33E742A2838D4F727E9","count":1},{"difficulty":19,"parent":"0x0000000000002B67F865461B9F2DAC7A14D0C7A070F46DAE04E8C5FE6ABF0F98","count":2},{"difficulty":31,"parent":"0x00","count":12}]},"hasbody":true,"body":{"witness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txnlist":[],"burntxn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"txndiff":"0x5BCE215703AB919D36898FE644FA27DCB8A9F02FF6F1EB362AE353E33E5E","burnwitness":{"mmrproofs":[],"scripts":[],"signatures":[]},"txn":{"outputs":[],"inputs":[],"state":[],"linkhash":"0x00","transactionid":"0xDECA244460B704393E8ACB5F6CCFCDDBFF6AA0172D56AA835340FBBD78F3FFC1"},"prng":"0xE49F5E62204186DCF62217C46277E737D31557B0A4D365D48B47B64682437669"},"istransaction":false,"superblock":0}},"event":"NEWTXPOW"},"meg":{"extradata":"","trigger":"NEWTXPOW","url":"<http://127.0.0.1:8080/testpost>"}}
 ```
 
 </Step>
@@ -330,7 +341,7 @@ Select **Add New Endpoint**
 From a new Command line window, run
 
 ```
-curl http://127.0.0.1:8080/api/nodestatus -X POST --user api:123
+curl http://127.0.0.1:8080/api/nodestatus -X POST --user YOURAPIUSER:YOURAPIPASSWORD
 ```
 
 The status response from the node should be returned.
@@ -350,7 +361,7 @@ You will need to securely store these details for your users. This information w
 From a new Command line window, run
 
 ```
-curl http://127.0.0.1:8080/wallet/create -X POST --user api:123
+curl http://127.0.0.1:8080/wallet/create -X POST --user YOURAPIUSER:YOURAPIPASSWORD
 ```
 
 A new wallet will be generated with a random seed phrase
@@ -370,13 +381,13 @@ Example response:
   <Card
     title="Wallet API"
     description="How to use the Wallet API"
-    href="/docs/user-guides/meg-wallet-api"
+    href="/docs/user-guides/meg/meg-wallet-api"
 />
 
   <Card
     title="MySQL Exports"
     description="How to export block, coin or transaction data to MySQL"
-    href="/docs/user-guides/mysql-setup"
+    href="/docs/user-guides/mysql/mysql-setup"
 />
  </Cards>
 

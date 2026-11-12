@@ -129,6 +129,10 @@ The following start up parameters are available for MEG:
 | `-minimarpc`         | The `http://host:port` of the Minima RPC.                                               |
 | `-minimarpcpassword` | The Minima RPC password if enabled.                                                     |
 | `-minkeyuses`        | MINIMUM key uses value for any Public Keys (if you are running this from a new server). |
+| `-startupdelay`     | Wait this many milliseconds before starting, to give Minima time to start (e.g. in Docker). |
+| `-enablecache`      | Use a 60-second cache on some calls (getTxPoW, scanchain, balance etc.).                |
+| `-logs`             | Enable debug logs.                                                                      |
+| `-privatelogs`      | Enable debug logs **and print full private keys** in the console. Never use in production. |
 | `-help`              | Print this help.                                                                        |
 
 ## Admin Console
@@ -155,16 +159,26 @@ MEG exposes ports to the localhost only. MEG can be positioned behind an API gat
 
 ## Dependencies
 
-MEG requires a Minima node (v1.0.41 or above) to be running with the following parameters
+MEG requires a [Minima Core](/docs/run-a-node/minima-core) node, using the standard key-use counter, to be running with the following parameters
 
 - `-rpcenable`
 - `-megammr`
 - `-notifyalltxpow`
 - `-mysqlalltxpow` (optional)
 
+<Callout title="Don't use block number as key uses on a MEG node" type="error">
+  Run the MEG node with Minima Core's standard key-use counter. Do **not** add
+  `-blockaskeyuses`. An exchange node signs far more transactions than the chain
+  makes blocks, so the block-number counter runs further and further ahead of
+  the chain. If the node is ever resynced or restored, it starts counting from
+  the current block number again and **reuses one-time keys**, putting funds at
+  risk. See [block number as key
+  uses](/docs/run-a-node/minima-core#block-number-as-key-uses).
+</Callout>
+
 ## Installation steps
 
-1. Download the latest meg.jar and minima.jar files
+1. Download the latest minima-meg-server.jar and the Minima Core minima.jar files
 2. Start a Minima node with the required parameters
 3. Start MEG with required parameters
 4. Create a connection between MEG and the Minima node
