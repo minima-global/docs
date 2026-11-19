@@ -5,6 +5,12 @@ icon: Zap
 tag: run-a-node
 ---
 
+<Callout title="Minima Classic">
+  This page covers **Minima Classic**, the standard Minima node with MiniDapps
+  and Maxima. To run the chain-only **Minima Core** client, see [Minima
+  Core](/docs/run-a-node/minima-core).
+</Callout>
+
 ## Android
 
 The simplest way is to install and run the Android app.
@@ -14,13 +20,13 @@ The simplest way is to install and run the Android app.
 </a>
 
 <Callout title="Note" type="info">
-  If you cannot use the Google Playstore, you can download a signed APK from [Github](https://github.com/minima-global/Minima/tree/master/jar).
+  If you cannot use the Google Play store, you can download the latest signed APK from the [Minima GitHub releases page](https://github.com/minima-global/Minima/releases/latest).
 </Callout>
 
 
 ## Desktop
 
-Desktop users can launch Minima from a JNLP file. The Java Network Launch Protocol.
+Desktop users can launch Minima from a JNLP (Java Network Launch Protocol) file.
 
 <Steps>
 
@@ -53,7 +59,7 @@ Further guidance can be found [here](/docs/run-a-node/mac) for Mac and [here](/d
 
 ## CLI
 
-At it's core, Minima is a Java application. So on a server or CLI the easiest way to run Minima is to install Java and download the latest minima.jar.
+At its core, Minima is a Java application. So on a server or CLI the easiest way to run Minima is to install Java and download the latest minima.jar.
 
 <Callout title="Note" type="info">
   You can download the latest version of Minima from the [Minima GitHub releases
@@ -79,7 +85,7 @@ java -version
 <Heading as="h3">Navigate to the directory where you saved the Minima jar</Heading>
 
 ```bash title="Terminal"
-cd /path/to/minima.jar
+cd /path/to/your/minima/folder
 ```
 
 </Step>
@@ -92,21 +98,19 @@ Adding `-mdsenable -mdspassword INSERTPASSWORD` will enable the minidapp system.
 Adding `-p2pnodes megammr.minima.global:9001` will automatically connect you to the peer-to-peer network.
 
 ```bash title="Terminal"
-    java -jar minima.jar -data .minima -mdsenable -mdspassword INSERTPASSWORD
+    java -jar minima.jar -data .minima -p2pnodes megammr.minima.global:9001 -mdsenable -mdspassword INSERTPASSWORD
 ```
 
-<Callout title="Tip" type="info">
- When you first run Minima the first thing you need is to add some connections.
+<Callout title="Connecting to the network" type="info">
+Minima has no built-in list of peers, so a new node needs some connections to join the network. The command above adds them with `-p2pnodes`.
 
-You can get this list by asking any user on the network to share their connections or by running
+If you started Minima without it, add connections from the Minima terminal:
 
 ```
 peers action:addpeers peerslist:megammr.minima.global:9001
 ```
 
-Alternatively, copy this link directly into the app when prompted to join the network (also in Settings > 'Add connections')
-
-[https://spartacusrex.com/minimapeers.txt](https://spartacusrex.com/minimapeers.txt)
+You can also use a peers list URL, such as [https://spartacusrex.com/minimapeers.txt](https://spartacusrex.com/minimapeers.txt), or ask another node runner to share their connections.
 
 </Callout>
   </Step>
@@ -139,6 +143,8 @@ docker run -d -e minima_mdspassword=INSERTYOURPASSWORD -e minima_desktop=true -v
 Then you log into your node via https://127.0.0.1:9003/
 
 Further guidance on starting a node in Docker desktop can be found [here](/docs/run-a-node/docker-desktop)
+
+On a server (VPS), use `-e minima_server=true` instead of `-e minima_desktop=true`, so your node acts as a relay node. See [Linux VPS (Docker)](/docs/run-a-node/linux-vps-docker).
 
 </Step>
 

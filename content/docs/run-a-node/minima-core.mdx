@@ -1,0 +1,121 @@
+---
+title: About Minima Core
+description: The official Minima node client that runs just the chain
+tag: run-a-node
+---
+
+## What is Minima Core?
+
+Minima Core is an official Minima node client, created by Spartacus Rex. It runs **just the chain**: it has no MiniDapp System (MDS) and no Maxima built in. That keeps the node small and simple. It builds and checks transactions, holds your keys and syncs with the network, like any other full node.
+
+Minima Core is non-custodial: it holds your real keys and funds. Back up your seed phrase before you use it.
+
+For how Minima Core compares with Minima Classic, and for community builds of Minima Core such as eurobuddha's Panda builds, see [Node Clients](/docs/learn/node-clients).
+
+## How it differs from Minima Classic
+
+| | Minima Classic | Minima Core |
+|---|---|---|
+| Full node | Yes | Yes |
+| MiniDapps (MDS) | Yes, built in | No |
+| Maxima | Yes, built in | No |
+| Extra features | MiniDapps, installed inside the node | Separate [Android apps](/docs/learn/android-apps) that connect to the node |
+| Key uses | Standard counter | [Block number as key uses](#block-number-as-key-uses) on Android |
+
+<Callout title="Your addresses will be different" type="warn">
+  Official Minima Core on Android uses block number as key uses, which gives
+  the same seed phrase **different addresses** from Minima Classic. Restoring
+  your seed phrase in Minima Core does not move your Minima Classic coins. Send
+  them to an address on your Minima Core node first. See [Block number as key
+  uses](#block-number-as-key-uses).
+</Callout>
+
+## Get Minima Core
+
+- [Minima Core for Android](/docs/run-a-node/minima-core-android) – the official app for Android phones, on Google Play
+- [Minima Core Desktop](/docs/run-a-node/minima-core-desktop) – run Minima Core on Mac, Windows or Linux, or from the command line
+
+## Block number as key uses
+
+Block number as key uses makes key reuse after a restore much harder to get wrong. The latest official Minima Core includes it, and the official Android app always uses it. When you run `minima.jar` yourself, turn it on with `-blockaskeyuses true`. Minima Classic doesn't have it.
+
+### The problem it solves
+
+Minima signs transactions with **one-time keys** (Winternitz one-time signatures). These are part of what makes Minima [quantum secure](/docs/learn/quantum-security). Each of your addresses is backed by a tree of these one-time keys, and every signature must use a fresh one. To pick the next fresh key, your node keeps a counter for each address, called **key uses**.
+
+If that counter ever goes backwards, the node signs again with a one-time key it has already used. Signing twice with the same one-time key leaks part of the private key, and with enough reuse someone could forge your signature and take your coins.
+
+The counter can go backwards when you:
+
+- restore a node from your seed phrase,
+- restore an old backup, or
+- run the same seed phrase on two nodes.
+
+This is why restore commands ask you to set `keyuses` higher than the number of signatures you have ever made. Most people don't know that number, so it is easy to get wrong.
+
+### How it works
+
+With this option on, your node doesn't keep its own count from zero. Instead it uses the **current block number** as the key-use counter. If it signs more than once in the same block, it moves on to the next number up.
+
+The block number only ever goes up, and every node on the network agrees on it. So a restored node starts counting from today's block number, past the keys you used before, without you having to enter a `keyuses` value. If you do enter one, the node uses whichever is higher. The one exception is when you've just sent several transactions close together: see [Wait before you restore or resync](#wait-before-you-restore-or-resync).
+
+To make room for counting by block number, each address gets a much larger key tree:
+
+| | Standard | Block number as key uses |
+|---|---|---|
+| One-time keys per address | 262,144 (64 × 64 × 64) | 268,435,456 (128 × 128 × 128 × 128) |
+| Addresses from `getaddress` | 64 | 32 |
+
+At one block about every 52 seconds on average, 268 million block numbers last for over 400 years.
+
+### Before you turn it on
+
+<Callout title="Your addresses will change" type="warn">
+  The larger key tree gives the same seed phrase a **completely different set
+  of addresses**. There is no setting to switch between your old and new
+  addresses. Coins on your old addresses are not on your new ones, so if your
+  wallet already holds coins, move them first: set up a node with this option
+  on, copy a receive address from it, and send your coins there from your
+  current node.
+
+  Some community builds, such as Pandamonium, include a wallet that can derive
+  both sets of addresses. See [Node Clients](/docs/learn/node-clients#community-builds).
+</Callout>
+
+<Callout title="Not for exchanges or busy nodes" type="error">
+  Only use block number as key uses on a node that sends fewer transactions
+  than the chain makes blocks – about one every 52 seconds. A node that sends
+  dozens, hundreds or thousands of transactions a day, such as an exchange or
+  [MEG](/docs/run-a-node/meg-about) node, pushes the counter further and further
+  ahead of the chain. If it is ever resynced or restored, it starts again from
+  the current block number and **reuses one-time keys**. Run busy nodes with
+  the standard key-use counter instead.
+</Callout>
+
+- Your node must be synced to the chain before it can sign, because it needs the current block number.
+
+To turn it on, add the option when you start Minima Core from the command line:
+
+```bash title="Terminal"
+java -jar minima.jar -blockaskeyuses true
+```
+
+### Wait before you restore or resync
+
+<Callout title="Sent several transactions close together? Wait before restoring" type="error">
+  If you send several transactions in the same block and then restore your
+  seed phrase, resync, or restore on another device straight away, your one-time
+  keys can be **reused**, putting your coins at risk.
+
+  **Wait the number of transactions you sent × 52 seconds before you restore or
+  resync.** For example, after 10 transactions in one block, wait at least 520
+  seconds (about 9 minutes).
+</Callout>
+
+Here's why. When your node signs more than once in the same block, it can't use that block's number again, so it moves on to the next numbers up. Ten transactions in one block use ten numbers, running ahead of the chain by up to ten blocks.
+
+A restored node knows nothing about those transactions. It starts counting from the current block number. If the chain hasn't caught up with the numbers your old node already used, the restored node uses those same one-time keys again.
+
+The chain makes one block about every 52 seconds on average. Waiting the number of transactions × 52 seconds gives it time to move past every number your old node used.
+
+See [Keys and signatures](/docs/learn/keys-signatures) for more on how Minima's one-time keys work.

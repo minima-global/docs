@@ -12,7 +12,7 @@ A chain re-sync ensures your node is on the correct top block and restores the w
 </Callout>
 
 <Callout title="Unlock Node before syncing" type="warn">
-Before running a Quick Sync, you much ensure that your node is unlocked. 
+Before running a Quick Sync, you must ensure that your node is unlocked. 
 </Callout>
 
 ## QuickSync method
@@ -66,7 +66,7 @@ For further help using the `megammrsync` command, use `help command:megammrsync`
 1. Open the Security MiniDapp
 2. Select **Archive reset**
 3. Select **Chain re-sync**
-4. Select a recent internal archive file or upload a new one. If you do not have one, you can visit our [Discord server](https://discord.com/invite/minimaglobal) or go to https://spartacusrex.com/archive and download the latest file.
+4. Select a recent internal archive file or upload a new one. If you do not have one, you can visit our [Discord server](https://discord.com/invite/minimaglobal) or download the latest archive file from [https://eurobuddha.com/archive.raw.dat](https://eurobuddha.com/archive.raw.dat).
 
 <Callout title="Info">
   For a successful re-sync to the latest block, you must use an archive file
@@ -85,16 +85,16 @@ Once complete, you will be on the correct top block.
 2. Open the Terminal MiniDapp
 3. Use one the following commands depending on whether you wish to re-sync from an archive file or a host, WITHOUT providing your 24 word seed phrase.
 
-**Example using an archive file (recommended):**
+**Example using an archive file:**
 
 ```bash title="Terminal"
 archive action:import file:archive-export.gzip
 ```
 
-**Example using an host**
+**Example using a host:**
 
 ```bash title="Terminal"
-archive action:resync file:xx.xxx.xx.xx:9001
+archive action:resync host:xx.xxx.xx.xx:9001
 ```
 
 4. Press Enter

@@ -40,7 +40,7 @@ It is **not possible to use a 24 word seed phrase from an existing Minima node**
 
 **Generate a new secret key**
 
-Generate a new 16 character secret key by clicking on "Generate Secret Key".
+Generate a new 20 character secret key by clicking on "Generate Secret Key".
 
 </Step>
 
@@ -65,7 +65,7 @@ Do NOT attempt to send Wrapped Minima, Ethereum or any tokens from different blo
 <Step>
 **Logout**
 
-Before logging out, ensure that you have written down your 16 character secret key. 
+Before logging out, ensure that you have written down your 20 character secret key. 
 
 </Step>
 </Steps>
@@ -97,7 +97,13 @@ Select which token you wish to send from the drop down list, then enter the amou
 <Step>
 **Set your secret key uses**
 
-Your secret key uses value must be different on every transaction. It will increment automatically but if you decide to use an unofficial Web Wallet, you must set this number yourself.
+Your key uses value must go up with every transaction. The Web Wallet increases it automatically, but it only remembers the value in the browser you are using.
+
+<Callout type="warn" title="Using a new device or browser">
+Always use the Web Wallet in the same browser, and not in a private or incognito window. On another device or browser, in a private window, or after you clear your browser data, the key uses value starts again from 0. If that happens, set it higher than any value you have used before, then send. Reusing a value means reusing a one-time key, which can put your funds at risk.
+</Callout>
+
+If you use an unofficial Web Wallet, you must always set this number yourself.
 
 </Step>
 

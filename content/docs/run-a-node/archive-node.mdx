@@ -16,7 +16,7 @@ The following assumes that only Minima is running on the server, you should cons
 
 - **Processing**: 2 CPU
 - **Memory**: 4GB RAM
-- **Storage**: 5GB storage
+- **Storage**: 50GB storage (grows over time)
 
 ## Ports
 
@@ -95,7 +95,7 @@ docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e min
   If you originally started your node without the `-e minima_archive=true` environment variable, you can either:
 
   - start a new separate container for your archive node,
-  - backup your existing node, the restore it to a new archive container you create,
+  - backup your existing node, then restore it to a new archive container you create,
   - backup your existing node, then stop and remove your existing Minima container and start a new Minima container including -e minima_archive=true, using the SAME data folder as your old node e.g. minimadocker9001 or minimadocker8001
     
    </Tab>
@@ -106,7 +106,7 @@ docker run -d -e minima_mdspassword=INSERTPASSWORD -e minima_desktop=true -e min
 
 ### Optionally re-sync to the Genesis block
 
-When you start an archive node, you will start storing the archive data from that point onwards. To run an archive node that stores all blocks since the Genesis block by doing a chain re-sync from another archive node that already has all blocks.
+When you start an archive node, it stores archive data from that point onwards. To store all blocks since the Genesis block, do a chain re-sync from another archive node that already has all blocks, using `archive action:resync host:ip:port` (see [Chain Resync](/docs/user-guides/node-recovery/chain-resync)).
 
 <Callout title="Info">
   An archive node can only be used to re-sync users who created their nodes

@@ -11,8 +11,8 @@ The following data can be exported to a table in a SQL database:
 | Table               | Description                                                              |
 |--------------------|--------------------------------------------------------------------------|
 | `cascadedata`      | if the node does not start at the genesis block, there will be compact block data for the cascade |
-| `syncblocks`       | historical compact blocks (excludes transaction details)                 |
-| `coins`            | (from v1.0.39) a coins table of all coins in the syncblocks            |
+| `syncblock`        | historical compact blocks (excludes transaction details)                 |
+| `coins`            | (from v1.0.39) a coins table of all coins in the `syncblock` table      |
 | `txpow`       | (from v1.0.41) full txpow data, including all transaction and block details |
 
 {/* Exporting your node's chain data to MySQL means you can:
@@ -40,7 +40,7 @@ The following data can be exported to a table in a SQL database:
 - **Set a password for the root user** when prompted
 
 
-<Callout type="tip" title="Windows Installation">
+<Callout type="info" title="Windows Installation">
 For Windows installations:
 - If you don’t want to open firewall ports, **uncheck** the option to **"Open Windows Firewall ports for network access"**.
 - To ensure MySQL Server starts with Windows, **check** the option to **"Start the MySQL Server at System Startup"**.
@@ -53,7 +53,7 @@ For Windows installations:
 
 | Field             | Description                                                                                |
 |------------------|--------------------------------------------------------------------------------------------|
-| Connection name  | Enter a name (e.g., **Local Server**).                                                     |
+| Connection name  | Enter a name (e.g., **minimaarchive**).                                                    |
 | Hostname         | Use **127.0.0.1** if MySQL Server is on your local machine, or enter the server’s IP address if remote. |
 | Port             | **3306** (unless configured otherwise during installation).                                |
 | Username         | **root**                                                                                   |
@@ -65,18 +65,23 @@ For Windows installations:
 **3. Create a New Database**
 
 - In **MySQL Workbench**, select your connection to open it.
-- In the **Query** window, run the following command to create a new database named `minimaarchive`:
+- In the **Query** window, run the following command to create a new database named `archivedb`:
    ```sql
-    CREATE DATABASE minimaarchive;
+    CREATE DATABASE archivedb;
    ```
 
 
 **4. Create users**
 
-- Create another user e.g. archiveuser with all privileges 
+- Create another user, e.g. `archiveuser`, with all privileges on `archivedb`. In the **Query** window, run:
+   ```sql
+    CREATE USER 'archiveuser'@'%' IDENTIFIED BY 'youruserpassword';
+    GRANT ALL PRIVILEGES ON archivedb.* TO 'archiveuser'@'%';
+   ```
+  Replace `youruserpassword` with your own password, here and in the examples below.
 - Optionally create additional users e.g. a read-only user if required.
 
-Your database `minimaarchive` is now created and ready for use!
+Your database `archivedb` is now created and ready for use!
 
 
 </Tab>
@@ -118,7 +123,7 @@ docker run -d -p 3307:3306  -e MYSQL_ROOT_PASSWORD=yourrootpassword -e MYSQL_DAT
 ```
 
 This will:
-- create a Docker container called **minimySQL** which runs your MySQL database called **archivedb**
+- create a Docker container called **minimysql** which runs your MySQL database called **archivedb**
 - run on your port 3307 (mapped to 3306 in Docker)
 - create the user specified and give them access to the database
 - connect the MySQL db to the **minimanetwork** Docker network
@@ -126,11 +131,19 @@ This will:
 
 **4. Connect Minima to the minimanetwork**
 
+`minimaarchive` is the name of the Minima container in the [archive node](/docs/run-a-node/archive-node) Docker example. If your Minima container has a different name, use that instead.
+
 ```bash title="Terminal"
 docker network connect minimanetwork minimaarchive
 ```
 
-Example output:
+This command prints nothing when it works. To check that both containers are on the network, run:
+
+```bash title="Terminal"
+docker network inspect minimanetwork
+```
+
+Both containers should be listed under `Containers`. Example output (shortened):
 
 ```json title="Output"
 [
@@ -155,7 +168,7 @@ In MySQL Workbench, create a connection to the server
 
 | Field             | Description                                                                                |
 |------------------|--------------------------------------------------------------------------------------------|
-| Connection name  | minimaarchive                                                    |
+| Connection name  | Enter a name (e.g., **minimaarchive**).                          |
 | Hostname         | Use **127.0.0.1** if Docker is on your local machine, or enter the server’s IP address if remote. |
 | Port             | **3307**                             |
 | Username         | **root**                                                                                   |
@@ -166,7 +179,7 @@ In MySQL Workbench, create a connection to the server
 
 - Click Test Connection, then OK.
 
-Your database `minimaarchive` is now created and ready for use!
+Your database `archivedb` is now created and ready for use!
 
 
 </Tab>
@@ -176,8 +189,20 @@ Your database `minimaarchive` is now created and ready for use!
 
 From the Minima Docker CLI or Minima Terminal, run the command `mysql action:info` with your login details to check the current status 
 
+For `host`, use the address and port where Minima can reach MySQL. This depends on where each one runs:
+
+| Where MySQL runs | Where Minima runs | `host` |
+|---|---|---|
+| On your computer (**MySQL Server** tab) | On the same computer, not in Docker | `127.0.0.1:3306` |
+| In Docker (**Docker** tab) | In Docker, connected to `minimanetwork` | `minimysql:3306` |
+| In Docker (**Docker** tab) | On the same computer, not in Docker | `127.0.0.1:3307` |
+
+Inside a Docker container, `127.0.0.1` is the container itself, not your computer. So Minima in Docker reaches MySQL by its container name, `minimysql`, on MySQL's own port, 3306. Port 3307 is for connections from outside Docker, such as MySQL Workbench. If your Minima node runs in Docker, use the **Docker** tab to set up MySQL, so that both are on `minimanetwork`.
+
+The examples below use the Docker setup:
+
 ```bash title="Terminal"
-mysql action:info host:127.0.0.1:3306 database:archivedb user:archiveuser password:youruserpassword 
+mysql action:info host:minimysql:3306 database:archivedb user:archiveuser password:youruserpassword
 ```
 
 Example output:
@@ -186,7 +211,7 @@ Example output:
 {
   "command":"mysql",
   "params":{
-    "host":"127.0.0.1:3306",
+    "host":"minimysql:3306",
     "database":"archivedb",
     "user":"archiveuser",
     "password":"youruserpassword",
@@ -211,7 +236,7 @@ Example output:
 
 In the above example, the Minima archive db contains 72105 blocks and the mysql has 0 blocks, as expected.
 
-<Callout type="warning">
+<Callout type="warn">
 Before running an update, you must check your node is on the correct tip block. Run the `status` command to check your tip block is up to date.
 </Callout>
 
@@ -224,10 +249,10 @@ Set the MySQL login details so you don't need to type them in every time.
 mysql action:setlogin ..LOGIN_DETAILS.. 
 ```
 
-Example
+Example, with the same `host` you used in [Check the connection](#check-the-connection):
 
 ```
-mysql action:setlogin host:127.0.0.1:3306 database:archivedb user:archiveuser password:youruserpassword 
+mysql action:setlogin host:minimysql:3306 database:archivedb user:archiveuser password:youruserpassword
 ```
 
 Subsequently, you can omit the host, database, user and password parameters.

@@ -1,0 +1,45 @@
+---
+title: Minima Core for Android
+description: Install the official Minima Core node on an Android phone
+tag: run-a-node
+---
+
+Minima Core for Android is the official [Minima Core](/docs/run-a-node/minima-core) app by Spartacus Rex. It runs a full Minima node on your phone, with a wallet built in.
+
+<Callout title="Your addresses will be different" type="warn">
+  Minima Core for Android uses [block number as key
+  uses](/docs/run-a-node/minima-core#block-number-as-key-uses), so the same seed
+  phrase gives **different addresses** from Minima Classic. Restoring your seed
+  phrase here does not move your Minima Classic coins. Send them to an address
+  on your Minima Core node first.
+</Callout>
+
+## Install Minima Core
+
+<Steps>
+<Step>
+### Install the app
+
+Install **Minima Core** from [Google Play](https://play.google.com/store/apps/details?id=org.minima.core).
+
+If you can't use Google Play, download the latest APK from the `dist` folder of the official [Minima Core Android repository](https://github.com/spartacusrex-minima/minima-core-android/tree/main/dist) and open it on your phone. Android may ask you to allow installs from this source.
+</Step>
+<Step>
+### Open the app
+
+Open Minima Core. It connects to the network by itself: on first start it adds peers from `https://spartacusrex.com/minimapeers.txt`.
+</Step>
+<Step>
+### Back up your seed phrase
+
+Minima Core holds your real keys and funds. Write down your seed phrase and keep it somewhere safe before you add any coins. See [Secure your seed phrase](/docs/user-guides/secure-your-seedphrase).
+</Step>
+</Steps>
+
+## Add apps
+
+Minima Core has no MiniDapps. Features such as a terminal or block explorer come from separate [Android apps](/docs/learn/android-apps) that connect to your node. Install the ones you want, then switch each one on in **Minima Core → Apps**.
+
+## Community builds
+
+Community developers also publish their own builds of Minima Core for Android, such as eurobuddha's PandaBear, BlackBear and Pandamonium. See [Node Clients](/docs/learn/node-clients#community-builds).

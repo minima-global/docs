@@ -31,7 +31,7 @@ The following requirements are separate to any specs required for non Minima rel
 
 - Processing: 2 CPU (4 CPU if using Docker)
 - Memory: 4GB RAM
-- Storage: 5GB storage
+- Storage: 50GB storage
 
 <Callout title="Storage" type="warn">
   Minimum requirements for storage may change over time.
@@ -41,7 +41,7 @@ The following requirements are separate to any specs required for non Minima rel
 
 - Processing: 2 CPU
 - Memory: 8GB RAM
-- Storage: 5GB storage
+- Storage: 50GB storage
 
 <Callout title="Android" type="error">
   We do not recommend running a Mega node from an Android device as the RAM
@@ -66,7 +66,7 @@ java -jar minima.jar -port 8001
 
 ## Relaying
 
-To ensure your node faciliates the relaying of transactions and blocks across the network, you should allow inbound connections to the server on port 9001 (or other main port you have chosen). Relay nodes are the backbone of the Minima peer-to-peer network. If your inbound connection is closed, your node will still function but will only make outgoing connections and will not act as a relay node.
+To ensure your node facilitates the relaying of transactions and blocks across the network, you should allow inbound connections to the server on port 9001 (or other main port you have chosen). Relay nodes are the backbone of the Minima peer-to-peer network. If your inbound connection is closed, your node will still function but will only make outgoing connections and will not act as a relay node.
 
 Desktop nodes can contribute to relaying transactions and blocks by setting up port forwarding on port 9001, however this is not usually recommended for home networks.
 
@@ -93,7 +93,7 @@ Allows ssh access to the server, optionally only allow this from your home IP ad
 <Callout title="9001 - Relay nodes" type="info">
   Allowing inbound connections on port 9001 will ensure your node acts as a
   relay node. Relay nodes are the backbone of the Minima peer-to-peer network
-  that faciliate the transmission of transactions and blocks across the network
+  that facilitate the transmission of transactions and blocks across the network
   and support the network to scale. If your inbound connection is closed, your
   node will only make outgoing connections and will not act as a relay node.
 </Callout>

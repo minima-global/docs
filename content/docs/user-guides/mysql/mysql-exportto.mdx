@@ -9,8 +9,8 @@ Once your node is connected to a MySQL database, the following data can be expor
 | Table               | Description                                                              |
 |--------------------|--------------------------------------------------------------------------|
 | `cascadedata`      | if the node does not start at the genesis block, there will be compact block data for the cascade |
-| `syncblocks`       | historical compact blocks (excludes transaction details)                 |
-| `coins`            | (from v1.0.39) a coins table of all coins in the syncblocks            |
+| `syncblock`        | historical compact blocks (excludes transaction details)                 |
+| `coins`            | (from v1.0.39) a coins table of all coins in the `syncblock` table      |
 | `txpow`       | (from v1.0.41) full txpow data, including all transaction and block details |
 
 ## How to export archive blocks data
@@ -81,18 +81,12 @@ The coins table will be populated from the syncblock table, so this must be popu
 The coins database is large and will take a while to populate, optionally you can create a second database in mysql workbench to keep the coinsdb separate to your existing archivedb.
 </Callout>
 
-To populate the coins table, you can choose to specify the number of coins to update in one go by using the `maxcoins` parameter. To update the table will all the coins, remove the `maxcoins` parameter.
+To populate the coins table, you can choose to specify the number of coins to update in one go by using the `maxcoins` parameter. To update the table with all the coins, remove the `maxcoins` parameter.
 
 The example below adds the first 100 coins to the database. Next time, it will start from where it left off. 
 
-**From any node**
 ```bash title="Terminal"
 mysqlcoins action:update maxcoins:100 ...LOGIN DETAILS...
-```
-
-**From docker**
-```bash title="Terminal"
-mysqlcoins action:update maxcoins:100 ...LOGIN DETAILS... 
 ```
 
 ### How to query the coins

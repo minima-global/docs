@@ -1,0 +1,68 @@
+---
+title: Minima Core Desktop
+description: Run Minima Core on Mac, Windows or Linux
+tag: run-a-node
+---
+
+There are two ways to run [Minima Core](/docs/run-a-node/minima-core) on a computer:
+
+- **minimaCore Desktop** – an app you install, with a wallet built in. The easiest option.
+- **The command line** – run the official `minima.jar` yourself. Best for servers and developers.
+
+## minimaCore Desktop
+
+minimaCore Desktop is a desktop version of Spartacus Rex's Minima Core for Android, built by community developer [eurobuddha](https://eurobuddha.com). It runs a full Minima Core node on Mac, Windows or Linux, with a built-in wallet, terminal and transaction history.
+
+minimaCore Desktop uses the **standard key-use counter**, so the same seed phrase gives the same addresses as Minima Classic (not the addresses Minima Core for Android shows). It connects to the network by itself, using the peers list at `https://spartacusrex.com/minimapeers.txt`.
+
+<Callout title="Community build" type="info">
+  minimaCore Desktop is a community build, provided as-is with no warranty and
+  still in active development. It holds your real keys and funds, so back up
+  your seed phrase and start with small amounts.
+</Callout>
+
+<Steps>
+<Step>
+### Download the app
+
+Download the version for your computer from the [minimaCore Desktop releases page](https://github.com/eurobuddha/minimacore-desktop/releases/latest):
+
+- **Mac** – the `.dmg` file
+- **Windows** – the `.exe` file
+- **Linux** – the `.AppImage` file
+</Step>
+<Step>
+### Install and open it
+
+Install the app as you would any other, then open it. The node starts and syncs with the network.
+</Step>
+<Step>
+### Back up your seed phrase
+
+Write down your seed phrase and keep it somewhere safe before you add any coins. See [Secure your seed phrase](/docs/user-guides/secure-your-seedphrase).
+</Step>
+</Steps>
+
+## Run from the command line
+
+Minima Core is also a single Java file, `minima.jar`, in the `jar` folder of the official [Minima Core repository](https://github.com/spartacusrex-minima/minima-core).
+
+```bash title="Terminal"
+java -jar minima.jar
+```
+
+When you run the jar yourself, **no peers are added by default**. Give it a list of nodes to connect to:
+
+```bash title="Terminal"
+java -jar minima.jar -p2pnodes https://spartacusrex.com/minimapeers.txt
+```
+
+Other useful options:
+
+- `-help` – list every startup option
+- `-data ~/.minima` – where the node keeps its data (this is the default)
+- `-megammr` – run a [Mega node](/docs/run-a-node/mega-node), which keeps the full coin database so other nodes can resync from it
+- `-solo` – start a private test network on your own machine (add `-clean` to wipe it and start again)
+- `-blockaskeyuses true` – use the block number as the key-use counter (see [Block number as key uses](/docs/run-a-node/minima-core#block-number-as-key-uses))
+
+Minima Core has no `-rpcssl` option, and the node will not start if you add it. Keep RPC on `127.0.0.1` and use an SSH tunnel (or stunnel) if you need to reach it from another machine.

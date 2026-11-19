@@ -7,7 +7,7 @@ tag: run-a-node
 
 Running a node on a server and allowing inbound connections on port 9001 will ensure your node acts as a **relay node**.
 
-Relay nodes are the backbone of the Minima peer-to-peer network that faciliate the transmission of transactions and blocks across the network and support the network to scale.
+Relay nodes are the backbone of the Minima peer-to-peer network that facilitate the transmission of transactions and blocks across the network and support the network to scale.
 
 Installing Minima as a background process with SystemD is an alternative to using Docker. SystemD is a daemon server that enables applications to run as background processes.
 
@@ -36,7 +36,7 @@ All inbound connections except for SSH should be denied by default.
 
 Inbound connections from all IPs can be allowed for
 
-- **9001 tcp**: Allowing inbound connections on port 9001 ensures your node acts as a relay node. Relay nodes are the backbone of the Minima peer-to-peer network that faciliate the transmission of transactions and blocks across the network and support the network to scale. If your inbound connection is closed, your node will only make outgoing connections and will not act as a relay node.
+- **9001 tcp**: Allowing inbound connections on port 9001 ensures your node acts as a relay node. Relay nodes are the backbone of the Minima peer-to-peer network that facilitate the transmission of transactions and blocks across the network and support the network to scale. If your inbound connection is closed, your node will only make outgoing connections and will not act as a relay node.
 
 Inbound connections from **all IPs** should be **denied** to:
 
@@ -76,7 +76,7 @@ As a user with sudo privileges:
 <Heading as="h3"> Install Uncomplicated Firewall </Heading>
  
 ```bash title="Terminal" 
-  sudo apt install ufw
+sudo apt install ufw
 ```
 </Step>
 <Step>
@@ -86,21 +86,21 @@ As a user with sudo privileges:
 This will disable the firewall, deny incoming connections, accept outgoing connections, allow ssh and enable the firewall.
 
 ```bash title="Terminal"
-  sudo ufw disable
+sudo ufw disable
 ```
 
 ```bash title="Terminal"
-  sudo ufw default deny incoming
+sudo ufw default deny incoming
 ```
 
 ```bash title="Terminal"
-  sudo ufw default allow outgoing
+sudo ufw default allow outgoing
 ```
 
 **DO NOT SKIP THE FOLLOWING STEP, OR YOU WILL BE LOCKED OUT OF YOUR SERVER!**
 
 ```bash title="Terminal"
-   sudo ufw allow ssh
+sudo ufw allow ssh
 ```
 
 </Step>
@@ -109,7 +109,7 @@ This will disable the firewall, deny incoming connections, accept outgoing conne
 <Heading as="h3"> Allow inbound connections to 9001 </Heading>
 
 ```bash title="Terminal"
-   sudo ufw allow in 9001
+sudo ufw allow in 9001
 ```
 
 </Step>
@@ -123,18 +123,18 @@ Allow inbound connections to your MiniDapp system only from your home IP address
 
 Note that most home IP addresses are not fixed and change, so you may have to redo this rule at a later date. You can find your home IP address by going to [ipchicken](https://ipchicken.com/) when connected to your home wifi network.
 
-Replace `xxx.xxx.xxx` with your actual home IP address
+Replace `xxx.xxx.xxx.xxx` with your actual home IP address
 
 </Callout>
 
 ```bash title="Terminal"
-   sudo ufw allow from xxx.xxx.xxx to any port 9003
+sudo ufw allow from xxx.xxx.xxx.xxx to any port 9003
 ```
 
 or to allow connections to your MiniDapp system from anywhere. **This will expose your login screen publicly.**
 
 ```bash title="Terminal"
-   sudo ufw allow in 9003
+sudo ufw allow in 9003
 ```
 
 </Step>
@@ -144,7 +144,7 @@ or to allow connections to your MiniDapp system from anywhere. **This will expos
 <Heading as="h3">Enable the firewall</Heading>
 
 ```bash title="Terminal"
-   sudo ufw enable
+sudo ufw enable
 ```
 
 For more information see [here](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29)
@@ -160,16 +160,16 @@ For more information see [here](https://wiki.debian.org/Uncomplicated%20Firewall
 
 ### Server installations
 
-<Tabs items={["Debian/Ubuntu", "CentOS/RedHat"]}>
+<Tabs items={["Debian/Ubuntu", "RHEL/Rocky/AlmaLinux"]}>
   <Tab value="Debian/Ubuntu">
     As a user with sudo privileges, install the following:
 
 ```bash title="Terminal"
-   sudo apt update -y
-   sudo apt upgrade -y
-   sudo apt install jq -y
-   sudo apt install default-jdk -y
-   sudo apt install wget -y
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install jq -y
+sudo apt install default-jdk -y
+sudo apt install wget -y
 ```
 
 - `sudo apt update -y`: Updates the package list to the latest version.
@@ -179,20 +179,20 @@ For more information see [here](https://wiki.debian.org/Uncomplicated%20Firewall
 - `sudo apt install wget -y`: Installs `wget`, a utility for non-interactive download of files from the web.
 
 </Tab>
-  <Tab value="CentOS/RedHat">
+  <Tab value="RHEL/Rocky/AlmaLinux">
 
 As a user with sudo privileges, install the following:
 
 ```bash title="Terminal"
-   sudo yum update -y
-   sudo yum install jq -y
-   sudo yum install java-1.8.0-openjdk-devel -y
-   sudo yum install wget nano -y
+sudo yum update -y
+sudo yum install jq -y
+sudo yum install java-17-openjdk -y
+sudo yum install wget nano -y
 ```
 
 - `sudo yum update -y`: Updates the package list to the latest version.
 - `sudo yum install jq -y`: Installs `jq`, a lightweight and flexible command-line JSON processor.
-- `sudo yum install java-1.8.0-openjdk-devel -y`: Installs the Java Development Kit (JDK) version 1.8.0.
+- `sudo yum install java-17-openjdk -y`: Installs Java 17.
 - `sudo yum install wget -y`: Installs `wget`, a utility for non-interactive download of files from the web.
 
 </Tab>
@@ -207,7 +207,7 @@ As a user with sudo privileges, install the following:
 <Heading as="h3"> Create a minima user</Heading>
 
 ```bash title="Terminal"
-   sudo adduser minima
+sudo adduser minima
 ```
 
 Set a password for the user and confirm it, leave all other settings blank by pressing enter, then y to confirm.** Make sure to remember this user's password!**
@@ -227,7 +227,7 @@ echo "Storage=persistent" | sudo tee -a /etc/systemd/journald.conf >/dev/null
 <Heading as="h3"> Restart the service </Heading>
 
 ```bash title="Terminal"
-   sudo systemctl restart systemd-journald
+sudo systemctl restart systemd-journald
 ```
 
 </Step>
@@ -242,22 +242,23 @@ echo "Storage=persistent" | sudo tee -a /etc/systemd/journald.conf >/dev/null
 <Callout title="Password Options">
   Edit the file to change the password, use the arrow keys to go to
   `yourpasswordhere` and set a secure password of over 12
-  characters using `a-z, A-Z, 0-9 and !@#=?+><,.-_'()/` symbols only.
+  characters using only letters, numbers and the symbols `- _ . @`. Other
+  symbols can stop the service from starting or break the RPC client script.
 </Callout>
 
 ```bash title="Terminal"
-   sudo tee <<EOF >/dev/null /etc/systemd/system/minima.service
-   [Unit]
-   Description=minima
-   [Service]
-   User=minima
-   Type=simple
-   ExecStart=/usr/bin/java -jar /home/minima/minima.jar -mdsenable -mdspassword yourpasswordhere -daemon -basefolder /home/minima -data /home/minima/.minima
-   Restart=always
-   RestartSec=100
-   [Install]
-   WantedBy=multi-user.target
-   EOF
+sudo tee <<EOF >/dev/null /etc/systemd/system/minima.service
+[Unit]
+Description=minima
+[Service]
+User=minima
+Type=simple
+ExecStart=/usr/bin/java -jar /home/minima/minima.jar -mdsenable -mdspassword yourpasswordhere -daemon -basefolder /home/minima -data /home/minima/.minima
+Restart=always
+RestartSec=100
+[Install]
+WantedBy=multi-user.target
+EOF
 ```
 </Tab>
 
@@ -266,18 +267,18 @@ echo "Storage=persistent" | sudo tee -a /etc/systemd/journald.conf >/dev/null
 The following will create a systemd service file for a node without the MiniDapp system enabled.
 
 ```bash title="Terminal"
-   sudo tee <<EOF >/dev/null /etc/systemd/system/minima.service
-   [Unit]
-   Description=minima
-   [Service]
-   User=minima
-   Type=simple
-   ExecStart=/usr/bin/java -jar /home/minima/minima.jar -rpcenable -rpcpassword INSERTRPCPASSWORD -rpcssl -daemon -basefolder /home/minima -data /home/minima/.minima
-   Restart=always
-   RestartSec=100
-   [Install]
-   WantedBy=multi-user.target
-   EOF
+sudo tee <<EOF >/dev/null /etc/systemd/system/minima.service
+[Unit]
+Description=minima
+[Service]
+User=minima
+Type=simple
+ExecStart=/usr/bin/java -jar /home/minima/minima.jar -rpcenable -rpcpassword INSERTRPCPASSWORD -rpcssl -daemon -basefolder /home/minima -data /home/minima/.minima
+Restart=always
+RestartSec=100
+[Install]
+WantedBy=multi-user.target
+EOF
 ```
 
 </Tab>
@@ -287,7 +288,7 @@ The following will create a systemd service file for a node without the MiniDapp
 To reopen the file if required:
 
 ```bash title="Terminal"
-  sudo nano /etc/systemd/system/minima.service
+sudo nano /etc/systemd/system/minima.service
 ```
 
 use `ctrl-X` then `Y` then press enter to save changes.
@@ -298,11 +299,11 @@ use `ctrl-X` then `Y` then press enter to save changes.
 <Heading as="h3"> Navigate to home directory </Heading>
 
 ```bash title="Terminal"
-   sudo su minima
+sudo su minima
 ```
 
 ```bash title="Terminal"
-   cd /home/minima
+cd /home/minima
 ```
 
 </Step>
@@ -311,13 +312,13 @@ use `ctrl-X` then `Y` then press enter to save changes.
 <Heading as="h3"> Download the minima jar file from Github </Heading>
 
 ```bash title="Terminal"
-   wget https://github.com/minima-global/Minima/raw/master/jar/minima.jar
+wget https://github.com/minima-global/Minima/raw/master/jar/minima.jar
 ```
 
 Exit back to your user
 
 ```bash title="Terminal"
-   exit
+exit
 ```
 
 </Step>
@@ -326,7 +327,7 @@ Exit back to your user
 <Heading as="h3">  Reload the services </Heading>
 
 ```bash title="Terminal"
-   sudo systemctl daemon-reload
+sudo systemctl daemon-reload
 ```
 
 </Step>
@@ -335,11 +336,11 @@ Exit back to your user
 <Heading as="h3">  Enable and start the minima service </Heading>
 
 ```bash title="Terminal"
-   sudo systemctl enable minima
+sudo systemctl enable minima
 ```
 
 ```bash title="Terminal"
-   sudo systemctl start minima
+sudo systemctl start minima
 ```
 
 </Step>
@@ -348,7 +349,7 @@ Exit back to your user
 <Heading as="h3"> View the logs to see your node starting up </Heading>
 
 ```bash title="Terminal"
-   sudo journalctl -u minima -f
+sudo journalctl -u minima -f
 ```
 
 `Ctrl+C will exit the log stream`
@@ -388,7 +389,7 @@ sudo nano /etc/systemd/system/minima.service
 -rpcenable -rpcpassword yourrpcpassword -rpcssl
 ```
 
-***Enter a password over 12 characters using a-z, A-Z, 0-9 and !@#=?+>,.-_'()/< symbols only.***
+***Enter a password over 12 characters using only letters, numbers and the symbols `- _ . @` - other symbols break the RPC client script below.***
 
 **Example**
 ```
@@ -415,7 +416,7 @@ sudo journalctl -u minima -f
 ```
 then `ctrl+c` to exit the logs
 
-6. Create a file and paste in the script below, ensuring that you **change the password**
+6. Create a file and paste in the script below, ensuring that you **change the password**. The script runs the client as the minima user, because newer Debian and Ubuntu versions keep `/home/minima` private to that user. You'll be asked for your own sudo password when you run it.
 
 ```
 sudo nano minima
@@ -424,8 +425,8 @@ sudo nano minima
 ```
 #!/bin/sh
 
-#Start the Minima RPC Client 
-java -cp /home/minima/minima.jar org.minima.utils.MinimaRPCClient -password yourrpcpassword -host https://127.0.0.1:9005
+#Start the Minima RPC Client as the minima user (who owns minima.jar)
+sudo -u minima java -cp /home/minima/minima.jar org.minima.utils.MinimaRPCClient -password yourrpcpassword -host https://127.0.0.1:9005
 ```
 
 Write the file using ctrl-`x` then confirm with `y`
@@ -477,7 +478,7 @@ To exit the Terminal, type `exit`.
 </Callout>
 
 ```bash title="Terminal"
-   java -cp /home/minima/minima.jar org.minima.utils.MinimaRPCClient -password yourrpcpassword -host https://127.0.0.1:9005
+java -cp /home/minima/minima.jar org.minima.utils.MinimaRPCClient -password yourrpcpassword -host https://127.0.0.1:9005
 ```
 
 Write the file using `ctrl-X` then confirm with `Y`
@@ -489,7 +490,7 @@ Write the file using `ctrl-X` then confirm with `Y`
     <Heading as="h3"> Permissions </Heading>
 
 ```bash title="Terminal"
-   sudo chmod +x ./minima
+sudo chmod +x ./minima
 ```
 
 </Step>
@@ -498,7 +499,7 @@ Write the file using `ctrl-X` then confirm with `Y`
     <Heading as="h3"> Run the script </Heading>
 
 ```bash title="Terminal"
-   ./minima
+./minima
 ```
 
 <ImageZoom
@@ -638,6 +639,8 @@ For future updates, you simply need to run the script (steps 6 and 7).
 
 To login to your node, open a web browser and navigate to **https://YourServerIP:9003/** 
 
+If Minima is running on the Linux machine you are using (not a remote VPS), go to **https://127.0.0.1:9003/** instead.
+
 <Callout type="warn">
   Click on Advanced, then Proceed. Or in Google Chrome, you may have to click
   anywhere on the page and type thisisunsafe to proceed. Details for other
@@ -665,12 +668,12 @@ height={500}
 <Accordions>
 <Accordion title="How to check your login password">
  
-If you forgot the password you set in step 7 above, you can check the password you set in the minima.service file.
+If you forgot the password you set in step 4 above, you can check the password you set in the minima.service file.
 
 Log on to your server and run
 
 ```bash
-   sudo nano /etc/systemd/system/minima.service
+sudo nano /etc/systemd/system/minima.service
 ``` 
 
 The `-mdspassword` parameter is your login password.
@@ -706,7 +709,7 @@ The first time you install Minima, you will need to
 <Accordion title="Startup parameters">
 The following start up parameters can optionally be specified when starting your node.
 
-To add/remove parameters after a node has been started, you must `quit` the node and restart it, adding/removing the required parameters.
+To add or remove parameters, edit the `ExecStart` line in `/etc/systemd/system/minima.service`, then run `sudo systemctl daemon-reload` and `sudo systemctl restart minima`.
 
 `[]` square brackets indicate where an input is required, **the brackets should not be included**.
 
@@ -719,18 +722,16 @@ To add/remove parameters after a node has been started, you must `quit` the node
 - `-allowallip` : Allow all IPs for Maxima / Networking. Local IPs won't be allowed otherwise.
 - `-archive` : Run an Archive node - store all archive data / the cascade to allow for resyncs from this node
 - `-daemon` : Run in daemon mode with no stdin input (if running Minima as a background service)
-- `-isclient` : Tells the P2P System that this node can't accept incoming connections
-- `-server` : Use Server settings - this node can accept incoming connections
-- `-desktop` : Use Desktop settings - this node can't accept incoming connections
+- `-server` : Use Server settings - this node accepts incoming connections, so it can act as a relay node. This is the default.
 
 <Heading as="h4">Folders</Heading>
 
-- `- data` : the data folder where all the config files for this node are stored. Default is a hidden .minima folder under the user's home directory. If you want to specify a folder not in the user's home directory, you must use the complete path.
+- `-data` : the data folder where all the config files for this node are stored. Default is a hidden .minima folder under the user's home directory. If you want to specify a folder not in the user's home directory, you must use the complete path.
 - `-basefolder` : specify a default file creation / backup / restore folder. Default is the user's home directory. Can be the same as the data folder provided.
 
 <Heading as="h4">MiniDapp System (mds)</Heading>
 
-- `- mdsenable` : enable the MiniDapp System (default port 9003)
+- `-mdsenable` : enable the MiniDapp System (default port 9003)
 - `-mdspassword [yourmdspassword]` : specify the mds login password
 - `-mdsinit [foldername/path]` : specify a folder of miniDAPPs
 - `-mdswrite [minidapp]` : give an initial miniDAPP WRITE access
@@ -740,7 +741,7 @@ To add/remove parameters after a node has been started, you must `quit` the node
 - `-rpcenable` : enable remote procedure call
 - `-rpcssl` : use Self Signed SSL cert to run RPC
 - `-rpcpassword [yourrpcpassword]` : set Basic Auth password for RPC calls ( Use with SSL / stunnel ). Only secure if used with SSL.
-- `-rpcclrf` : use CRLF at the end of the RPC headers (NodeJS)
+- `-rpccrlf` : use CRLF at the end of the RPC headers (NodeJS)
 
 <Heading as="h4">Test nodes</Heading>
 
@@ -780,7 +781,7 @@ The best way to interact with the node is to [enable the RPC client](/docs/run-a
 Once enabled, to start the RPC client when logged on to the server, enter:
 
 ```bash title="Terminal"
-   ./minima
+./minima
 ```
 
 
@@ -794,18 +795,18 @@ You can send commands to your Minima node using cURL to the RPC port.
 
 Install cURL on your server:
 
-<Tabs items={["Debian/Ubuntu", "CentOS/RedHat"]}>
+<Tabs items={["Debian/Ubuntu", "RHEL/Rocky/AlmaLinux"]}>
   <Tab value="Debian/Ubuntu">
 
 ```bash 
-   sudo apt install curl
+sudo apt install curl
 ```
 
 </Tab>
-  <Tab value="CentOS/RedHat">
+  <Tab value="RHEL/Rocky/AlmaLinux">
 
 ```bash 
-   sudo yum install curl
+sudo yum install curl
 ```
 
 </Tab>
@@ -816,18 +817,20 @@ Install cURL on your server:
 To interact with your node locally (whilst logged onto the server):
 
 ```bash title="Terminal"
-curl -k -u minima:[yourRPCpasswordhere] serverip:9005/status
+curl -k -u minima:[yourRPCpasswordhere] https://127.0.0.1:9005/status
 ```
 
 To interact from an external computer, use SSH with each command, logging in with the minima user:
 
 ``` bash title="Terminal"
-ssh minima@YourServerIP curl -k -u minima:[yourRPCpasswordhere] serverip:9005/status
+ssh minima@YourServerIP curl -k -u minima:[yourRPCpasswordhere] https://127.0.0.1:9005/status
 ```
 
 
 To use commands that require spaces, use `%20` instead:
 
 ``` bash title="Terminal"
-ssh minima@YourServerIP curl -k -u minima:[yourpasswordhere] serverip:9005/backup%20password:insertpassword%20file:insertpathtobackup\backupname.bak | jq
+ssh minima@YourServerIP curl -k -u minima:[yourpasswordhere] https://127.0.0.1:9005/backup%20password:insertpassword%20file:/home/minima/backupname.bak | jq
 ```
+
+Commands you run over SSH, including any passwords in them, are saved in your shell history.
